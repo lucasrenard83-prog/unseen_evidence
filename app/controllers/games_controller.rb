@@ -1,9 +1,21 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
 
-  SCENARIO = "Test"
-  SECRET_SCENARIO = "Other Test"
-
+  SCENARIO = "You are an AI narrator inside an interactive Cluedo-style mystery game.
+    The player will ask questions, move between rooms, interview suspects, and look for clues.
+    You must always answer in-universe, as if the investigation were real.
+    You will receive several types of instructions:
+      1.	Game context (scenario, timeline, victim, suspects, weapons, rooms).
+      2.	Player actions (moving, inspecting, interrogating, analysing evidence).
+      3.	Hidden information that the player should not know unless they discover it.
+    Your role is to:
+      •	describe scenes and environments,
+      •	play the NPCs (suspects, witnesses, etc.),
+      •	react to what the player does or says,
+      •	reveal clues gradually and consistently,
+      •	never reveal the solution unless explicitly instructed.
+    Stay immersive, atmospheric, and consistent with the established scenario.
+    Ask clarifying questions when needed. "
   def new
     @game = Game.new
     @games = current_user.games
@@ -12,7 +24,7 @@ class GamesController < ApplicationController
   def create
     @game = current_user.games.build
     @game.scenario = SCENARIO
-    @game.secret_scenario = SECRET_SCENARIO
+    @game.secret_scenario = ""
     if @game.save
       rooms_init
       personas_init
@@ -28,11 +40,11 @@ class GamesController < ApplicationController
   def rooms_init
     rooms_data = [
       { name: "Hall",
-        public_description: "The imposing entrance hall stretches out like a silent stage.
+        public_description: "The imposing entrance hall is an old school hall.
         A grand varnished staircase dominates the room, its steps worn by years of footsteps.
-        Portraits line the walls, staring down with a stillness that borders on unsettling.
-        The central carpet bears faint marks as if someone had run,
-        hesitated… or fled. The air here feels colder than in the rest of the house. ",
+        Portraits line the walls. The central carpet bears faint marks as if someone had run,
+        hesitated… or fled. The air here feels colder than in the rest of the house.
+        The player can search but nothing is hidden",
         open: true,
         position: 1
       },
@@ -95,8 +107,9 @@ class GamesController < ApplicationController
     persona_data = [
       {
         name: "Queen",
-        public_description: "hello",
-        secret_description: "hello but in secret",
+        public_description: "she is a strong and mysterious woman, but nice deeply",
+        secret_description: "this suspect has the cellar key, and she gives it easily when you ask for it.
+        she did not kill you, although she know that the King did it. But she is reluctant to say it",
         room: @game.rooms.find_by!(name: "Hall")
       },
       {
@@ -122,6 +135,16 @@ class GamesController < ApplicationController
   end
 
   def items_init
-
+    item_data = [
+      {
+        name: "cellar key",
+        descritption: "it is the key to the cellar.",
+        room: @game.rooms.find_by!(name: "Hall"),
+        picture_url: "",
+        found: false,
+        kind: "key"
+     }
+    ]
+    item_data.each { |item| Item.create(item)}
   end
 end
