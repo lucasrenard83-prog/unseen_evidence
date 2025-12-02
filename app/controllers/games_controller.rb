@@ -15,6 +15,8 @@ class GamesController < ApplicationController
     @game.secret_scenario = SECRET_SCENARIO
     if @game.save
       rooms_init
+      personas_init
+      items_init
       redirect_to room_path(@game.rooms.find_by!(name: "Hall"))
     else
       render :new, status: :unprocessable_entity
@@ -43,7 +45,7 @@ class GamesController < ApplicationController
         though nothing here seems to have been burned recently. ",
         open: true,
         position: 2},
-      { name: "library",
+      { name: "Library",
         public_description: " A faint scent of old paper lingers in the air,
         mixed with a discreet hint of wood polish. Shelves climb all the way to the ceiling,
         packed with far too many books for anyone to truly read. A green-shaded lamp casts a
@@ -52,7 +54,7 @@ class GamesController < ApplicationController
         finally uncover a secret kept far too long. ",
         open: true,
         position: 3},
-      { name: "Basement",
+      { name: "Cellar",
         public_description: "Darkness clings to the damp walls,
         forming a heavy, confined atmosphere. The dirt floor shows irregular small prints.
         Shelves filled with jars line the room under a single exposed bulb that flickers
@@ -69,6 +71,14 @@ class GamesController < ApplicationController
         of something that happened here… whatever it was. ",
         open: false,
         position: 5},
+      { name: "Bureau",
+        public_description: "Flooded with daylight, yet strangely cold.
+        The potted plants, luxuriant sea of greens. Rain taps rhythmically
+        against the glass panes, giving the impression of someone whispering just outside.
+        A round table is scattered with slightly damp papers and a pen frozen mid-stroke,
+        abandoned in a moment of abrupt interruption.",
+        open: false,
+        position: 6},
       { name: "Greenhouse",
         public_description: "Flooded with daylight, yet strangely cold.
         The potted plants, luxuriant sea of greens. Rain taps rhythmically
@@ -76,9 +86,42 @@ class GamesController < ApplicationController
         A round table is scattered with slightly damp papers and a pen frozen mid-stroke,
         abandoned in a moment of abrupt interruption.",
         open: false,
-        position: 6}
+        position: 7},
     ]
     rooms_data.each { |room| @game.rooms.create!(room)}
   end
 
+  def personas_init
+    persona_data = [
+      {
+        name: "Queen",
+        public_description: "hello",
+        secret_description: "hello but in secret",
+        room: @game.rooms.find_by!(name: "Hall")
+      },
+      {
+        name: "King",
+        public_description: "hello",
+        secret_description: "hello but in secret",
+        room: @game.rooms.find_by!(name: "Kitchen")
+      },
+      {
+        name: "Bishop",
+        public_description: "hello",
+        secret_description: "hello but in secret",
+        room: @game.rooms.find_by!(name: "Library")
+      },
+      {
+        name: "Rook",
+        public_description: "hello",
+        secret_description: "hello but in secret",
+        room: @game.rooms.find_by!(name: "Attic")
+      },
+    ]
+    persona_data.each { |persona| Persona.create(persona)}
+  end
+
+  def items_init
+
+  end
 end
