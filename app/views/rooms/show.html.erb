@@ -1,16 +1,17 @@
 <h1><%=  @room.name %></h1>
-<%= @room.public_description %>
+<hr>
+
 <div class="show-body">
 
   <div id = "chatbox" class ="col-md-6 border">
     <div class="messages">
       <% @messages.each do |message| %>
         <% if message.role == "user" %>
-          <div class="d-flex justify-content-end mb-2 px-3 pb-0 pt-3 chat-border">
+          <div class="justify-content-end mb-2 px-3 pb-0 pt-3 chat-border" style="color: blue">
             <%= simple_format(message.content) %>
           </div>
         <% elsif message.role == "assistant" %>
-          <div class="d-flex justify-content-start mb-5 px-3 pb-0 pt-3 reponse-ia">
+          <div class="justify-content-start mb-5 px-3 pb-0 pt-3 reponse-ia">
               <%= simple_format(message.content) %>
           </div>
         <% end %>
