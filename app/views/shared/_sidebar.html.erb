@@ -1,0 +1,8 @@
+<div class="sidebar-content">
+  <h3>Rooms</h3>
+  <div class="sidebar-list">
+    <% @rooms.each do |room| %>
+      <%= link_to room.name, room_path(room), class:"sidebar-element" %>
+    <% end %>
+  </div>
+</div>

@@ -1,2 +1,7 @@
 <h1><%=  @room.name %></h1>
-the show of the room
+
+<%= @room.public_description %>
+
+<div class="sidebar">
+  <%= render "shared/sidebar", rooms: @rooms %>
+</div>
