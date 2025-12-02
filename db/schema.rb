@@ -25,8 +25,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_01_154147) do
 
   create_table "items", force: :cascade do |t|
     t.string "name"
-    t.bigint "room_id", null: false
     t.string "descritption"
+    t.bigint "room_id", null: false
     t.string "picture_url"
     t.boolean "found"
     t.string "kind"
@@ -40,9 +40,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_01_154147) do
     t.string "role"
     t.bigint "game_id", null: false
     t.bigint "room_id", null: false
-    t.bigint "persona_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "persona_id", null: false
     t.index ["game_id"], name: "index_messages_on_game_id"
     t.index ["persona_id"], name: "index_messages_on_persona_id"
     t.index ["room_id"], name: "index_messages_on_room_id"
