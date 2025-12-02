@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   def show
     @room = Room.find(params[:id])
     @game = @room.game
-    @rooms = @game.rooms
+    @rooms = @game.rooms.order(:position)
   end
 
 end
