@@ -2,21 +2,30 @@
 
 .color-1 {
   background-color: $yellow;
+  color: black;
 }
 
 .color-2 {
   background-color: $dark-blue;
-}
 
-.color-3 {
-
-  background-color: $purple;
+  font-size: 24px;
 }
 
 .color-4 {
  background-color: $brown;
+
 }
 
-.color-5 {
-  background-color: $white-moon;
+
+.color-6 {
+ background-color: $red;
+}
+
+.color-8 {
+
+  background-color: $vert;
+}
+
+h1 {
+  font-family: $merry;
 }
