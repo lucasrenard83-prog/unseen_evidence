@@ -1,7 +1,33 @@
 <h1><%=  @room.name %></h1>
-
 <%= @room.public_description %>
+<div class="show-body">
 
-<div class="sidebar">
-  <%= render "shared/sidebar", rooms: @rooms %>
+  <div id = "chatbox" class ="col-md-6 border">
+    <div class="messages">
+      <% @messages.each do |message| %>
+        <% if message.role == "user" %>
+          <div class="d-flex justify-content-end mb-2 px-3 pb-0 pt-3 chat-border">
+            <%= simple_format(message.content) %>
+          </div>
+        <% elsif message.role == "assistant" %>
+          <div class="d-flex justify-content-start mb-5 px-3 pb-0 pt-3 reponse-ia">
+              <%= simple_format(message.content) %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div id="new_message_container">
+      <%= simple_form_for [@game, @message] do |f| %>
+        <%= f.hidden_field :room_id, value: @room.id %>
+        <%= f.input :content, required: true, placeholder: "Your Text Here" %>
+        <%= f.button :submit, 'Send', class:"button-perso my-2", style: "width: 150px"%>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+  <div class="sidebar">
+    <%= render "shared/sidebar", rooms: @rooms %>
+  </div>
 </div>

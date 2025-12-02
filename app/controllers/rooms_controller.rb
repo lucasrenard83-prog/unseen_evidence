@@ -5,6 +5,8 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @game = @room.game
     @rooms = @game.rooms.order(:position)
+    @messages = @game.messages
+    @message = Message.new
   end
 
 end
