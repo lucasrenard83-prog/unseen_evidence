@@ -5,22 +5,21 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @game = @room.game
     @rooms = @game.rooms.order(:position)
-    @messages = @game.messages
     @message = Message.new
 
-    # Shows the description of the room when entering if no message
-    intro_msg = "Entering #{@room.name} "
+    # Only create intro message if this is the first time visiting this room
     if @room.messages.count == 0
-      intro_msg += @room.description
+      intro_msg = "Entering #{@room.name}. #{@room.description}"
+      Message.create(
+        role: "assistant",
+        content: intro_msg,
+        room: @room,
+        game: @game,
+        persona: Persona.find_by(room: @room)
+      )
     end
 
-    @intro = Message.create(
-      role: "assistant",
-      content: intro_msg,
-      room: @room,
-      game: @game,
-      persona: Persona.find_by(room: @room)
-      )
+    # Load messages for this room only
+    @messages = @room.messages.order(:created_at)
   end
-
 end
