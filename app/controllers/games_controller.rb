@@ -48,7 +48,7 @@ class GamesController < ApplicationController
         hesitated… or fled. The air here feels colder than in the rest of the house.
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers as to call help that's not needed anymore",
-        AI_guildeline: "...",
+        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -64,7 +64,7 @@ class GamesController < ApplicationController
         as if time itself had stopped.The silence is heavy, almost expectant,
         as though the walls are waiting for someone to finally uncover a secret kept far too long.
         You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen",
-        AI_guildeline: "...",
+        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -80,7 +80,7 @@ class GamesController < ApplicationController
         A small pool of blood lies still only perturbed by footsteps leading out of the room.
         Mrs Pawn appears so small in this gigantic and empty room, she gets up and reveals her tall stature as well as her panicked face,
         a wave of relief running through her face when she sees you, finally opening the door that was blocking her way out",
-        AI_guildeline: "...",
+        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -96,7 +96,7 @@ class GamesController < ApplicationController
         In the back of the room a furnace lies dormant.
         A draft from nowhere cuts through the stale air,
         almost as if something had moved here not long ago.",
-        AI_guildeline: "...",
+        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -112,7 +112,7 @@ class GamesController < ApplicationController
         a drawer sits ajar and a pen lies on the floor,
         silent hints that someone was here not long ago… whoever they were.
         Mr.King is here observing the grey sky through the window, he salutes you, his back still facing you.",
-        AI_guildeline: "...",
+        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -129,7 +129,7 @@ class GamesController < ApplicationController
         You stumble upon Mrs.Cavaleer when you open the door, she's playing with a knife,
         her eyes lost in the void as if she was contemplating old memories.
         She finally notices you, unfazed she invites you to enter.",
-        AI_guildeline: "...",
+        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -144,8 +144,8 @@ class GamesController < ApplicationController
         Light seeps through loose tiles in thin dusty beams.
         At the center lies a toppled chair and a circular mark on the floor,
         signs of something that happened here… whatever it was.
-        Mr.Rook a broad, tall and severe looking figure observes you from the back of the room."
-        AI_guildeline: "...",
+        Mr.Rook a broad, tall and severe looking figure observes you from the back of the room.",
+        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -162,7 +162,7 @@ class GamesController < ApplicationController
         She moves with a precision that suggests she is always three steps ahead in any conversation.
         Pearls at her neck, gloves spotless, yet a faint tremor in her fingers betrays hidden nerves.
         Rumors cling to her like a perfume; secrets, alliances, and a temper sharp enough to cut long before she raises her voice.",
-        AI_guideline: "She will throw off the investigator any chance she has;
+        ai_guideline: "She will throw off the investigator any chance she has;
         not to hide anything but just to prove her point : a medium is a fraud and could never find a murder culprit.
         she will be an obvious choice but she is innocent ",
         item_given: false,
@@ -170,18 +170,18 @@ class GamesController < ApplicationController
       },
       { name: "Mrs. Cavaleer",
         description: "",
-        AI_guideline: "...",
+        ai_guideline: "...",
         item_given: false,
         room: @game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
-        descritption: "...",
+        description: "...",
         ai_guideline: "...",
         item_given: false,
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
-        descritption: "...",
+        description: "...",
         ai_guideline: "he's guilty",
         item_given: false,
         room: @game.rooms.find_by!(name: "Attic")
@@ -193,7 +193,7 @@ class GamesController < ApplicationController
         Symbols hang from his neck, worn thin from years of handling.
         He speaks of guidance and redemption,
         yet there is something in his smile that suggests he knows exactly where everyone's sins are buried.",
-        AI_guideline: "His calm but unsettling behavior places the investigator in a weird position of trust/mistrust constantly redirecting his focus on and off him.",
+        ai_guideline: "His calm but unsettling behavior places the investigator in a weird position of trust/mistrust constantly redirecting his focus on and off him.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Hall")
       },
@@ -203,69 +203,69 @@ class GamesController < ApplicationController
         Deep lines carve his face, each one a trace of sleepless nights and unspoken worries.
         His eyes—cold, calculating—measure everything and everyone. There's a quiet tension around him,
         as if he knows more than he will ever admit, and fears far more than he lets show.",
-        AI_guideline: "At ease constantly his behavior is pushing the investigator to trust him
+        ai_guideline: "At ease constantly his behavior is pushing the investigator to trust him
         (which he/she should) and doesnt hesitate to give any info as long as it's true.
         He will be the biggest help you'll have if you sniff around him long enough",
         item_given: false,
         room: @game.rooms.find_by!(name: "Study")
       }
     ]
-    persona_data.each { |persona| Persona.create(persona)}
+    persona_data.each { |persona| Persona.create!(persona)}
   end
 
   def items_init
     item_data = [
       { name: "cellar key",
-        descritption: "it is the key to the cellar.",
+        description: "it is the key to the cellar.",
         # room: @game.rooms.find_by!(name: ""),
         # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
         found: false
       },
       { name: "greenhouse key",
-        descritption: "it is the key to the greenhouse.",
+        description: "it is the key to the greenhouse.",
         # room: @game.rooms.find_by!(name: ""),
         # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
         found: false
       },
       { name: "kitchen knife",
-      descritption: "it is the key to the cellar.",
+      description: "it is the key to the cellar.",
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "revolver",
-      descritption: "it is the key to the cellar.",
+      description: "it is the key to the cellar.",
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "poison",
-      descritption: "it is the key to the cellar.",
+      description: "it is the key to the cellar.",
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "wrench",
-      descritption: "it is the key to the cellar.",
+      description: "it is the key to the cellar.",
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "wine bottle",
-      descritption: "it is the key to the cellar.",
+      description: "it is the key to the cellar.",
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "rope",
-      descritption: "it is the key to the cellar.",
+      description: "it is the key to the cellar.",
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
