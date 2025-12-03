@@ -56,9 +56,9 @@ private
       "
       Scenario: #{@message.game.scenario}
       Current Room: #{@message.room.name}
-      Description: #{@message.room.descritption}
+      Description: #{@message.room.description}
       Suspect in the room: #{@message.persona.name}
-      Suspect Public Description: #{@message.persona.descritption}
+      Suspect Public Description: #{@message.persona.description}
       Suspect Secret Description: #{@message.persona.ai_guideline}
       Room items: #{@message.room.items.pluck(:name).join(', ')}
 

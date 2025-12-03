@@ -9,7 +9,7 @@ class RoomsController < ApplicationController
 
     # Only create intro message if this is the first time visiting this room
     if @room.messages.count == 0
-      intro_msg = "Entering #{@room.name}. #{@room.descritption}"
+      intro_msg = "Entering #{@room.name}. #{@room.description}"
       Message.create(
         role: "assistant",
         content: intro_msg,
