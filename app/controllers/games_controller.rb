@@ -47,7 +47,7 @@ class GamesController < ApplicationController
         Portraits line the walls. The central carpet bears faint marks as if someone had run,
         hesitated… or fled. The air here feels colder than in the rest of the house.
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
-        A serene looking man, Mr.Bishop, is murmuring prayers as to call help that's not needed anymore",
+        A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore",
         AI_guildeline: "...",
         item_found: false,
         before_picture_url: "...",
@@ -169,8 +169,15 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Library")
       },
       { name: "Mrs. Cavaleer",
-        description: "",
-        AI_guideline: "...",
+        description: "Restless energy wrapped in a confident grin.
+        She carries herself like someone who thrives on risk—quick to act,
+        quicker to improvise. Her boots are muddy, her coat battered,
+        suggesting she spends more time outside the rules than within them.
+        A scar cuts across her jaw, earned in a story she tells differently every time.
+        She protects those she chooses with fierce loyalty,
+        but her unpredictable nature leaves everyone wondering whose side she's truly on.",
+        AI_guideline: "Ideal culprit by her behavior, she holds nothing of real interest but is very invested in the investigation.
+        Her personality, charisma and presence pushes the investigator to 'stay on her case'.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Kitchen")
       },
