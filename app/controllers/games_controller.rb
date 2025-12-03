@@ -28,7 +28,7 @@ class GamesController < ApplicationController
     if @game.save
       rooms_init
       personas_init
-      items_init
+      # items_init  # Commented out: items require room_id (NOT NULL)
       redirect_to room_path(@game.rooms.find_by!(name: "Hall"))
     else
       render :new, status: :unprocessable_entity
@@ -175,14 +175,14 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
-        description: "...",
-        AI_guideline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_given: false,
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
-        description: "...",
-        AI_guideline: "he's guilty",
+        descritption: "...",
+        ai_guideline: "he's guilty",
         item_given: false,
         room: @game.rooms.find_by!(name: "Attic")
       },
@@ -217,57 +217,57 @@ class GamesController < ApplicationController
     item_data = [
       { name: "cellar key",
         descritption: "it is the key to the cellar.",
-        room: @game.rooms.find_by!(name: ""),
-        persona: @game.personas.find_by!(name: ""),
+        # room: @game.rooms.find_by!(name: ""),
+        # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
         found: false
       },
       { name: "greenhouse key",
         descritption: "it is the key to the greenhouse.",
-        room: @game.rooms.find_by!(name: ""),
-        persona: @game.personas.find_by!(name: ""),
+        # room: @game.rooms.find_by!(name: ""),
+        # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
         found: false
       },
       { name: "kitchen knife",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "revolver",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "poison",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "wrench",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "wine bottle",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "rope",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       }
