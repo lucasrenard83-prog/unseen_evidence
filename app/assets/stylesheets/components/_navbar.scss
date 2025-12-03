@@ -1,19 +1,23 @@
 .navbar-bar {
-  background-color: linear-gradient($gray, $dark-blue);
+  background-color: $dark-blue;
+  background: linear-gradient(to left, $gray, $dark-blue);
   display: flex;
+
   h1 {
     justify-content: center;
     font-size: 40px;
     font-family: $merry;
+    color: whitesmoke;
   }
-}
 
-.logout-btn {
-  border-radius: 15px;
-  background-color: linear-gradient($red, $orange);
-  border: none;
+  .logout-btn{
+    color: black;
+  }
 
 }
+
+
+
 
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
