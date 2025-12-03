@@ -1,6 +1,18 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+.navbar-bar {
+  background-color: linear-gradient($gray, $dark-blue);
+  display: flex;
+  h1 {
+    justify-content: center;
+    font-size: 40px;
+    font-family: $merry;
+  }
+}
+
+.logout-btn {
+  border-radius: 15px;
+  background-color: linear-gradient($red, $orange);
+  border: none;
+
 }
 
 .navbar-lewagon .navbar-collapse {
