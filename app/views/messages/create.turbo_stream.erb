@@ -1,0 +1,8 @@
+<%= turbo_stream.append "messages-list" do %>
+  <%= render "messages/message", message: @message %>
+  <%= render "messages/message", message: @answer %>
+<% end %>
+
+<%= turbo_stream.replace "message_input" do %>
+  <input class="form-control string required" type="text" name="message[content]" id="message_input" placeholder="Your Text Here" required="required" aria-required="true">
+<% end %>

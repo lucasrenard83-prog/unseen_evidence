@@ -1,32 +1,28 @@
-<h1><%=  @room.name %></h1>
-<hr>
-
 <div class="show-body">
+  <%= turbo_frame_tag "room_content" do %>
+    <div class="room-main">
+      <h1><%= @room.name %></h1>
+      <hr>
 
-  <div id = "chatbox" class ="col-md-6 border">
-    <div class="messages">
-      <% @messages.each do |message| %>
-        <% if message.role == "user" %>
-          <div class="justify-content-end mb-2 px-3 pb-0 pt-3 chat-border" style="color: blue">
-            <%= simple_format(message.content) %>
-          </div>
-        <% elsif message.role == "assistant" %>
-          <div class="justify-content-start mb-5 px-3 pb-0 pt-3 reponse-ia">
-              <%= simple_format(message.content) %>
+      <div id="chatbox" class="col-md-6 border" data-controller="chat">
+        <%= turbo_frame_tag "messages" do %>
+          <div class="messages" id="messages-list" data-chat-target="messages">
+            <% @messages.each do |message| %>
+              <%= render "messages/message", message: message %>
+            <% end %>
           </div>
         <% end %>
-      <% end %>
-    </div>
 
-    <div id="new_message_container">
-      <%= simple_form_for [@game, @message] do |f| %>
-        <%= f.hidden_field :room_id, value: @room.id %>
-        <%= f.input :content, required: true, placeholder: "Your Text Here" %>
-        <%= f.button :submit, 'Send', class:"button-perso my-2", style: "width: 150px"%>
-      <% end %>
+        <div id="new_message_container">
+          <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
+            <%= f.hidden_field :room_id, value: @room.id %>
+            <%= f.input :content, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
+            <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  <% end %>
 
   <div class="sidebar">
     <%= render "shared/sidebar", rooms: @rooms %>
