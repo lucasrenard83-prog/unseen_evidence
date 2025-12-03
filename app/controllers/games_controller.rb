@@ -28,7 +28,7 @@ class GamesController < ApplicationController
     if @game.save
       rooms_init
       personas_init
-      items_init
+      # items_init  # Commented out: items require room_id (NOT NULL)
       redirect_to room_path(@game.rooms.find_by!(name: "Hall"))
     else
       render :new, status: :unprocessable_entity
@@ -42,12 +42,12 @@ class GamesController < ApplicationController
       { name: "Hall",
         position: 1,
         open: true,
-        description: "The imposing entrance hall is an old school hall.
+        descritption: "The imposing entrance hall is an old school hall.
         A grand varnished staircase dominates the room, its steps worn by years of footsteps.
         Portraits line the walls. The central carpet bears faint marks as if someone had run,
         hesitated… or fled. The air here feels colder than in the rest of the house.
         The player can search but nothing is hidden",
-        AI_guildeline: "...",
+        ai_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -55,8 +55,8 @@ class GamesController < ApplicationController
       { name: "Library",
         position: 2,
         open: true,
-        description: "...",
-        AI_guildeline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -64,8 +64,8 @@ class GamesController < ApplicationController
       { name: "Greenhouse",
         position: 3,
         open: false,
-        description: "...",
-        AI_guildeline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -73,8 +73,8 @@ class GamesController < ApplicationController
       { name: "Cellar",
         position: 4,
         open: false,
-        description: "...",
-        AI_guildeline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -82,8 +82,8 @@ class GamesController < ApplicationController
       { name: "Study",
         position: 5,
         open: true,
-        description: "...",
-        AI_guildeline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -91,8 +91,8 @@ class GamesController < ApplicationController
       { name: "Kitchen",
         position: 6,
         open: true,
-        description: "...",
-        AI_guildeline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -100,8 +100,8 @@ class GamesController < ApplicationController
       { name: "Attic",
         position: 7,
         open: true,
-        description: "...",
-        AI_guildeline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -113,39 +113,39 @@ class GamesController < ApplicationController
   def personas_init
     persona_data = [
       { name: "Mrs. Queen",
-        description: "she is a strong and mysterious woman, but nice deeply",
-        AI_guideline: "this suspect has the cellar key, and she gives it easily when you ask for it.
+        descritption: "she is a strong and mysterious woman, but nice deeply",
+        ai_guideline: "this suspect has the cellar key, and she gives it easily when you ask for it.
         she did not kill you, although she know that the King did it. But she is reluctant to say it",
         item_given: false,
         room: @game.rooms.find_by!(name: "Library")
       },
       { name: "Mrs. Cavaleer",
-        description: "...",
-        AI_guideline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_given: false,
         room: @game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
-        description: "...",
-        AI_guideline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_given: false,
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
-        description: "...",
-        AI_guideline: "he's guilty",
+        descritption: "...",
+        ai_guideline: "he's guilty",
         item_given: false,
         room: @game.rooms.find_by!(name: "Attic")
       },
       { name: "Mr. Bishop",
-        description: "...",
-        AI_guideline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_given: false,
         room: @game.rooms.find_by!(name: "Hall")
       },
       { name: "Mr. King",
-        description: "...",
-        AI_guideline: "...",
+        descritption: "...",
+        ai_guideline: "...",
         item_given: false,
         room: @game.rooms.find_by!(name: "Study")
       }
@@ -157,57 +157,57 @@ class GamesController < ApplicationController
     item_data = [
       { name: "cellar key",
         descritption: "it is the key to the cellar.",
-        room: @game.rooms.find_by!(name: ""),
-        persona: @game.personas.find_by!(name: ""),
+        # room: @game.rooms.find_by!(name: ""),
+        # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
         found: false
       },
       { name: "greenhouse key",
         descritption: "it is the key to the greenhouse.",
-        room: @game.rooms.find_by!(name: ""),
-        persona: @game.personas.find_by!(name: ""),
+        # room: @game.rooms.find_by!(name: ""),
+        # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
         found: false
       },
       { name: "kitchen knife",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "revolver",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "poison",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "wrench",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "wine bottle",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "rope",
       descritption: "it is the key to the cellar.",
-      room: @game.rooms.find_by!(name: ""),
-      persona: @game.personas.find_by!(name: ""),
+      # room: @game.rooms.find_by!(name: ""),
+      # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       }
