@@ -17,6 +17,10 @@ class GamesController < ApplicationController
     Stay immersive, atmospheric, and consistent with the established scenario.
     Ask clarifying questions when needed. "
 
+  def index
+  @games = Game.where(user: current_user)
+  end
+
   def new
     @game = Game.new
     @games = current_user.games
@@ -27,8 +31,9 @@ class GamesController < ApplicationController
     @game.scenario = SCENARIO
     @game.secret_scenario = ""
     if @game.save
-      rooms_init
+      rooms_init(@game)
       personas_init
+      items_init(@game)
       # items_init  # Commented out: items require room_id (NOT NULL)
       redirect_to room_path(@game.rooms.find_by!(name: "Hall"))
     else
@@ -38,7 +43,7 @@ class GamesController < ApplicationController
 
   private
 
-  def rooms_init
+  def rooms_init(game)
     rooms_data = [
       { name: "Hall",
         position: 1,
@@ -47,6 +52,8 @@ class GamesController < ApplicationController
         A grand varnished staircase dominates the room, its steps worn by years of usage.
         Portraits line the walls. The central carpet bears faint marks as if someone had run,
         hesitated… or fled. The air here feels colder than in the rest of the house.
+        The player can search but nothing is hidden",
+        ai_guideline: "...",
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore",
         AI_guideline: "...",
@@ -57,6 +64,8 @@ class GamesController < ApplicationController
       { name: "Library",
         position: 2,
         open: true,
+        description: "...",
+        ai_guideline: "...",
         description: "A faint scent of old paper lingers in the air,
         mixed with a discreet hint of wood polish.
         Shelves climb all the way to the ceiling,
@@ -73,6 +82,8 @@ class GamesController < ApplicationController
       { name: "Greenhouse",
         position: 3,
         open: false,
+        description: "...",
+        ai_guideline: "...",
         description: "Flooded with daylight, yet strangely cold.
         The potted plants, luxuriant sea of greens placid and mute.
         Rain taps rhythmically against the glass panes,
@@ -89,6 +100,8 @@ class GamesController < ApplicationController
       { name: "Cellar",
         position: 4,
         open: false,
+        description: "...",
+        ai_guideline: "...",
         description: "Darkness clings to the damp walls,
         forming a heavy, confined atmosphere, a hint of smoke smell lingers .
         The dirt floor shows irregular small prints.
@@ -105,6 +118,8 @@ class GamesController < ApplicationController
       { name: "Study",
         position: 5,
         open: true,
+        description: "...",
+        ai_guideline: "...",
         description: "The office is narrow and dim,
         filled with the scent of old paper and lingering tension.
         Files and folders sprawl across the desk, some left half-open.
@@ -121,6 +136,8 @@ class GamesController < ApplicationController
       { name: "Kitchen",
         position: 6,
         open: true,
+        description: "...",
+        ai_guideline: "...",
         description: "White tiles and gleaming surfaces—almost too clean.
         On the table rests a fruit bowl.
         The fridge hums, the only steady noise in a room
@@ -138,6 +155,8 @@ class GamesController < ApplicationController
       { name: "Attic",
         position: 7,
         open: true,
+        description: "...",
+        ai_guideline: "...",
         description: "The attic is wide and cluttered,
         smelling of dry wood and forgotten memories.
         Beneath the sloping roof, trunks and boxes pile up,
@@ -152,12 +171,15 @@ class GamesController < ApplicationController
         after_picture_url: "..."
       }
     ]
-    rooms_data.each { |room| @game.rooms.create!(room)}
+    rooms_data.each { |room| game.rooms.create!(room)}
   end
 
   def personas_init
     persona_data = [
       { name: "Mrs. Queen",
+        description: "she is a strong and mysterious woman, but nice deeply",
+        ai_guideline: "this suspect has the cellar key, and she gives it easily when you ask for it.
+        she did not kill you, although she know that the King did it. But she is reluctant to say it",
         description: "Graceful, eloquent, and dangerously observant.
         Her smiles feel perfectly rehearsed; her silence, even more so.
         She moves with a precision that suggests she is always three steps ahead in any conversation.
@@ -170,12 +192,15 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Library")
       },
       { name: "Mrs. Cavaleer",
+        description: "...",
         description: "",
         ai_guideline: "...",
         item_given: false,
         room: @game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
+        description: "...",
+        ai_guideline: "...",
         description: "Young, timid, and often ignored; exactly how she prefers it.
         Her posture is small, shoulders tense, eyes fixed on the ground as if afraid to take up space.
         But behind that meek exterior lies a surprising alertness.
@@ -187,6 +212,8 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
+        description: "...",
+        ai_guideline: "he's guilty",
         description: "Solid as a wall and twice as immovable.
         Broad-shouldered, square-jawed, he stands with the stoic discipline of someone used to being a guardian.
         His loyalty is unquestionable—or so he insists.
@@ -199,6 +226,8 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Attic")
       },
       { name: "Mr. Bishop",
+        description: "...",
+        ai_guideline: "...",
         description: "Soft-spoken, with a calm that borders on unsettling.
         His voice is warm, but his gaze sharpens whenever he thinks no one is watching.
         He moves with an almost ritualistic precision, hands always folded, steps always measured.
@@ -210,6 +239,8 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Hall")
       },
       { name: "Mr. King",
+        description: "...",
+        ai_guideline: "...",
         description: "A tall, imposing man whose presence fills the room long before he speaks.
         His once-upright posture has begun to stoop under the weight of decisions he no longer dares to explain.
         Deep lines carve his face, each one a trace of sleepless nights and unspoken worries.
@@ -225,10 +256,11 @@ class GamesController < ApplicationController
     persona_data.each { |persona| Persona.create!(persona)}
   end
 
-  def items_init
+  def items_init(game)
     item_data = [
       { name: "cellar key",
         description: "it is the key to the cellar.",
+        room: game.rooms.find_by!(name: "Hall"),
         # room: @game.rooms.find_by!(name: ""),
         # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
@@ -236,6 +268,7 @@ class GamesController < ApplicationController
       },
       { name: "greenhouse key",
         description: "it is the key to the greenhouse.",
+        room: game.rooms.find_by!(name: "Kitchen"),
         # room: @game.rooms.find_by!(name: ""),
         # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
@@ -243,6 +276,7 @@ class GamesController < ApplicationController
       },
       { name: "kitchen knife",
       description: "it is the key to the cellar.",
+      room: game.rooms.find_by!(name: "Cellar"),
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
@@ -250,6 +284,7 @@ class GamesController < ApplicationController
       },
       { name: "revolver",
       description: "it is the key to the cellar.",
+      room: game.rooms.find_by!(name: "Study"),
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
@@ -257,6 +292,7 @@ class GamesController < ApplicationController
       },
       { name: "poison",
       description: "it is the key to the cellar.",
+      room: game.rooms.find_by!(name: "Library"),
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
@@ -264,6 +300,7 @@ class GamesController < ApplicationController
       },
       { name: "wrench",
       description: "it is the key to the cellar.",
+      room: game.rooms.find_by!(name: "Attic"),
       # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
@@ -283,7 +320,21 @@ class GamesController < ApplicationController
       picture_url: "",
       found: false
       }
+      # { name: "wine bottle",
+      # description: "it is the key to the cellar.",
+      # room: @game.rooms.find_by!(name: ""),
+      # # persona: @game.personas.find_by!(name: ""),
+      # picture_url: "",
+      # found: false
+      # },
+      # { name: "rope",
+      # description: "it is the key to the cellar.",
+      # room: @game.rooms.find_by!(name: ""),
+      # # persona: @game.personas.find_by!(name: ""),
+      # picture_url: "",
+      # found: false
+      # }
     ]
-    item_data.each { |item| Item.create(item)}
+    item_data.each { |item| game.items.create!(item)}
   end
 end

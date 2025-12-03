@@ -1,0 +1,13 @@
+<div>
+  <div>
+    <h1>My Games</h1>
+  </div>
+    <%@games.each do |game| %>
+  <div>
+    <%= game.id %>
+    <%= game.rooms.where(open: false).count %>
+    <%= game.items.count %>
+    <%  %>
+  </div>
+    <% end %>
+</div>

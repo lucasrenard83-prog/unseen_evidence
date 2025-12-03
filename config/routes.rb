@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "uikit" => "pages#uikit"
 
-  resources :games, only: [:new, :create] do
+  resources :games, only: [:index, :new, :create] do
     resources :messages, only: [:create]
   end
   resources :rooms, only: [:show]
