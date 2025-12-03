@@ -21,11 +21,11 @@ class MessagesController < ApplicationController
       raw = response.content
       json = JSON.parse(raw)
 
-      message = json["message"]
+      # message = json["message"]
       item    = json["item_transferred"]
       extract_found_item_name(item)
 
-      @answer = Message.new(content: message)
+      @answer = Message.new(content: response.content)
       @answer.role = "assistant"
       @answer.game = @message.game
       @answer.room = @message.room
