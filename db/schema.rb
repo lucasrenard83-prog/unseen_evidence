@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_02_091923) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_03_135442) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,9 +29,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_091923) do
     t.bigint "room_id", null: false
     t.string "picture_url"
     t.boolean "found"
-    t.string "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "game_id"
+    t.bigint "persona_id"
+    t.index ["game_id"], name: "index_items_on_game_id"
+    t.index ["persona_id"], name: "index_items_on_persona_id"
     t.index ["room_id"], name: "index_items_on_room_id"
   end
 
@@ -50,22 +53,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_091923) do
 
   create_table "personas", force: :cascade do |t|
     t.string "name"
-    t.string "public_description"
-    t.string "secret_description"
-    t.boolean "guilty"
+    t.string "descritption"
+    t.string "ai_guideline"
     t.bigint "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "item_given"
     t.index ["room_id"], name: "index_personas_on_room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
     t.string "name"
-    t.string "public_description"
-    t.string "secret_description"
+    t.string "descritption"
+    t.string "ai_guideline"
     t.string "before_picture_url"
     t.string "after_picture_url"
-    t.boolean "searched"
+    t.boolean "item_found"
     t.bigint "game_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -87,6 +90,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_091923) do
   end
 
   add_foreign_key "games", "users"
+  add_foreign_key "items", "games"
+  add_foreign_key "items", "personas"
   add_foreign_key "items", "rooms"
   add_foreign_key "messages", "games"
   add_foreign_key "messages", "personas"
