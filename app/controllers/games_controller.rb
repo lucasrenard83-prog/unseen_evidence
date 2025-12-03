@@ -52,11 +52,10 @@ class GamesController < ApplicationController
         A grand varnished staircase dominates the room, its steps worn by years of usage.
         Portraits line the walls. The central carpet bears faint marks as if someone had run,
         hesitated… or fled. The air here feels colder than in the rest of the house.
-        The player can search but nothing is hidden",
-        ai_guideline: "...",
+        The player can search but nothing is hidden,
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore",
-        AI_guideline: "...",
+        ai_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -64,7 +63,6 @@ class GamesController < ApplicationController
       { name: "Library",
         position: 2,
         open: true,
-        description: "...",
         ai_guideline: "...",
         description: "A faint scent of old paper lingers in the air,
         mixed with a discreet hint of wood polish.
@@ -74,7 +72,6 @@ class GamesController < ApplicationController
         as if time itself had stopped.The silence is heavy, almost expectant,
         as though the walls are waiting for someone to finally uncover a secret kept far too long.
         You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen",
-        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -82,7 +79,6 @@ class GamesController < ApplicationController
       { name: "Greenhouse",
         position: 3,
         open: false,
-        description: "...",
         ai_guideline: "...",
         description: "Flooded with daylight, yet strangely cold.
         The potted plants, luxuriant sea of greens placid and mute.
@@ -92,7 +88,6 @@ class GamesController < ApplicationController
         A small pool of blood lies still only perturbed by footsteps leading out of the room.
         Mrs Pawn appears so small in this gigantic and empty room, she gets up and reveals her tall stature as well as her panicked face,
         a wave of relief running through her face when she sees you, finally opening the door that was blocking her way out",
-        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -100,7 +95,6 @@ class GamesController < ApplicationController
       { name: "Cellar",
         position: 4,
         open: false,
-        description: "...",
         ai_guideline: "...",
         description: "Darkness clings to the damp walls,
         forming a heavy, confined atmosphere, a hint of smoke smell lingers .
@@ -110,7 +104,6 @@ class GamesController < ApplicationController
         In the back of the room a furnace lies dormant.
         A draft from nowhere cuts through the stale air,
         almost as if something had moved here not long ago.",
-        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -118,7 +111,6 @@ class GamesController < ApplicationController
       { name: "Study",
         position: 5,
         open: true,
-        description: "...",
         ai_guideline: "...",
         description: "The office is narrow and dim,
         filled with the scent of old paper and lingering tension.
@@ -128,7 +120,6 @@ class GamesController < ApplicationController
         a drawer sits ajar and a pen lies on the floor,
         silent hints that someone was here not long ago… whoever they were.
         Mr.King is here observing the grey sky through the window, he salutes you, his back still facing you.",
-        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -136,7 +127,6 @@ class GamesController < ApplicationController
       { name: "Kitchen",
         position: 6,
         open: true,
-        description: "...",
         ai_guideline: "...",
         description: "White tiles and gleaming surfaces—almost too clean.
         On the table rests a fruit bowl.
@@ -147,7 +137,6 @@ class GamesController < ApplicationController
         You stumble upon Mrs.Cavaleer when you open the door, she's playing with a knife,
         her eyes lost in the void as if she was contemplating old memories.
         She finally notices you, unfazed she invites you to enter.",
-        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -155,7 +144,6 @@ class GamesController < ApplicationController
       { name: "Attic",
         position: 7,
         open: true,
-        description: "...",
         ai_guideline: "...",
         description: "The attic is wide and cluttered,
         smelling of dry wood and forgotten memories.
@@ -165,7 +153,6 @@ class GamesController < ApplicationController
         At the center lies a toppled chair and a circular mark on the floor,
         signs of something that happened here… whatever it was.
         Mr.Rook a broad, tall and severe looking figure observes you from the back of the room.",
-        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -177,9 +164,6 @@ class GamesController < ApplicationController
   def personas_init
     persona_data = [
       { name: "Mrs. Queen",
-        description: "she is a strong and mysterious woman, but nice deeply",
-        ai_guideline: "this suspect has the cellar key, and she gives it easily when you ask for it.
-        she did not kill you, although she know that the King did it. But she is reluctant to say it",
         description: "Graceful, eloquent, and dangerously observant.
         Her smiles feel perfectly rehearsed; her silence, even more so.
         She moves with a precision that suggests she is always three steps ahead in any conversation.
@@ -192,15 +176,19 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Library")
       },
       { name: "Mrs. Cavaleer",
-        description: "...",
-        description: "",
-        ai_guideline: "...",
+        description: "Restless energy wrapped in a confident grin.
+        She carries herself like someone who thrives on risk—quick to act,
+        quicker to improvise. Her boots are muddy, her coat battered,
+        suggesting she spends more time outside the rules than within them.
+        A scar cuts across her jaw, earned in a story she tells differently every time.
+        She protects those she chooses with fierce loyalty,
+        but her unpredictable nature leaves everyone wondering whose side she's truly on.",
+        ai_guideline: "Ideal culprit by her behavior, she holds nothing of real interest but is very invested in the investigation.
+        Her personality, charisma and presence pushes the investigator to 'stay on her case'.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
-        description: "...",
-        ai_guideline: "...",
         description: "Young, timid, and often ignored; exactly how she prefers it.
         Her posture is small, shoulders tense, eyes fixed on the ground as if afraid to take up space.
         But behind that meek exterior lies a surprising alertness.
@@ -212,8 +200,6 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
-        description: "...",
-        ai_guideline: "he's guilty",
         description: "Solid as a wall and twice as immovable.
         Broad-shouldered, square-jawed, he stands with the stoic discipline of someone used to being a guardian.
         His loyalty is unquestionable—or so he insists.
@@ -226,8 +212,6 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Attic")
       },
       { name: "Mr. Bishop",
-        description: "...",
-        ai_guideline: "...",
         description: "Soft-spoken, with a calm that borders on unsettling.
         His voice is warm, but his gaze sharpens whenever he thinks no one is watching.
         He moves with an almost ritualistic precision, hands always folded, steps always measured.
@@ -239,8 +223,6 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Hall")
       },
       { name: "Mr. King",
-        description: "...",
-        ai_guideline: "...",
         description: "A tall, imposing man whose presence fills the room long before he speaks.
         His once-upright posture has begun to stoop under the weight of decisions he no longer dares to explain.
         Deep lines carve his face, each one a trace of sleepless nights and unspoken worries.
@@ -261,7 +243,6 @@ class GamesController < ApplicationController
       { name: "cellar key",
         description: "it is the key to the cellar.",
         room: game.rooms.find_by!(name: "Hall"),
-        # room: @game.rooms.find_by!(name: ""),
         # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
         found: false
@@ -269,71 +250,50 @@ class GamesController < ApplicationController
       { name: "greenhouse key",
         description: "it is the key to the greenhouse.",
         room: game.rooms.find_by!(name: "Kitchen"),
-        # room: @game.rooms.find_by!(name: ""),
         # persona: @game.personas.find_by!(name: ""),
         picture_url: "",
         found: false
       },
       { name: "kitchen knife",
-      description: "it is the key to the cellar.",
+      description: "An old looking kitchen knife, its handle is worn out by the multiple uses over the time.",
       room: game.rooms.find_by!(name: "Cellar"),
-      # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "revolver",
-      description: "it is the key to the cellar.",
+      description: "An original piece, well decorated and taken care of.",
       room: game.rooms.find_by!(name: "Study"),
-      # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "poison",
-      description: "it is the key to the cellar.",
+      description: "A vial of odd looking liquid, its smell burns the nostrils.",
       room: game.rooms.find_by!(name: "Library"),
-      # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "wrench",
-      description: "it is the key to the cellar.",
+      description: "An old and rusty wrench, it has certainly seen better days.",
       room: game.rooms.find_by!(name: "Attic"),
-      # room: @game.rooms.find_by!(name: ""),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "wine bottle",
-      description: "it is the key to the cellar.",
-      # room: @game.rooms.find_by!(name: ""),
+      description: "A nice 'cépage' but it seems broken and some mold covers the hole naturaly sealing it.",
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       },
       { name: "rope",
-      description: "it is the key to the cellar.",
-      # room: @game.rooms.find_by!(name: ""),
+      description: "A sturdy rope, the end of it looks newer as if it has been gradually cut over the years.",
       # persona: @game.personas.find_by!(name: ""),
       picture_url: "",
       found: false
       }
-      # { name: "wine bottle",
-      # description: "it is the key to the cellar.",
-      # room: @game.rooms.find_by!(name: ""),
-      # # persona: @game.personas.find_by!(name: ""),
-      # picture_url: "",
-      # found: false
-      # },
-      # { name: "rope",
-      # description: "it is the key to the cellar.",
-      # room: @game.rooms.find_by!(name: ""),
-      # # persona: @game.personas.find_by!(name: ""),
-      # picture_url: "",
-      # found: false
-      # }
     ]
     item_data.each { |item| game.items.create!(item)}
   end
