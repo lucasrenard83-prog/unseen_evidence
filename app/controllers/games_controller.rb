@@ -16,6 +16,7 @@ class GamesController < ApplicationController
       •	never reveal the solution unless explicitly instructed.
     Stay immersive, atmospheric, and consistent with the established scenario.
     Ask clarifying questions when needed. "
+
   def new
     @game = Game.new
     @games = current_user.games
@@ -47,8 +48,8 @@ class GamesController < ApplicationController
         Portraits line the walls. The central carpet bears faint marks as if someone had run,
         hesitated… or fled. The air here feels colder than in the rest of the house.
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
-        A serene looking man, Mr.Bishop, is murmuring prayers as to call help that's not needed anymore",
-        AI_guideline: "...",
+        A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore",
+        AI_guildeline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -175,14 +176,25 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
-        description: "...",
-        ai_guideline: "...",
+        descritption: "Young, timid, and often ignored; exactly how she prefers it.
+        Her posture is small, shoulders tense, eyes fixed on the ground as if afraid to take up space.
+        But behind that meek exterior lies a surprising alertness.
+        She notices details others overlook, absorbing whispers, gestures, and footsteps.
+        People underestimate her, unaware she might hold the missing piece to the truth even if she doesn't realize it herself.",
+        ai_guideline: "Stuck in the greenhouse; where the victim was killed; from the beginning.
+        She holds a big hint on the real culprit but couldnt reveal it since stuck in the room she doesn't know who it is exactly but know it was a tall person.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
-        description: "...",
-        ai_guideline: "he's guilty",
+        descritption: "Solid as a wall and twice as immovable.
+        Broad-shouldered, square-jawed, he stands with the stoic discipline of someone used to being a guardian.
+        His loyalty is unquestionable—or so he insists.
+        But the blankness in his expression feels trained, as if hiding doubts he cannot afford to show.
+        He carries a quiet heaviness, the kind that comes from witnessing too much… and speaking too little.",
+        ai_guideline: "He's guilty.
+        He is very serious and 'helps' when he can.
+        He will keep on pushing the investigator on wrong paths but stays helpful all throughout the game.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Attic")
       },
