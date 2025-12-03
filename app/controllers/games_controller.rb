@@ -16,6 +16,7 @@ class GamesController < ApplicationController
       •	never reveal the solution unless explicitly instructed.
     Stay immersive, atmospheric, and consistent with the established scenario.
     Ask clarifying questions when needed. "
+
   def new
     @game = Game.new
     @games = current_user.games
