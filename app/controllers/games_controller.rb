@@ -49,7 +49,7 @@ class GamesController < ApplicationController
         hesitated… or fled. The air here feels colder than in the rest of the house.
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore",
-        AI_guildeline: "...",
+        AI_guideline: "...",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -176,7 +176,7 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
-        descritption: "Young, timid, and often ignored; exactly how she prefers it.
+        description: "Young, timid, and often ignored; exactly how she prefers it.
         Her posture is small, shoulders tense, eyes fixed on the ground as if afraid to take up space.
         But behind that meek exterior lies a surprising alertness.
         She notices details others overlook, absorbing whispers, gestures, and footsteps.
@@ -187,7 +187,7 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
-        descritption: "Solid as a wall and twice as immovable.
+        description: "Solid as a wall and twice as immovable.
         Broad-shouldered, square-jawed, he stands with the stoic discipline of someone used to being a guardian.
         His loyalty is unquestionable—or so he insists.
         But the blankness in his expression feels trained, as if hiding doubts he cannot afford to show.
