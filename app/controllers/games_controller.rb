@@ -182,14 +182,25 @@ class GamesController < ApplicationController
         room: @game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
-        descritption: "...",
-        ai_guideline: "...",
+        descritption: "Young, timid, and often ignored; exactly how she prefers it.
+        Her posture is small, shoulders tense, eyes fixed on the ground as if afraid to take up space.
+        But behind that meek exterior lies a surprising alertness.
+        She notices details others overlook, absorbing whispers, gestures, and footsteps.
+        People underestimate her, unaware she might hold the missing piece to the truth even if she doesn't realize it herself.",
+        ai_guideline: "Stuck in the greenhouse; where the victim was killed; from the beginning.
+        She holds a big hint on the real culprit but couldnt reveal it since stuck in the room she doesn't know who it is exactly but know it was a tall person.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
-        descritption: "...",
-        ai_guideline: "he's guilty",
+        descritption: "Solid as a wall and twice as immovable.
+        Broad-shouldered, square-jawed, he stands with the stoic discipline of someone used to being a guardian.
+        His loyalty is unquestionable—or so he insists.
+        But the blankness in his expression feels trained, as if hiding doubts he cannot afford to show.
+        He carries a quiet heaviness, the kind that comes from witnessing too much… and speaking too little.",
+        ai_guideline: "He's guilty.
+        He is very serious and 'helps' when he can.
+        He will keep on pushing the investigator on wrong paths but stays helpful all throughout the game.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Attic")
       },
