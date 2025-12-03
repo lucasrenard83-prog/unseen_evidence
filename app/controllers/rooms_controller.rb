@@ -11,7 +11,7 @@ class RoomsController < ApplicationController
     # Shows the description of the room when entering if no message
     intro_msg = "Entering #{@room.name} "
     if @room.messages.count == 0
-      intro_msg += @room.public_description
+      intro_msg += @room.description
     end
 
     @intro = Message.create(

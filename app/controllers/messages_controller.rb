@@ -53,10 +53,10 @@ private
       "
       Scenario: #{@message.game.scenario}
       Current Room: #{@message.room.name}
-      Description: #{@message.room.public_description}
+      Description: #{@message.room.description}
       Suspect in the room: #{@message.persona.name}
-      Suspect Public Description: #{@message.persona.public_description}
-      Suspect Secret Description: #{@message.persona.secret_description}
+      Suspect Public Description: #{@message.persona.description}
+      Suspect Secret Description: #{@message.persona.ai_guideline}
       Room items: #{@message.room.items.pluck(:name).join(', ')}
 
       If the request is to talk to the persona, answer as if he or she was answering ;
