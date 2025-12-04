@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
 
-  SCENARIO = "You are an AI narrator inside an interactive Cluedo-style mystery game.
+  SCENARIO = "You are a narrator inside an murder mystery game.
     The player will ask questions, move between rooms, interview suspects, and look for clues.
     You must always answer in-universe, as if the investigation were real.
     You will receive several types of instructions:
@@ -28,7 +28,8 @@ class GamesController < ApplicationController
 
   def create
     @game = current_user.games.build
-    @game.scenario = SCENARIO
+    # scenario removed >> only using the general prompt
+    @game.scenario = ""
     @game.secret_scenario = ""
     if @game.save
       rooms_init(@game)
