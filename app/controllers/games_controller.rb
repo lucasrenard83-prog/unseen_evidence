@@ -65,10 +65,11 @@ class GamesController < ApplicationController
         A grand varnished staircase dominates the room, its steps worn by years of usage.
         Portraits line the walls. The central carpet bears faint marks as if someone had run,
         hesitated… or fled. The air here feels colder than in the rest of the house.
-        The player can search but nothing is hidden,
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
-        A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore",
-        ai_guideline: "...",
+        A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore.",
+        ai_guideline: "Bishop will give you a little introduction of the context.
+        There's a piece of paper hidden under the carpet with part of a code, there's also dirty footsteps around the room pointing to the greenhouse.
+        If you examine the body, you'll find out that the murder weapon is a knife.",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -76,7 +77,6 @@ class GamesController < ApplicationController
       { name: "Library",
         position: 2,
         open: true,
-        ai_guideline: "...",
         description: "A faint scent of old paper lingers in the air,
         mixed with a discreet hint of wood polish.
         Shelves climb all the way to the ceiling,
@@ -84,7 +84,8 @@ class GamesController < ApplicationController
         A green-shaded lamp casts a tired glow over an oak desk where a cup of tea sits cold,
         as if time itself had stopped.The silence is heavy, almost expectant,
         as though the walls are waiting for someone to finally uncover a secret kept far too long.
-        You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen",
+        You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen.",
+        ai_guideline: "A trapdoor is hidden under the rug, it is locked with a code and holds the murder weapon.",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -92,7 +93,6 @@ class GamesController < ApplicationController
       { name: "Greenhouse",
         position: 3,
         open: false,
-        ai_guideline: "...",
         description: "Flooded with daylight, yet strangely cold.
         The potted plants, luxuriant sea of greens placid and mute.
         Rain taps rhythmically against the glass panes,
@@ -100,7 +100,9 @@ class GamesController < ApplicationController
         Some plants are lying on the ground their roots exposed, their pots broken.
         A small pool of blood lies still only perturbed by footsteps leading out of the room.
         Mrs Pawn appears so small in this gigantic and empty room, she gets up and reveals her tall stature as well as her panicked face,
-        a wave of relief running through her face when she sees you, finally opening the door that was blocking her way out",
+        a wave of relief running through her face when she sees you, finally opening the door that was blocking her way out.",
+        ai_guideline: "The victim was killed here but only rest a pool of blood as evidence. In the room is Mrs Pawn, she was locked in by the culprit.
+        The culprit was taking the body out of the room when Pawn entered so he locked her in. Pawn retrieved a revolver that was in Rook's possession. If you search the room you'll find the other half of the code for the library's trapdoor",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -108,7 +110,6 @@ class GamesController < ApplicationController
       { name: "Cellar",
         position: 4,
         open: false,
-        ai_guideline: "...",
         description: "Darkness clings to the damp walls,
         forming a heavy, confined atmosphere, a hint of smoke smell lingers .
         The dirt floor shows irregular small prints.
@@ -117,6 +118,8 @@ class GamesController < ApplicationController
         In the back of the room a furnace lies dormant.
         A draft from nowhere cuts through the stale air,
         almost as if something had moved here not long ago.",
+        ai_guideline: "In the furnace is located a pile of papers half-burnt where you can distinguish 3 names : Rook, Bishop and Cavaleer.
+        It is the evidence needed to validate the success of the investigation",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -124,7 +127,6 @@ class GamesController < ApplicationController
       { name: "Study",
         position: 5,
         open: true,
-        ai_guideline: "...",
         description: "The office is narrow and dim,
         filled with the scent of old paper and lingering tension.
         Files and folders sprawl across the desk, some left half-open.
@@ -133,6 +135,7 @@ class GamesController < ApplicationController
         a drawer sits ajar and a pen lies on the floor,
         silent hints that someone was here not long ago… whoever they were.
         Mr.King is here observing the grey sky through the window, he salutes you, his back still facing you.",
+        ai_guideline: "In the desk, in a drawer there's a hidden compartment that holds the Cellar Key",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -140,7 +143,6 @@ class GamesController < ApplicationController
       { name: "Kitchen",
         position: 6,
         open: true,
-        ai_guideline: "...",
         description: "White tiles and gleaming surfaces—almost too clean.
         On the table rests a fruit bowl.
         The fridge hums, the only steady noise in a room
@@ -150,6 +152,7 @@ class GamesController < ApplicationController
         You stumble upon Mrs.Cavaleer when you open the door, she's playing with a knife,
         her eyes lost in the void as if she was contemplating old memories.
         She finally notices you, unfazed she invites you to enter.",
+        ai_guideline: "A poison vial is hidden in the spices cabinet. Cavaleer is holding the Greenhouse key.",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -157,7 +160,6 @@ class GamesController < ApplicationController
       { name: "Attic",
         position: 7,
         open: true,
-        ai_guideline: "...",
         description: "The attic is wide and cluttered,
         smelling of dry wood and forgotten memories.
         Beneath the sloping roof, trunks and boxes pile up,
@@ -166,6 +168,8 @@ class GamesController < ApplicationController
         At the center lies a toppled chair and a circular mark on the floor,
         signs of something that happened here… whatever it was.
         Mr.Rook a broad, tall and severe looking figure observes you from the back of the room.",
+        ai_guideline: "If you look at the wooden beam near the ceiling a rope is hidden. Rook is guilty,
+        he has lost his revolver during his escape from the greenhouse so he used the knife to finish the murder. ",
         item_found: false,
         before_picture_url: "...",
         after_picture_url: "..."
@@ -243,7 +247,7 @@ class GamesController < ApplicationController
         as if he knows more than he will ever admit, and fears far more than he lets show.",
         ai_guideline: "At ease constantly his behavior is pushing the investigator to trust him
         (which he/she should) and doesnt hesitate to give any info as long as it's true.
-        He will be the biggest help you'll have if you sniff around him long enough",
+        He will be the biggest help you'll have if you sniff around him long enough.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Study")
       }
@@ -253,41 +257,53 @@ class GamesController < ApplicationController
 
   def items_init(game)
     item_data = [
-      { name: "cellar key",
+      { name: "Cellar key",
         description: "it is the key to the cellar.",
         room: game.rooms.find_by!(name: "Study"),
         # persona: Persona.find_by!(name: ""),
-        picture_url: "",
+        picture_url: "app/assets/images/items/Cellar_Key",
         found: false
       },
-      { name: "greenhouse key",
+      { name: "Greenhouse key",
         description: "it is the key to the greenhouse.",
         # room: game.rooms.find_by!(name: "Kitchen"),
         persona: Persona.find_by!(name: "Mrs. Cavaleer"),
-        picture_url: "",
+        picture_url: "app/assets/images/items/GreenHouse_Key",
         found: false
       },
-      { name: "kitchen knife",
+      { name: "Kitchen knife",
       description: "An old looking kitchen knife, its handle is worn out by the multiple uses over the time.",
       room: game.rooms.find_by!(name: "Library"),
       # persona: @game.personas.find_by!(name: ""),
-      picture_url: "",
+      picture_url: "app/assets/images/items/Knife",
       found: false
       },
-      { name: "revolver",
+      { name: "Revolver",
       description: "An original piece, well decorated and taken care of.",
       # room: game.rooms.find_by!(name: "Study"),
       persona: Persona.find_by!(name: "Mrs. Pawn"),
-      picture_url: "",
+      picture_url: "app/assets/images/items/Revolver",
       found: false
       },
-      { name: "poison",
+      { name: "Poison",
       description: "A vial of odd looking liquid, its smell burns the nostrils.",
       room: game.rooms.find_by!(name: "Kitchen"),
       # persona: @game.personas.find_by!(name: ""),
-      picture_url: "",
+      picture_url: "app/assets/images/items/Poison",
       found: false
       },
+      { name: "Piece of paper",
+      description: " A piece of paper with faded words, you can make out part of a code : '29'",
+      room: game.rooms.find_by!(name: "Hall"),
+      picture_url: "app/assets/images/items/Piece_of_paper",
+      found: false
+      }
+      { name: "Worn out paper",
+      description: "A worn out piece of paper, only a number is written on it : '21'",
+      room: game.rooms.find_by!(name: "Mr. King"),
+      picture_url: "app/assets/images/items/Worn_out_paper",
+      found: false
+      }
       # { name: "wrench",
       # description: "An old and rusty wrench, it has certainly seen better days.",
       # room: game.rooms.find_by!(name: "Attic"),
