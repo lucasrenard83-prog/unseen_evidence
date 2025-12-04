@@ -1,7 +1,6 @@
 <div class="container my-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="mb-0">My Games</h1>
-    <%= link_to "New Game", new_game_path, class: "btn btn-primary" %>
   </div>
 
   <% if @games.any? %>
@@ -49,12 +48,12 @@
             </div>
           </div>
         </div>
-        <%= link_to "Start a game", new_game_path %>
       <% end %>
+      <%= button_to "Start a New Game", games_path, method: :post, class:"purple-btn" %>
     </div>
   <% else %>
 
       You don’t have any games yet.
-      <%= link_to "Start a new one", new_game_path, class: "alert-link" %>.
+      <%= button_to "Start a new one", games_path, method: :post, class: "alert-link" %>.
   <% end %>
 </div>
