@@ -1,5 +1,6 @@
 <div class="sidebar-content">
-  <h3>Rooms</h3>
+  <h2>Rooms</h2>
+  <hr>
   <div class="sidebar-list">
     <% @rooms.each do |room| %>
       <%= link_to room.name, room_path(room), class: "sidebar-element", data: { turbo_frame: "room_content" } %>
