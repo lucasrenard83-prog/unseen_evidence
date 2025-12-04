@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
   resources :rooms, only: [:show]
 
+  post "games/:id/confront", to: "games#confront", as: "confront_game"
 
   # Defines the root path route ("/")
   # root "posts#index"

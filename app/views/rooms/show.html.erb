@@ -69,8 +69,35 @@
   </div>
 
   <div class="tab-pane fade" id="nav-confront" role="tabpanel" aria-labelledby="nav-confront-tab" tabindex="0">
-    <div class="show-body pt-3 mx-3 paper-color">
-      Final Countdown
+    <div class="pt-3 mx-3 paper-color">
+      <h2>Conclusion of the investigation</h2>
+
+      <%= form_tag confront_game_path(@game), method: :post do %>
+        <select name="killer">
+          <option value="">Select the killer...</option>
+          <% @personas.each do |persona| %>
+            <option value="<%= persona.name %>"><%= persona.name %></option>
+          <% end %>
+        </select>
+
+        <select name="room">
+          <option value="">Select the room...</option>
+          <% @rooms.each do |room| %>
+            <option value="<%= room.name %>"><%= room.name %></option>
+          <% end %>
+        </select>
+
+        <select name="weapon">
+          <option value="">Select the weapon...</option>
+          <option value="Kitchen knife">Kitchen knife</option>
+          <option value="Revolver">Revolver</option>
+          <option value="Poison">Poison</option>
+          <option value="Rope">Rope</option>
+        </select>
+
+      <%= submit_tag "Submit Accusation", class: "btn btn-danger" %>
+      <% end %>
+
     </div>
   </div>
 
