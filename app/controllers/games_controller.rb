@@ -84,8 +84,9 @@ class GamesController < ApplicationController
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore.",
         ai_guideline: "Bishop will give you a little introduction of the context.
-        There's a piece of paper hidden under the carpet with part of a code, there's also dirty footsteps around the room pointing to the greenhouse.
-        If you examine the body, you'll find out that the murder weapon is a knife.",
+        There's a piece of paper hidden under the table with part of a code, if the player searches under the table he finds the 'Piece of paper'.
+        There's also dirty footsteps around the room pointing to the greenhouse.
+        If the player examines the body, he'll find out that the murder weapon is probably a knife.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_hall.png"),
         after_picture_url: helpers.image_url("rooms/after_hall.png"),
@@ -101,7 +102,11 @@ class GamesController < ApplicationController
         as if time itself had stopped.The silence is heavy, almost expectant,
         as though the walls are waiting for someone to finally uncover a secret kept far too long.
         You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen.",
-        ai_guideline: "A trapdoor is hidden under the rug, it is locked with a code and holds the murder weapon.",
+        ai_guideline: "A trapdoor is hidden under the rug, it is locked with a code and holds the murder weapon.
+        If the player searches under the carpet the trapdoor will be revealed.
+        If the player has the item 'Piece of paper' and 'Worn out paper' he will then access the lock.
+        Otherwise describe that a lock with a code is present.
+        The player needs to guess the right code to unlock the trapdoor.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_library.png"),
         after_picture_url: helpers.image_url("rooms/after_library.png"),
@@ -117,8 +122,11 @@ class GamesController < ApplicationController
         A small pool of blood lies still only perturbed by footsteps leading out of the room.
         Mrs Pawn appears so small in this gigantic and empty room, she gets up and reveals her tall stature as well as her panicked face,
         a wave of relief running through her face when she sees you, finally opening the door that was blocking her way out.",
-        ai_guideline: "The victim was killed here but only rest a pool of blood as evidence. In the room is Mrs Pawn, she was locked in by the culprit.
-        The culprit was taking the body out of the room when Pawn entered so he locked her in. Pawn retrieved a revolver that was in Rook's possession. If you search the room you'll find the other half of the code for the library's trapdoor",
+        ai_guideline: "The victim was killed here but only rest a pool of blood as evidence.
+        In the room is Mrs Pawn, she was locked in by the culprit.
+        The culprit was taking the body out of the room when Pawn entered so he locked her in.
+        Pawn retrieved a revolver. If the player asks if Pawn saw something,
+        she will tell you about her encounter with a tall shadow that locked her in and gives you the revolver.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/greenhouse.png"),
 
@@ -134,8 +142,9 @@ class GamesController < ApplicationController
         In the back of the room a furnace lies dormant.
         A draft from nowhere cuts through the stale air,
         almost as if something had moved here not long ago.",
-        ai_guideline: "In the furnace is located a pile of papers half-burnt where you can distinguish 3 names : Rook, Bishop and Cavaleer.
-        It is the evidence needed to validate the success of the investigation",
+        ai_guideline: "In the furnace is located a pile of papers half-burnt,
+        if the player searches in the furnace he obtains the 'Old documents'. On it the player can distinguish 3 names : Rook, Bishop and Cavaleer.
+        It is the evidence needed to validate the motive for the success of the investigation",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_cellar.png"),
         after_picture_url: helpers.image_url("rooms/after_cellar.png"),
@@ -151,7 +160,8 @@ class GamesController < ApplicationController
         a drawer sits ajar and a pen lies on the floor,
         silent hints that someone was here not long ago… whoever they were.
         Mr.King is here observing the grey sky through the window, he salutes you, his back still facing you.",
-        ai_guideline: "In the desk, in a drawer there's a hidden compartment that holds the Cellar Key",
+        ai_guideline: "In the desk, in a drawer there's a hidden compartment, if the player searches in it he will find that it holds the 'Cellar Key'.
+        If the player is nice with Mr.King, and asks him if he found something he will be rewarded with the 'Worn out paper'",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_study.png"),
         after_picture_url: helpers.image_url("rooms/after_study.png"),
@@ -168,7 +178,8 @@ class GamesController < ApplicationController
         You stumble upon Mrs.Cavaleer when you open the door, she's playing with a knife,
         her eyes lost in the void as if she was contemplating old memories.
         She finally notices you, unfazed she invites you to enter.",
-        ai_guideline: "A poison vial is hidden in the spices cabinet. Cavaleer is holding the Greenhouse key.",
+        ai_guideline: "A poison vial is hidden in the spices cabinet.If the player searches in the cabinet he will find the 'Poison'.
+        Cavaleer is holding the 'Greenhouse key'. If the player wants to obtain it he will have to be a bit pushy.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_kitchen.png"),
         after_picture_url: helpers.image_url("rooms/after_kitchen.png"),
@@ -184,8 +195,8 @@ class GamesController < ApplicationController
         At the center lies a toppled chair and a circular mark on the floor,
         signs of something that happened here… whatever it was.
         Mr.Rook a broad, tall and severe looking figure observes you from the back of the room.",
-        ai_guideline: "If you look at the wooden beam near the ceiling a rope is hidden. Rook is guilty,
-        he has lost his revolver during his escape from the greenhouse so he used the knife to finish the murder. ",
+        ai_guideline: "If the player looks at the wooden beam, near the ceiling, a rope is hidden.
+        Rook is guilty, he has lost his revolver during his escape from the greenhouse so he used the knife to finish the murder. ",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_attic.png"),
         after_picture_url: helpers.image_url("rooms/after_attic.png"),
@@ -261,7 +272,7 @@ class GamesController < ApplicationController
         Deep lines carve his face, each one a trace of sleepless nights and unspoken worries.
         His eyes—cold, calculating—measure everything and everyone. There's a quiet tension around him,
         as if he knows more than he will ever admit, and fears far more than he lets show.",
-        ai_guideline: "At ease constantly his behavior is pushing the investigator to trust him
+        ai_guideline: "At ease constantly his behavior is pushing the player to trust him
         (which he/she should) and doesnt hesitate to give any info as long as it's true.
         He will be the biggest help you'll have if you sniff around him long enough.",
         item_given: false,
