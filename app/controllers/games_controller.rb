@@ -40,6 +40,19 @@ class GamesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+  def destroy
+    @game = Game.find(params[:id])
+    @rooms = @game.rooms
+    @messages = @game.messages
+    @personas = @rooms.flat_map{|room| room.personas}
+    @items = @game.items
+    @items.destroy_all
+    @messages.destroy_all
+    @personas.each{|persona| persona.destroy}
+    @rooms.destroy_all
+    @game.destroy
+    redirect_to games_path
+  end
 
   private
 
