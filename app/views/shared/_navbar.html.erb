@@ -1,8 +1,8 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon navbar-bar">
   <div class="container-fluid">
 
-    <a class="navbar-brand" href="/">
-      <i class="fa-solid fa-ghost fa-beat fa-xl"></i>
+    <a class="ghost navbar-brand" href="/">
+      <i class="fa-solid fa-ghost fa-beat fa-xl" style="color: #ffd700"></i>
     </a>
 
    <h1> Unseen Evidence </h1>
@@ -10,8 +10,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto">
         <% if current_user %>
-          <li class="nav-item active">
-            <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"logout-btn" %>
+          <li class="nav-item active l-out">
+           <%= button_to '<i class="fa-solid fa-right-from-bracket fa-xl"></i>'.html_safe, destroy_user_session_path, method: :delete, class:"logout-btn" %>
           </li>
         <% else %>
           <li class="nav-item active">
