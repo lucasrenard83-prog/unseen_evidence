@@ -42,14 +42,15 @@ class GamesController < ApplicationController
   end
   def destroy
     @game = Game.find(params[:id])
-    @rooms = @game.rooms
-    @messages = @game.messages
-    @personas = @rooms.flat_map{|room| room.personas}
-    @items = @game.items
-    @items.destroy_all
-    @messages.destroy_all
-    @personas.each{|persona| persona.destroy}
-    @rooms.destroy_all
+  #   @game.rooms.each do |room|
+  #   room.personas.destroy_all
+  #  end
+  #   @rooms = @game.rooms
+  #   @messages = @game.messages
+  #   @items = @game.items
+  #   @rooms.destroy_all
+  #   @items.destroy_all
+  #   @messages.destroy_all
     @game.destroy
     redirect_to games_path
   end

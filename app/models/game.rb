@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
   belongs_to :user
-  has_many :messages
-  has_many :rooms
-  has_many :items
+  has_many :rooms,    dependent: :destroy
+  has_many :items,    dependent: :destroy
+  has_many :messages, dependent: :destroy
 end
