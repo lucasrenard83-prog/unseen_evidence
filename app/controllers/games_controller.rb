@@ -300,7 +300,7 @@ class GamesController < ApplicationController
       }
       { name: "Worn out paper",
       description: "A worn out piece of paper, only a number is written on it : '21'",
-      room: game.rooms.find_by!(name: "Mr. King"),
+      persona: @game.personas.find_by!(name: "Mr. King"),
       picture_url: "app/assets/images/items/Worn_out_paper",
       found: false
       }
