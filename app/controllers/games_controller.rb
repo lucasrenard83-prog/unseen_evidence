@@ -261,34 +261,35 @@ class GamesController < ApplicationController
         description: "it is the key to the cellar.",
         room: game.rooms.find_by!(name: "Study"),
         # persona: Persona.find_by!(name: ""),
-        picture_url: "app/assets/images/items/Cellar_Key",
+        picture_url: helpers.image_url("items/cellar_key.png"),
         found: false
       },
       { name: "Greenhouse key",
         description: "it is the key to the greenhouse.",
         # room: game.rooms.find_by!(name: "Kitchen"),
         persona: Persona.find_by!(name: "Mrs. Cavaleer"),
-        picture_url: "app/assets/images/items/GreenHouse_Key",
+        picture_url: helpers.image_url("items/greenhouse_key.png"),
         found: false
       },
       { name: "Kitchen knife",
       description: "An old looking kitchen knife, its handle is worn out by the multiple uses over the time.",
       room: game.rooms.find_by!(name: "Library"),
       # persona: @game.personas.find_by!(name: ""),
-      picture_url: "app/assets/images/items/Knife",
+      picture_url: helpers.image_url("items/knife.png"),
       found: false
       },
       { name: "Revolver",
       description: "An original piece, well decorated and taken care of.",
       # room: game.rooms.find_by!(name: "Study"),
       persona: Persona.find_by!(name: "Mrs. Pawn"),
-      picture_url: "app/assets/images/items/Revolver",
+      picture_url: helpers.image_url("items/revolver.png"),
       found: false
       },
       { name: "Poison",
       description: "A vial of odd looking liquid, its smell burns the nostrils.",
       room: game.rooms.find_by!(name: "Kitchen"),
       # persona: @game.personas.find_by!(name: ""),
+      picture_url: helpers.image_url("items/poison.png"),
       picture_url: "app/assets/images/items/Poison",
       found: false
       },
@@ -322,7 +323,7 @@ class GamesController < ApplicationController
       description: "A sturdy rope, the end of it looks newer as if it has been gradually cut over the years.",
       # persona: @game.personas.find_by!(name: ""),
       room: game.rooms.find_by!(name: "Attic"),
-      picture_url: "",
+      picture_url: helpers.image_url("items/rope.png"),
       found: false
       }
     ]
