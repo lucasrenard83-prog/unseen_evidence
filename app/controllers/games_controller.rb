@@ -119,7 +119,7 @@ class GamesController < ApplicationController
         ai_guideline: "The victim was killed here but only rest a pool of blood as evidence. In the room is Mrs Pawn, she was locked in by the culprit.
         The culprit was taking the body out of the room when Pawn entered so he locked her in. Pawn retrieved a revolver that was in Rook's possession. If you search the room you'll find the other half of the code for the library's trapdoor",
         item_found: false,
-        before_picture_url: helpers.image_url("rooms/before_greenhouse.png"),
+        before_picture_url: helpers.image_url("rooms/greenhouse.png"),
 
       },
       { name: "Cellar",
