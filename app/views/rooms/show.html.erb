@@ -9,11 +9,9 @@
 
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
-
     <div class="show-body pt-3 paper-color mx-3 mb-5">
       <div class="row">
         <div class="col-10">
-        <%= turbo_frame_tag "room_content" do %>
           <div class="room-main p-3">
             <h2>The <%= @room.name %></h2>
             <hr>
@@ -36,7 +34,6 @@
               </div>
             </div>
           </div>
-        <% end %>
         </div>
 
         <div class="col-2">
@@ -47,7 +44,6 @@
       </div>
 
     </div>
-
   </div>
 
   <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab" tabindex="0">
@@ -55,7 +51,11 @@
       <div class="image-holder p-3">
         <h2>The <%= @room.name%> </h2>
         <hr>
-        <img src="" alt="<%= @room.name%>" >
+        <% if @room.item_found%>
+          <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>">
+        <% else %>
+          <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>">
+        <% end %>
       </div>
     </div>
   </div>
