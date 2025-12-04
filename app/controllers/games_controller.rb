@@ -71,8 +71,8 @@ class GamesController < ApplicationController
         There's a piece of paper hidden under the carpet with part of a code, there's also dirty footsteps around the room pointing to the greenhouse.
         If you examine the body, you'll find out that the murder weapon is a knife.",
         item_found: false,
-        before_picture_url: "...",
-        after_picture_url: "..."
+        before_picture_url: helpers.image_url("rooms/before_hall.png"),
+        after_picture_url: helpers.image_url("rooms/after_hall.png"),
       },
       { name: "Library",
         position: 2,
@@ -87,8 +87,8 @@ class GamesController < ApplicationController
         You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen.",
         ai_guideline: "A trapdoor is hidden under the rug, it is locked with a code and holds the murder weapon.",
         item_found: false,
-        before_picture_url: "...",
-        after_picture_url: "..."
+        before_picture_url: helpers.image_url("rooms/before_library.png"),
+        after_picture_url: helpers.image_url("rooms/after_library.png"),
       },
       { name: "Greenhouse",
         position: 3,
@@ -104,8 +104,8 @@ class GamesController < ApplicationController
         ai_guideline: "The victim was killed here but only rest a pool of blood as evidence. In the room is Mrs Pawn, she was locked in by the culprit.
         The culprit was taking the body out of the room when Pawn entered so he locked her in. Pawn retrieved a revolver that was in Rook's possession. If you search the room you'll find the other half of the code for the library's trapdoor",
         item_found: false,
-        before_picture_url: "...",
-        after_picture_url: "..."
+        before_picture_url: helpers.image_url("rooms/before_greenhouse.png"),
+
       },
       { name: "Cellar",
         position: 4,
@@ -121,8 +121,8 @@ class GamesController < ApplicationController
         ai_guideline: "In the furnace is located a pile of papers half-burnt where you can distinguish 3 names : Rook, Bishop and Cavaleer.
         It is the evidence needed to validate the success of the investigation",
         item_found: false,
-        before_picture_url: "...",
-        after_picture_url: "..."
+        before_picture_url: helpers.image_url("rooms/before_cellar.png"),
+        after_picture_url: helpers.image_url("rooms/after_cellar.png"),
       },
       { name: "Study",
         position: 5,
@@ -137,8 +137,8 @@ class GamesController < ApplicationController
         Mr.King is here observing the grey sky through the window, he salutes you, his back still facing you.",
         ai_guideline: "In the desk, in a drawer there's a hidden compartment that holds the Cellar Key",
         item_found: false,
-        before_picture_url: "...",
-        after_picture_url: "..."
+        before_picture_url: helpers.image_url("rooms/before_study.png"),
+        after_picture_url: helpers.image_url("rooms/after_study.png"),
       },
       { name: "Kitchen",
         position: 6,
@@ -154,8 +154,8 @@ class GamesController < ApplicationController
         She finally notices you, unfazed she invites you to enter.",
         ai_guideline: "A poison vial is hidden in the spices cabinet. Cavaleer is holding the Greenhouse key.",
         item_found: false,
-        before_picture_url: "...",
-        after_picture_url: "..."
+        before_picture_url: helpers.image_url("rooms/before_kitchen.png"),
+        after_picture_url: helpers.image_url("rooms/after_kitchen.png"),
       },
       { name: "Attic",
         position: 7,
@@ -171,8 +171,8 @@ class GamesController < ApplicationController
         ai_guideline: "If you look at the wooden beam near the ceiling a rope is hidden. Rook is guilty,
         he has lost his revolver during his escape from the greenhouse so he used the knife to finish the murder. ",
         item_found: false,
-        before_picture_url: "...",
-        after_picture_url: "..."
+        before_picture_url: helpers.image_url("rooms/before_attic.png"),
+        after_picture_url: helpers.image_url("rooms/after_attic.png"),
       }
     ]
     rooms_data.each { |room| game.rooms.create!(room)}
