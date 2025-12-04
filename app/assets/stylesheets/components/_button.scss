@@ -1,10 +1,11 @@
 .purple-btn{
-  width: 500px;
+  font-family: $merry;
+  font-size: 30px;
+  width: 270px;
   background-color: $purple;
   color: $yellow;
-  background-color: $purple;
   border-radius: 30px;
-
+  padding: 6px;
   &:hover {
     opacity: 80%;
     background-color: $purple;
