@@ -3,7 +3,7 @@
   <hr>
   <div class="sidebar-list">
     <% @rooms.each do |room| %>
-      <%= link_to room.name, room_path(room), class: "sidebar-element", data: { turbo_frame: "room_content" } %>
+      <%= link_to room.name, room_path(room), class: "sidebar-element" %>
     <% end %>
   </div>
 </div>
