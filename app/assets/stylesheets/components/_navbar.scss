@@ -19,18 +19,20 @@
   }
 }
 
-
-
-
-
-
-
-
-
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
 }
 
 .navbar-lewagon .navbar-brand img {
   width: 40px;
+}
+
+.paper-color {
+  background-color: $paper;
+}
+
+.paper-folder {
+  border-radius: 5px 5px 0px 0px;
+  margin-left: 10px;
+  color:black;
 }
