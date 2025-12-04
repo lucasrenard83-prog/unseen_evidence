@@ -1,0 +1,12 @@
+.purple-btn{
+  width: 500px;
+  background-color: $purple;
+  color: $yellow;
+  background-color: $purple;
+  border-radius: 30px;
+
+  &:hover {
+    opacity: 50%;
+    background-color: $purple;
+  }
+}
