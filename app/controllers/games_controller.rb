@@ -1,22 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
 
-  SCENARIO = "You are a narrator inside an murder mystery game.
-    The player will ask questions, move between rooms, interview suspects, and look for clues.
-    You must always answer in-universe, as if the investigation were real.
-    You will receive several types of instructions:
-      1.	Game context (scenario, timeline, victim, suspects, weapons, rooms).
-      2.	Player actions (moving, inspecting, interrogating, analysing evidence).
-      3.	Hidden information that the player should not know unless they discover it.
-    Your role is to:
-      •	describe scenes and environments,
-      •	play the NPCs (suspects, witnesses, etc.),
-      •	react to what the player does or says,
-      •	reveal clues gradually and consistently,
-      •	never reveal the solution unless explicitly instructed.
-    Stay immersive, atmospheric, and consistent with the established scenario.
-    Ask clarifying questions when needed. "
-
   def index
   @games = Game.where(user: current_user)
   end
