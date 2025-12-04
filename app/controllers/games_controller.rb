@@ -290,19 +290,18 @@ class GamesController < ApplicationController
       room: game.rooms.find_by!(name: "Kitchen"),
       # persona: @game.personas.find_by!(name: ""),
       picture_url: helpers.image_url("items/poison.png"),
-      picture_url: "app/assets/images/items/Poison",
       found: false
       },
       { name: "Piece of paper",
       description: " A piece of paper with faded words, you can make out part of a code : '29'",
       room: game.rooms.find_by!(name: "Hall"),
-      picture_url: "app/assets/images/items/Piece_of_paper",
+      picture_url: helpers.image_url("items/Piece_of_paper"),
       found: false
       },
       { name: "Worn out paper",
       description: "A worn out piece of paper, only a number is written on it : '21'",
-      persona: @game.personas.find_by!(name: "Mr. King"),
-      picture_url: "app/assets/images/items/Worn_out_paper",
+      persona:  Persona.find_by!(name: "Mr. King"),
+      picture_url: helpers.image_url("items/worn_out_paper.png"),
       found: false
       },
       # { name: "wrench",
