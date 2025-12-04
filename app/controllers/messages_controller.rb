@@ -56,7 +56,8 @@ private
       "
       Scenario: #{@message.game.scenario}
       Current Room: #{@message.room.name}
-      Description: #{@message.room.description}
+      Room description: #{@message.room.description}
+      Room secret description: #{@message.room.ai_guideline}
       Suspect in the room: #{@message.persona.name}
       Suspect Public Description: #{@message.persona.description}
       Suspect Secret Description: #{@message.persona.ai_guideline}
