@@ -48,11 +48,17 @@
   </div>
 
   <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
-    List of Clues
+    <% @game.items.each do |item| %>
+      <img src="<%=item.found == true ? item.picture_url : image_url("items/interrogation.png") %>" alt="Picture of <%= item.name %>" style="width:200px" class="clue-image <%=item.found == true ? "found" : "not-found"%>">
+    <% end %>
+
   </div>
 
   <div class="tab-pane fade" id="nav-confront" role="tabpanel" aria-labelledby="nav-confront-tab" tabindex="0">
     Final Countdown
   </div>
 
+</div>
+<div id="img-popup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7);  justify-content:center; align-items:center; z-index:9999;">
+  <img id="img-popup-img" src="" alt="" style="max-width:90vw; max-height:90vh;">
 </div>
