@@ -1,30 +1,58 @@
-<div class="show-body">
-  <%= turbo_frame_tag "room_content" do %>
-    <div class="room-main">
-      <h1><%= @room.name %></h1>
-      <hr>
+<nav>
+  <div class="nav nav-tabs mt-3 mx-3" id="nav-tab" role="tablist">
+    <button class="nav-link active paper-folder paper-color" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">Investigation</button>
+    <button class="nav-link paper-folder paper-color" id="nav-image-tab" data-bs-toggle="tab" data-bs-target="#nav-image" type="button" role="tab" aria-controls="nav-image" aria-selected="false">Inspect Room</button>
+    <button class="nav-link paper-folder paper-color" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false">Check Clues</button>
+    <button class="nav-link paper-folder paper-color" id="nav-confront-tab" data-bs-toggle="tab" data-bs-target="#nav-confront" type="button" role="tab" aria-controls="nav-confront" aria-selected="false">Confrontation</button>
+  </div>
+</nav>
 
-      <div id="chatbox" class="col-md-6 border" data-controller="chat">
-        <%= turbo_frame_tag "messages" do %>
-          <div class="messages" id="messages-list" data-chat-target="messages">
-            <% @messages.each do |message| %>
-              <%= render "messages/message", message: message %>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
+
+    <div class="show-body pt-3 mx-3 paper-color">
+      <%= turbo_frame_tag "room_content" do %>
+        <div class="room-main">
+          <h1><%= @room.name %></h1>
+          <hr>
+
+          <div id="chatbox" class="col-md-6 border" data-controller="chat">
+            <%= turbo_frame_tag "messages" do %>
+              <div class="messages" id="messages-list" data-chat-target="messages">
+                <% @messages.each do |message| %>
+                  <%= render "messages/message", message: message %>
+                <% end %>
+              </div>
             <% end %>
-          </div>
-        <% end %>
 
-        <div id="new_message_container">
-          <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
-            <%= f.hidden_field :room_id, value: @room.id %>
-            <%= f.input :content, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
-            <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
-          <% end %>
+            <div id="new_message_container">
+              <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
+                <%= f.hidden_field :room_id, value: @room.id %>
+                <%= f.input :content, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
+                <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
+              <% end %>
+            </div>
+          </div>
         </div>
+      <% end %>
+
+      <div class="sidebar">
+        <%= render "shared/sidebar", rooms: @rooms %>
       </div>
     </div>
-  <% end %>
 
-  <div class="sidebar">
-    <%= render "shared/sidebar", rooms: @rooms %>
   </div>
+
+  <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab" tabindex="0">
+    The image of the Room
+  </div>
+
+  <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
+    List of Clues
+  </div>
+
+  <div class="tab-pane fade" id="nav-confront" role="tabpanel" aria-labelledby="nav-confront-tab" tabindex="0">
+    Final Countdown
+  </div>
+
 </div>
