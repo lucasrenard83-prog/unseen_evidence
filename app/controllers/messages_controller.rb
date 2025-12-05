@@ -133,6 +133,7 @@ end
 
   def extract_found_item_name(text)
     @item = @message.room.items.find_by(name: text)
+    @item ||= @message.persona&.items&.find_by(name: text)
 
     if @item
       # set room as searched to switch pictures
