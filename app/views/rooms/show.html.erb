@@ -8,6 +8,8 @@
 </nav>
 
 <div class="tab-content" id="nav-tabContent">
+
+  <%# Chat Box %>
   <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
     <div class="show-body pt-3 paper-color mx-3 mb-5">
       <div class="row">
@@ -46,6 +48,7 @@
     </div>
   </div>
 
+  <%# Image of Rooms %>
   <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab" tabindex="0">
     <div class="show-body pt-3 mx-3 paper-color">
       <div class="image-holder p-3">
@@ -60,21 +63,23 @@
     </div>
   </div>
 
+  <%# Inventory %>
   <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
-  <% @game.items.each do |item| %>
-    <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
-      <img
-        src="<%= item.picture_url %>"
-        alt="Picture of <%= item.name %>"
-        class="clue-image">
+    <% @game.items.each do |item| %>
+      <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
+        <img
+          src="<%= item.picture_url %>"
+          alt="Picture of <%= item.name %>"
+          class="clue-image">
 
-      <% unless item.found %>
-        <div class="clue-mask">?</div>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+        <% unless item.found %>
+          <div class="clue-mask">?</div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
+  <%# Confrontation %>
   <div class="tab-pane fade" id="nav-confront" role="tabpanel" aria-labelledby="nav-confront-tab" tabindex="0">
     <div class="pt-3 mx-3 paper-color">
       <h2>Conclusion of the investigation</h2>
@@ -105,6 +110,11 @@
       <%= submit_tag "Submit Accusation", class: "btn btn-danger" %>
       <% end %>
 
+      <%# Victory OR Defeat %>
+    <%= render "shared/victory" %>
+
+    <%# if win --> render _victory %>
+    <%# elseif render_defeat %>
     </div>
   </div>
 
