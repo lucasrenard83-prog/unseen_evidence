@@ -114,6 +114,23 @@ private
 end
 
 
+  # def extract_found_item_name(text)
+  #   # Cherche d'abord dans la room
+  #   @item = @message.room.items.find_by(name: text)
+
+  #   # Si pas trouvé, cherche dans les items du persona
+  #   @item ||= @message.persona&.items&.find_by(name: text)
+
+  #   if @item
+  #     @item.update(found: true)
+
+  #     # Mettre à jour le flag de la room si l'item appartient à cette room
+  #     if @item.room_id == @message.room.id
+  #       @message.room.update(item_found: true)
+  #     end
+  #   end
+  # end
+
   def extract_found_item_name(text)
     @item = @message.room.items.find_by(name: text)
     @item ||= @message.persona&.items&.find_by(name: text)
