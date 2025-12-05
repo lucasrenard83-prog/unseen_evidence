@@ -52,18 +52,7 @@ private
 
   end
 
-  def system_prompt
-    "
-    You are a narrator in a murder mystery game. You MUST follow these rules strictly:
-    CONTEXT (treat as ground truth)
-    - Scenario: #{@message.game.scenario}
-    - Current Room: #{@message.room.name}
-    - Room Description: #{@message.room.description}
-    - Suspect Present: #{@message.persona.name}
-    - Suspect Public Info: #{@message.persona.description}
-    - Items in Room: #{@message.room.items.pluck(:name).join(', ')}
-
-    HIDDEN INFO (reveal ONLY when player explicitly searches/discovers)
+  prompt = "  HIDDEN INFO (reveal ONLY when player explicitly searches/discovers)
     - Room Secret: #{@message.room.ai_guideline}
     - Suspect Secret: #{@message.persona.ai_guideline}
 
@@ -85,6 +74,30 @@ private
     - item_transferred: Use EXACT item name from 'Items in Room' list, or null
     - NEVER invent items - only use: #{@message.room.items.pluck(:name).join(', ') || 'none'}
     - If player doesn't explicitly finds or receive an item, use null"
+
+  def system_prompt
+    if @message.persona
+      "
+      Scenario: #{@message.game.scenario}
+      Current Room: #{@message.room.name}
+      Room description: #{@message.room.description}
+      Room secret description: #{@message.room.ai_guideline}
+      Suspect in the room: #{@message.persona.name}
+      Suspect Public Description: #{@message.persona.description}
+      Suspect Secret Description: #{@message.persona.ai_guideline}
+      Room items: #{@message.room.items.pluck(:name).join(', ')}
+
+      #{prompt}"
+    else
+      "
+      Scenario: #{@message.game.scenario}
+      Current Room: #{@message.room.name}
+      Room description: #{@message.room.description}
+      Room secret description: #{@message.room.ai_guideline}
+      Room items: #{@message.room.items.pluck(:name).join(', ')}
+
+      #{prompt}"
+    end
   end
 
   def extract_found_item_name(text)
