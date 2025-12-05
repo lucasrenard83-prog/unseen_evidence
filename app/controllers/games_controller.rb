@@ -307,7 +307,7 @@ class GamesController < ApplicationController
       { name: "Piece of paper",
       description: " A piece of paper with faded words, you can make out part of a code : '29'",
       room: game.rooms.find_by!(name: "Hall"),
-      picture_url: helpers.image_url("items/Piece_of_paper"),
+      picture_url: helpers.image_url("items/Piece_of_paper.png"),
       found: false
       },
       { name: "Worn out paper",
