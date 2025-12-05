@@ -20,6 +20,7 @@ class MessagesController < ApplicationController
 
       raw = response.content
       json = JSON.parse(raw)
+      # raise
 
       # message = json["message"]
       item    = json["item_transferred"]
@@ -143,6 +144,11 @@ private
     @item = @message.room.items.find_by(name: text)
     if @item
       @item&.update(found: true)
+      if @item.name == "Cellar key"
+        Room.where(name: "Cellar").where(game_id: params["game_id"].to_i)[0].update(open: true)
+      elsif @item.name == "Greenhouse Key"
+        Room.where(name: "Greenhouse").where(game_id: params["game_id"].to_i)[0].open(open: true)
+      end
     end
   end
   def params_message
