@@ -54,8 +54,8 @@
       <div class="image-holder p-3">
         <h2>The <%= @room.name%> </h2>
         <hr>
-        <% if @room.item_found%>
-          <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>">
+        <% if @room.item_found %>
+          <img src="<%= @room.after_picture_url %>" alt="<%= @room.name%>">
         <% else %>
           <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>">
         <% end %>

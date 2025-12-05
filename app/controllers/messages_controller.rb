@@ -46,26 +46,50 @@ class MessagesController < ApplicationController
 private
 
   def build_conversation_history
-    @message.game.messages.each do |message|
-      @ruby_llm_chat.add_message(message)
-    end
-
+    # Limite à 15 derniers messages pour réduire le coût et la latence
+    # Économie estimée : ~10,000 tokens sur une partie longue (~80% réduction)
+    @message.game.messages
+      .order(created_at: :desc)
+      .limit(15)
+      .reverse
+      .each do |message|
+        @ruby_llm_chat.add_message(message)
+      end
   end
 
   def system_prompt
+    # Récupère les items de la room
+    room_items = @message.room.items.pluck(:name)
+
+    # Récupère les items du persona présent (si existe)
+    persona_items = @message.persona&.items&.pluck(:name) || []
+
+    # Combine les deux listes
+    all_items = (room_items + persona_items).uniq
+
+    # Formate l'affichage pour distinguer les sources
+    items_display = if all_items.any?
+      room_part = room_items.any? ? "In room: #{room_items.join(', ')}" : ""
+      persona_part = persona_items.any? ? "Held by suspect: #{persona_items.join(', ')}" : ""
+      [room_part, persona_part].reject(&:empty?).join(' | ')
+    else
+      'NONE - This room is empty'
+    end
+
     "
-    You are a narrator in a murder mystery game. You MUST follow these rules strictly:
-    CONTEXT (treat as ground truth)
-    - Scenario: #{@message.game.scenario}
+     You are a narrator in a murder mystery game. You MUST follow these rules strictly:
+    CONTEXT (treat as absolute truth - NEVER invent anything not listed here)
+    - Scenario: #{@message.game.scenario.presence || 'Not specified'}
     - Current Room: #{@message.room.name}
     - Room Description: #{@message.room.description}
-    - Suspect Present: #{@message.persona.name}
-    - Suspect Public Info: #{@message.persona.description}
-    - Items in Room: #{@message.room.items.pluck(:name).join(', ')}
+    - Suspect Present: #{@message.persona&.name || 'NONE - No one is in this room'}
+    - Suspect Public Info: #{@message.persona&.description || 'N/A'}
+    - Items Available: #{items_display}
 
-    HIDDEN INFO (reveal ONLY when player explicitly searches/discovers)
-    - Room Secret: #{@message.room.ai_guideline}
-    - Suspect Secret: #{@message.persona.ai_guideline}
+    HIDDEN INFO (reveal ONLY when player explicitly searches/investigates/examines closely)
+    - Room Secret: #{@message.room.ai_guideline.presence || 'None'}
+    - Suspect Secret: #{@message.persona&.ai_guideline.presence || 'None'}
+    WARNING: Do NOT mention these secrets unless player performs specific investigative action
 
     STRICT RULES
     1. NEVER invent rooms, items, suspects, or events not listed above
@@ -82,15 +106,27 @@ private
       \"item_transferred\": null
     }
 
-    - item_transferred: Use EXACT item name from 'Items in Room' list, or null
-    - NEVER invent items - only use: #{@message.room.items.pluck(:name).join(', ') || 'none'}
-    - If player doesn't explicitly finds or receive an item, use null"
-  end
+- item_transferred: Use EXACT item name from 'Items Available' list, or null
+  - NEVER invent items - only use: #{all_items.join(', ').presence || 'none'}
+  - If player doesn't explicitly find or receive an item, use null
+  "
+end
+
 
   def extract_found_item_name(text)
+    # Cherche d'abord dans la room
     @item = @message.room.items.find_by(name: text)
+
+    # Si pas trouvé, cherche dans les items du persona
+    @item ||= @message.persona&.items&.find_by(name: text)
+
     if @item
-      @item&.update(found: true)
+      @item.update(found: true)
+
+      # Mettre à jour le flag de la room si l'item appartient à cette room
+      if @item.room_id == @message.room.id
+        @message.room.update(item_found: true)
+      end
     end
   end
 
