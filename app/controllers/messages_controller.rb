@@ -20,11 +20,11 @@ class MessagesController < ApplicationController
 
       raw = response.content
       json = JSON.parse(raw)
-      # raise
 
       # message = json["message"]
       item    = json["item_transferred"]
       extract_found_item_name(item)
+      @message.room.reload
 
       @answer = Message.new(content: raw)
       @answer.role = "assistant"
@@ -142,16 +142,24 @@ private
 
   def extract_found_item_name(text)
     @item = @message.room.items.find_by(name: text)
+
     if @item
+      # set room as searched to switch pictures
+      if @item.room
+        @item.room.update(item_found: true)
+      end
+      # set item as found and open doors if a key
       @item&.update(found: true)
       if @item.name == "Cellar key"
         Room.where(name: "Cellar").where(game_id: params["game_id"].to_i)[0].update(open: true)
-      elsif @item.name == "Greenhouse Key"
-        Room.where(name: "Greenhouse").where(game_id: params["game_id"].to_i)[0].open(open: true)
+      elsif @item.name == "Greenhouse key"
+        Room.where(name: "Greenhouse").where(game_id: params["game_id"].to_i)[0].update(open: true)
       end
     end
   end
+
   def params_message
     params.require(:message).permit(:room_id, :content, :game_id, )
   end
+
 end
