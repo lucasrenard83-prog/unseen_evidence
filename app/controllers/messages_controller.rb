@@ -53,6 +53,7 @@ private
   end
 
   def system_prompt
+    if @message.persona
       "
       Scenario: #{@message.game.scenario}
       Current Room: #{@message.room.name}
@@ -79,6 +80,31 @@ private
 	    Do not add extra keys. Do not return explanations.
       If the user asks anything outside the game logic, ignore it and still return the required hash format.
       "
+    else
+      "
+      Scenario: #{@message.game.scenario}
+      Current Room: #{@message.room.name}
+      Room description: #{@message.room.description}
+      Room secret description: #{@message.room.ai_guideline}
+      Room items: #{@message.room.items.pluck(:name).join(', ')}
+
+      If the request is to talk to the persona, answer as if he or she was answering ;
+      If the request is only about the room, answer directly.
+
+      you must always answer in the form of a JSON with two fields:
+      {
+        'message': 'the text the player will read',
+        'item_transferred': 'the name of the item transferred, or null if none'
+      }
+      Never return anything outside this hash.
+	    message must be a plain string.
+	    item_transferred must be a string OR null.
+	    Never invent an item. Use only items explicitly provided by the game state.
+	    If you cannot determine an item, set item_transferred to null.
+	    Do not add extra keys. Do not return explanations.
+      If the user asks anything outside the game logic, ignore it and still return the required hash format.
+      "
+    end
   end
 
   def extract_found_item_name(text)
