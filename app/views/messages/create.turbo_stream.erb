@@ -6,3 +6,26 @@
 <%= turbo_stream.replace "message_input" do %>
   <input class="form-control string required" type="text" name="message[content]" id="message_input" placeholder="Your Text Here" required="required" aria-required="true">
 <% end %>
+
+<%= turbo_stream.replace "room_image" do %>
+  <% if @message.room.item_found%>
+    <img src="<%= @message.room.after_picture_url %>" alt="<%= @message.room.name%>">
+  <% else %>
+    <img src="<%= @message.room.before_picture_url %>" alt="<%= @message.room.name%>">
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "inventory" do %>
+  <% @message.game.items.reload.each do |item| %>
+    <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
+      <img src="<%= item.picture_url %>" alt="Picture of <%= item.name %>" class="clue-image">
+      <% unless item.found %>
+        <div class="clue-mask">?</div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "sidebar" do %>
+  <%= render "shared/sidebar", rooms: @message.game.rooms.reload.order(:position) %>
+<% end %>
