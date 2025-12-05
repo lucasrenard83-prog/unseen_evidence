@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
       response = @ruby_llm_chat
-        .with_instructions(system_prompt)
+        .with_instructions(system_prompt(@message))
         .ask(@message.content)
 
       raw = response.content
@@ -52,9 +52,21 @@ private
 
   end
 
-  prompt = "  HIDDEN INFO (reveal ONLY when player explicitly searches/discovers)
-    - Room Secret: #{@message.room.ai_guideline}
-    - Suspect Secret: #{@message.persona.ai_guideline}
+  def system_prompt(message)
+    if message.persona
+      "
+      Scenario: #{message.game.scenario}
+      Current Room: #{message.room.name}
+      Room description: #{message.room.description}
+      Room secret description: #{message.room.ai_guideline}
+      Suspect in the room: #{message.persona.name}
+      Suspect Public Description: #{message.persona.description}
+      Suspect Secret Description: #{message.persona.ai_guideline}
+      Room items: #{message.room.items.pluck(:name).join(', ')}
+
+      HIDDEN INFO (reveal ONLY when player explicitly searches/discovers)
+    - Room Secret: #{message.room.ai_guideline}
+    - Suspect Secret: #{message.persona.ai_guideline}
 
     STRICT RULES
     1. NEVER invent rooms, items, suspects, or events not listed above
@@ -72,33 +84,60 @@ private
     }
 
     - item_transferred: Use EXACT item name from 'Items in Room' list, or null
-    - NEVER invent items - only use: #{@message.room.items.pluck(:name).join(', ') || 'none'}
+    - NEVER invent items - only use: #{message.room.items.pluck(:name).join(', ') || 'none'}
     - If player doesn't explicitly finds or receive an item, use null"
 
-  def system_prompt
-    if @message.persona
-      "
-      Scenario: #{@message.game.scenario}
-      Current Room: #{@message.room.name}
-      Room description: #{@message.room.description}
-      Room secret description: #{@message.room.ai_guideline}
-      Suspect in the room: #{@message.persona.name}
-      Suspect Public Description: #{@message.persona.description}
-      Suspect Secret Description: #{@message.persona.ai_guideline}
-      Room items: #{@message.room.items.pluck(:name).join(', ')}
-
-      #{prompt}"
     else
       "
-      Scenario: #{@message.game.scenario}
-      Current Room: #{@message.room.name}
-      Room description: #{@message.room.description}
-      Room secret description: #{@message.room.ai_guideline}
-      Room items: #{@message.room.items.pluck(:name).join(', ')}
+      Scenario: #{message.game.scenario}
+      Current Room: #{message.room.name}
+      Room description: #{message.room.description}
+      Room secret description: #{message.room.ai_guideline}
+      Room items: #{message.room.items.pluck(:name).join(', ')}
 
-      #{prompt}"
+     HIDDEN INFO (reveal ONLY when player explicitly searches/discovers)
+    - Room Secret: #{message.room.ai_guideline}
+
+    STRICT RULES
+    1. NEVER invent rooms, items, suspects, or events not listed above
+    2. NEVER reveal hidden info unless player takes specific action to discover it
+    3. NEVER confirm or deny who the killer is
+    4. If player asks about something not in context, say you don't see/know that
+    5. Stay in character - respond as the suspect if player addresses them
+    6. Keep responses concise (2-4 sentences max)
+
+    #RESPONSE FORMAT (mandatory)
+    Return ONLY valid JSON, no other text:
+    {
+      \"message\": \"your narrative response here\",
+      \"item_transferred\": null
+    }
+
+    - item_transferred: Use EXACT item name from 'Items in Room' list, or null
+    - NEVER invent items - only use: #{message.room.items.pluck(:name).join(', ') || 'none'}
+    - If player doesn't explicitly finds or receive an item, use null"
     end
   end
+
+  # prompt = "
+  #   STRICT RULES
+  #   1. NEVER invent rooms, items, suspects, or events not listed above
+  #   2. NEVER reveal hidden info unless player takes specific action to discover it
+  #   3. NEVER confirm or deny who the killer is
+  #   4. If player asks about something not in context, say you don't see/know that
+  #   5. Stay in character - respond as the suspect if player addresses them
+  #   6. Keep responses concise (2-4 sentences max)
+
+  #   #RESPONSE FORMAT (mandatory)
+  #   Return ONLY valid JSON, no other text:
+  #   {
+  #     \"message\": \"your narrative response here\",
+  #     \"item_transferred\": null
+  #   }
+
+  #   - item_transferred: Use EXACT item name from 'Items in Room' list, or null
+  #   - NEVER invent items - only use: #{message.room.items.pluck(:name).join(', ') || 'none'}
+  #   - If player doesn't explicitly finds or receive an item, use null"
 
   def extract_found_item_name(text)
     @item = @message.room.items.find_by(name: text)
@@ -106,5 +145,7 @@ private
       @item&.update(found: true)
     end
   end
-
+  def params_message
+    params.require(:message).permit(:room_id, :content, :game_id, )
+  end
 end
