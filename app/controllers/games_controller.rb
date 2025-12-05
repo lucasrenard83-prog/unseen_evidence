@@ -1,22 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
 
-  SCENARIO = "You are an AI narrator inside an interactive Cluedo-style mystery game.
-    The player will ask questions, move between rooms, interview suspects, and look for clues.
-    You must always answer in-universe, as if the investigation were real.
-    You will receive several types of instructions:
-      1.	Game context (scenario, timeline, victim, suspects, weapons, rooms).
-      2.	Player actions (moving, inspecting, interrogating, analysing evidence).
-      3.	Hidden information that the player should not know unless they discover it.
-    Your role is to:
-      •	describe scenes and environments,
-      •	play the NPCs (suspects, witnesses, etc.),
-      •	react to what the player does or says,
-      •	reveal clues gradually and consistently,
-      •	never reveal the solution unless explicitly instructed.
-    Stay immersive, atmospheric, and consistent with the established scenario.
-    Ask clarifying questions when needed. "
-
   def index
   @games = Game.where(user: current_user)
   end
@@ -28,7 +12,8 @@ class GamesController < ApplicationController
 
   def create
     @game = current_user.games.build
-    @game.scenario = SCENARIO
+    # Default scenario to provide context to the LLM
+    @game.scenario = "A mysterious murder occurred in a Victorian manor. As a medium investigator, you must uncover the truth by exploring rooms, questioning suspects, and gathering evidence. The victim was found dead in the entrance hall, and all suspects remain in the house."
     @game.secret_scenario = ""
     if @game.save
       rooms_init(@game)
@@ -42,14 +27,15 @@ class GamesController < ApplicationController
   end
   def destroy
     @game = Game.find(params[:id])
-    @rooms = @game.rooms
-    @messages = @game.messages
-    @personas = @rooms.flat_map{|room| room.personas}
-    @items = @game.items
-    @items.destroy_all
-    @messages.destroy_all
-    @personas.each{|persona| persona.destroy}
-    @rooms.destroy_all
+  #   @game.rooms.each do |room|
+  #   room.personas.destroy_all
+  #  end
+  #   @rooms = @game.rooms
+  #   @messages = @game.messages
+  #   @items = @game.items
+  #   @rooms.destroy_all
+  #   @items.destroy_all
+  #   @messages.destroy_all
     @game.destroy
     redirect_to games_path
   end
@@ -83,8 +69,9 @@ class GamesController < ApplicationController
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore.",
         ai_guideline: "Bishop will give you a little introduction of the context.
-        There's a piece of paper hidden under the carpet with part of a code, there's also dirty footsteps around the room pointing to the greenhouse.
-        If you examine the body, you'll find out that the murder weapon is a knife.",
+        If the player searches under the table, they find the 'Piece of paper' (contains part of a code).
+        There are traces of dirt around the room.
+        If the player examines the body, they discover the murder weapon was likely a knife.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_hall.png"),
         after_picture_url: helpers.image_url("rooms/after_hall.png"),
@@ -100,7 +87,11 @@ class GamesController < ApplicationController
         as if time itself had stopped.The silence is heavy, almost expectant,
         as though the walls are waiting for someone to finally uncover a secret kept far too long.
         You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen.",
-        ai_guideline: "A trapdoor is hidden under the rug, it is locked with a code and holds the murder weapon.",
+        ai_guideline: "A trapdoor is hidden under the rug - it holds the 'Kitchen knife' (murder weapon).
+        If player searches under the carpet, reveal the trapdoor with a code lock.
+        If player has both 'Piece of paper' (code: 29) and 'Worn out paper' (code: 21), they can deduce the code is 2921.
+        If player enters code 2921, the 'Kitchen knife' is found.
+        Otherwise, describe the locked trapdoor without revealing contents.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_library.png"),
         after_picture_url: helpers.image_url("rooms/after_library.png"),
@@ -116,8 +107,11 @@ class GamesController < ApplicationController
         A small pool of blood lies still only perturbed by footsteps leading out of the room.
         Mrs Pawn appears so small in this gigantic and empty room, she gets up and reveals her tall stature as well as her panicked face,
         a wave of relief running through her face when she sees you, finally opening the door that was blocking her way out.",
-        ai_guideline: "The victim was killed here but only rest a pool of blood as evidence. In the room is Mrs Pawn, she was locked in by the culprit.
-        The culprit was taking the body out of the room when Pawn entered so he locked her in. Pawn retrieved a revolver that was in Rook's possession. If you search the room you'll find the other half of the code for the library's trapdoor",
+        ai_guideline: "The victim was killed here - only a pool of blood remains as evidence.
+        Mrs. Pawn was locked in by the culprit (a tall shadow).
+        The culprit was moving the body out when Pawn entered, so they locked her in.
+        Pawn has the 'Revolver' (found in the room). If player asks what Pawn saw,
+        she describes a tall shadow that locked her in and gives player the 'Revolver'.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/greenhouse.png"),
 
@@ -133,8 +127,9 @@ class GamesController < ApplicationController
         In the back of the room a furnace lies dormant.
         A draft from nowhere cuts through the stale air,
         almost as if something had moved here not long ago.",
-        ai_guideline: "In the furnace is located a pile of papers half-burnt where you can distinguish 3 names : Rook, Bishop and Cavaleer.
-        It is the evidence needed to validate the success of the investigation",
+        ai_guideline: "In the furnace are half-burnt papers.
+        If player searches the furnace, they find 'Old documents' with 3 names visible: Rook, Bishop, and Cavaleer.
+        This is key evidence for establishing the motive.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_cellar.png"),
         after_picture_url: helpers.image_url("rooms/after_cellar.png"),
@@ -150,7 +145,9 @@ class GamesController < ApplicationController
         a drawer sits ajar and a pen lies on the floor,
         silent hints that someone was here not long ago… whoever they were.
         Mr.King is here observing the grey sky through the window, he salutes you, his back still facing you.",
-        ai_guideline: "In the desk, in a drawer there's a hidden compartment that holds the Cellar Key",
+        ai_guideline: "The desk drawer has a hidden compartment containing the 'Cellar key'.
+        If player is polite to Mr. King and asks if he found anything, he gives the 'Worn out paper'.
+        If player asks about Mrs. Cavaleer, King reveals how to get the 'Greenhouse key' from her (be kind/respectful).",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_study.png"),
         after_picture_url: helpers.image_url("rooms/after_study.png"),
@@ -167,7 +164,8 @@ class GamesController < ApplicationController
         You stumble upon Mrs.Cavaleer when you open the door, she's playing with a knife,
         her eyes lost in the void as if she was contemplating old memories.
         She finally notices you, unfazed she invites you to enter.",
-        ai_guideline: "A poison vial is hidden in the spices cabinet. Cavaleer is holding the Greenhouse key.",
+        ai_guideline: "The 'Poison' is hidden in the spices cabinet. If player searches cabinet, they find it.
+        Cavaleer holds the 'Greenhouse key'. She gives it if player is respectful/kind (as King advised).",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_kitchen.png"),
         after_picture_url: helpers.image_url("rooms/after_kitchen.png"),
@@ -183,8 +181,8 @@ class GamesController < ApplicationController
         At the center lies a toppled chair and a circular mark on the floor,
         signs of something that happened here… whatever it was.
         Mr.Rook a broad, tall and severe looking figure observes you from the back of the room.",
-        ai_guideline: "If you look at the wooden beam near the ceiling a rope is hidden. Rook is guilty,
-        he has lost his revolver during his escape from the greenhouse so he used the knife to finish the murder. ",
+        ai_guideline: "If the player looks at the wooden beam near the ceiling, the 'Rope' can be found.
+        Rook is guilty, he has lost his 'Revolver' during his escape from the Greenhouse so he used the 'Kitchen knife' to finish the murder. ",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_attic.png"),
         after_picture_url: helpers.image_url("rooms/after_attic.png"),
@@ -201,9 +199,8 @@ class GamesController < ApplicationController
         She moves with a precision that suggests she is always three steps ahead in any conversation.
         Pearls at her neck, gloves spotless, yet a faint tremor in her fingers betrays hidden nerves.
         Rumors cling to her like a perfume; secrets, alliances, and a temper sharp enough to cut long before she raises her voice.",
-        ai_guideline: "She will throw off the investigator any chance she has;
-        not to hide anything but just to prove her point : a medium is a fraud and could never find a murder culprit.
-        she will be an obvious choice but she is innocent ",
+        ai_guideline: "She deliberately misleads the investigator to prove mediums are frauds who cannot solve murders.
+        She is innocent but acts suspiciously - an obvious red herring.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Library")
       },
@@ -215,8 +212,9 @@ class GamesController < ApplicationController
         A scar cuts across her jaw, earned in a story she tells differently every time.
         She protects those she chooses with fierce loyalty,
         but her unpredictable nature leaves everyone wondering whose side she's truly on.",
-        ai_guideline: "Ideal culprit by her behavior, she holds nothing of real interest but is very invested in the investigation.
-        Her personality, charisma and presence pushes the investigator to 'stay on her case'.",
+        ai_guideline: "Ambivalent behavior - holds 'Greenhouse key' but genuinely wants to help solve the murder.
+        Her charisma makes her seem suspicious, but she's innocent.
+        She gives the key if player is respectful/kind (Mr. King can advise this approach).",
         item_given: false,
         room: @game.rooms.find_by!(name: "Kitchen")
       },
@@ -226,8 +224,9 @@ class GamesController < ApplicationController
         But behind that meek exterior lies a surprising alertness.
         She notices details others overlook, absorbing whispers, gestures, and footsteps.
         People underestimate her, unaware she might hold the missing piece to the truth even if she doesn't realize it herself.",
-        ai_guideline: "Stuck in the greenhouse; where the victim was killed; from the beginning.
-        She holds a big hint on the real culprit but couldnt reveal it since stuck in the room she doesn't know who it is exactly but know it was a tall person.",
+        ai_guideline: "Was locked in Greenhouse (crime scene) from the beginning.
+        She has the 'Revolver'. She saw a tall shadow (the killer) but doesn't know their identity.
+        This is a crucial clue - the killer is tall (narrows to Mr. Rook or Mr. King).",
         item_given: false,
         room: @game.rooms.find_by!(name: "Greenhouse")
       },
@@ -237,9 +236,10 @@ class GamesController < ApplicationController
         His loyalty is unquestionable—or so he insists.
         But the blankness in his expression feels trained, as if hiding doubts he cannot afford to show.
         He carries a quiet heaviness, the kind that comes from witnessing too much… and speaking too little.",
-        ai_guideline: "He's guilty.
-        He is very serious and 'helps' when he can.
-        He will keep on pushing the investigator on wrong paths but stays helpful all throughout the game.",
+        ai_guideline: "GUILTY - Mr. Rook is the killer.
+        He acts serious and helpful while subtly misdirecting the investigation.
+        He lost his 'Revolver' fleeing the Greenhouse, used 'Kitchen knife' instead.
+        He is tall (matches Pawn's description).",
         item_given: false,
         room: @game.rooms.find_by!(name: "Attic")
       },
@@ -250,7 +250,8 @@ class GamesController < ApplicationController
         Symbols hang from his neck, worn thin from years of handling.
         He speaks of guidance and redemption,
         yet there is something in his smile that suggests he knows exactly where everyone's sins are buried.",
-        ai_guideline: "His calm but unsettling behavior places the investigator in a weird position of trust/mistrust constantly redirecting his focus on and off him.",
+        ai_guideline: "Calm but unsettling demeanor creates constant trust/mistrust in the investigator.
+        He is innocent but his behavior makes him suspicious - another red herring.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Hall")
       },
@@ -260,9 +261,10 @@ class GamesController < ApplicationController
         Deep lines carve his face, each one a trace of sleepless nights and unspoken worries.
         His eyes—cold, calculating—measure everything and everyone. There's a quiet tension around him,
         as if he knows more than he will ever admit, and fears far more than he lets show.",
-        ai_guideline: "At ease constantly his behavior is pushing the investigator to trust him
-        (which he/she should) and doesnt hesitate to give any info as long as it's true.
-        He will be the biggest help you'll have if you sniff around him long enough.",
+        ai_guideline: "Relaxed and trustworthy - the most helpful character.
+        Gives the 'Worn out paper' if player is polite.
+        Reveals how to get 'Greenhouse key' from Cavaleer (be respectful/kind).
+        He is innocent and genuinely helpful.",
         item_given: false,
         room: @game.rooms.find_by!(name: "Study")
       }
@@ -310,7 +312,7 @@ class GamesController < ApplicationController
       { name: "Piece of paper",
       description: " A piece of paper with faded words, you can make out part of a code : '29'",
       room: game.rooms.find_by!(name: "Hall"),
-      picture_url: helpers.image_url("items/Piece_of_paper"),
+      picture_url: helpers.image_url("items/Piece_of_paper.png"),
       found: false
       },
       { name: "Worn out paper",
@@ -333,11 +335,17 @@ class GamesController < ApplicationController
       # picture_url: "",
       # found: false
       # },
-      { name: "rope",
+      { name: "Rope",
       description: "A sturdy rope, the end of it looks newer as if it has been gradually cut over the years.",
       # persona: @game.personas.find_by!(name: ""),
       room: game.rooms.find_by!(name: "Attic"),
       picture_url: helpers.image_url("items/rope.png"),
+      found: false
+      },
+      { name: "Old documents",
+      description: "Half-burnt papers retrieved from the furnace. Three names are still visible: Rook, Bishop, and Cavaleer.",
+      room: game.rooms.find_by!(name: "Cellar"),
+      picture_url: helpers.image_url("items/old_documents.png"),
       found: false
       }
     ]
