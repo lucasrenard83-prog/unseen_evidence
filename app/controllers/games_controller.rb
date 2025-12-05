@@ -69,9 +69,9 @@ class GamesController < ApplicationController
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore.",
         ai_guideline: "Bishop will give you a little introduction of the context.
-        If the player searches under the table, they find the 'Piece of paper' (contains part of a code).
-        There are traces of dirt around the room.
-        If the player examines the body, they discover the murder weapon was likely a knife.",
+        There's a piece of paper hidden under the table with part of a code, if the player searches under the table he finds the 'Piece of paper'.
+        There's also dirty footsteps around the room pointing to the greenhouse.
+        If the player examines the body, he'll find out that the murder weapon is probably a knife.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_hall.png"),
         after_picture_url: helpers.image_url("rooms/after_hall.png"),
