@@ -3,7 +3,11 @@
   <hr>
   <div class="sidebar-list">
     <% @rooms.each do |room| %>
-      <%= link_to room.name, room_path(room), class: "sidebar-element" %>
+      <% if room.open %>
+        <%= link_to room.name, room_path(room), class: "sidebar-element" %>
+      <% else %>
+        <div class="sidebar-element sidebar-locked"> <%= room.name %> </div>
+      <% end %>
     <% end %>
   </div>
 </div>
