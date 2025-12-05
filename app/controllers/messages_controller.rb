@@ -21,12 +21,12 @@ class MessagesController < ApplicationController
       raw = response.content
       json = JSON.parse(raw)
 
-      # message = json["message"]
+      message = json["message"]
       item    = json["item_transferred"]
       extract_found_item_name(item)
       @message.room.reload
 
-      @answer = Message.new(content: raw)
+      @answer = Message.new(content: message)
       @answer.role = "assistant"
       @answer.game = @message.game
       @answer.room = @message.room
@@ -114,39 +114,38 @@ private
 end
 
 
-  # prompt = "
-  #   STRICT RULES
-  #   1. NEVER invent rooms, items, suspects, or events not listed above
-  #   2. NEVER reveal hidden info unless player takes specific action to discover it
-  #   3. NEVER confirm or deny who the killer is
-  #   4. If player asks about something not in context, say you don't see/know that
-  #   5. Stay in character - respond as the suspect if player addresses them
-  #   6. Keep responses concise (2-4 sentences max)
+  # def extract_found_item_name(text)
+  #   # Cherche d'abord dans la room
+  #   @item = @message.room.items.find_by(name: text)
 
-  #   #RESPONSE FORMAT (mandatory)
-  #   Return ONLY valid JSON, no other text:
-  #   {
-  #     \"message\": \"your narrative response here\",
-  #     \"item_transferred\": null
-  #   }
+  #   # Si pas trouvé, cherche dans les items du persona
+  #   @item ||= @message.persona&.items&.find_by(name: text)
 
-  #   - item_transferred: Use EXACT item name from 'Items in Room' list, or null
-  #   - NEVER invent items - only use: #{message.room.items.pluck(:name).join(', ') || 'none'}
-  #   - If player doesn't explicitly finds or receive an item, use null"
+  #   if @item
+  #     @item.update(found: true)
+
+  #     # Mettre à jour le flag de la room si l'item appartient à cette room
+  #     if @item.room_id == @message.room.id
+  #       @message.room.update(item_found: true)
+  #     end
+  #   end
+  # end
 
   def extract_found_item_name(text)
-    # Cherche d'abord dans la room
     @item = @message.room.items.find_by(name: text)
-
-    # Si pas trouvé, cherche dans les items du persona
     @item ||= @message.persona&.items&.find_by(name: text)
 
     if @item
-      @item.update(found: true)
-
-      # Mettre à jour le flag de la room si l'item appartient à cette room
-      if @item.room_id == @message.room.id
-        @message.room.update(item_found: true)
+      # set room as searched to switch pictures
+      if @item.room
+        @item.room.update(item_found: true)
+      end
+      # set item as found and open doors if a key
+      @item&.update(found: true)
+      if @item.name == "Cellar key"
+        Room.where(name: "Cellar").where(game_id: params["game_id"].to_i)[0].update(open: true)
+      elsif @item.name == "Greenhouse key"
+        Room.where(name: "Greenhouse").where(game_id: params["game_id"].to_i)[0].update(open: true)
       end
     end
   end
