@@ -29,3 +29,12 @@
 <%= turbo_stream.replace "sidebar" do %>
   <%= render "shared/sidebar", rooms: @message.game.rooms.reload.order(:position) %>
 <% end %>
+
+<% if @item %>
+  <%= turbo_stream.append "messages-list" do %>
+    <div class="message system-message item-found">
+      <strong>You found: <%= @item.name %>!</strong>
+      <p><%= @item.description %></p>
+    </div>
+  <% end %>
+<% end %>
