@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
       response = @ruby_llm_chat
-        .with_instructions(system_prompt)
+        .with_instructions(system_prompt(@message))
         .ask(@message.content)
 
       raw = response.content
@@ -24,6 +24,7 @@ class MessagesController < ApplicationController
       # message = json["message"]
       item    = json["item_transferred"]
       extract_found_item_name(item)
+      @message.room.reload
 
       @answer = Message.new(content: raw)
       @answer.role = "assistant"
@@ -113,6 +114,26 @@ private
 end
 
 
+  # prompt = "
+  #   STRICT RULES
+  #   1. NEVER invent rooms, items, suspects, or events not listed above
+  #   2. NEVER reveal hidden info unless player takes specific action to discover it
+  #   3. NEVER confirm or deny who the killer is
+  #   4. If player asks about something not in context, say you don't see/know that
+  #   5. Stay in character - respond as the suspect if player addresses them
+  #   6. Keep responses concise (2-4 sentences max)
+
+  #   #RESPONSE FORMAT (mandatory)
+  #   Return ONLY valid JSON, no other text:
+  #   {
+  #     \"message\": \"your narrative response here\",
+  #     \"item_transferred\": null
+  #   }
+
+  #   - item_transferred: Use EXACT item name from 'Items in Room' list, or null
+  #   - NEVER invent items - only use: #{message.room.items.pluck(:name).join(', ') || 'none'}
+  #   - If player doesn't explicitly finds or receive an item, use null"
+
   def extract_found_item_name(text)
     # Cherche d'abord dans la room
     @item = @message.room.items.find_by(name: text)
@@ -128,6 +149,10 @@ end
         @message.room.update(item_found: true)
       end
     end
+  end
+
+  def params_message
+    params.require(:message).permit(:room_id, :content, :game_id, )
   end
 
 end

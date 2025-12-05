@@ -40,7 +40,9 @@
 
         <div class="col-2">
           <div class="sidebar p-3">
-            <%= render "shared/sidebar", rooms: @rooms %>
+            <%= turbo_frame_tag "sidebar" do %>
+              <%= render "shared/sidebar", rooms: @rooms %>
+            <% end %>
           </div>
         </div>
       </div>
@@ -54,10 +56,12 @@
       <div class="image-holder p-3">
         <h2>The <%= @room.name%> </h2>
         <hr>
-        <% if @room.item_found %>
-          <img src="<%= @room.after_picture_url %>" alt="<%= @room.name%>">
-        <% else %>
-          <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>">
+        <%= turbo_frame_tag "room_image" do %>
+          <% if @room.item_found%>
+            <img src="<%= @room.after_picture_url %>" alt="<%= @room.name%>">
+          <% else %>
+            <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>">
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -65,17 +69,19 @@
 
   <%# Inventory %>
   <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
-    <% @game.items.each do |item| %>
-      <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
-        <img
-          src="<%= item.picture_url %>"
-          alt="Picture of <%= item.name %>"
-          class="clue-image">
+    <%= turbo_frame_tag "inventory" do %>
+      <% @game.items.each do |item| %>
+        <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
+          <img
+            src="<%= item.picture_url %>"
+            alt="Picture of <%= item.name %>"
+            class="clue-image">
 
-        <% unless item.found %>
-          <div class="clue-mask">?</div>
-        <% end %>
-      </div>
+          <% unless item.found %>
+            <div class="clue-mask">?</div>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 
