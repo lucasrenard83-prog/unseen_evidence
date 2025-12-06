@@ -1,0 +1,45 @@
+.map {
+  display: flex ;
+  flex-direction: column;
+  align-items: center;
+  border: 3px black double ;
+  padding: 4px;
+  text-align: center;
+}
+
+.floor {
+  margin-top: 8px;
+
+  width: 100% ;
+  padding: 2px;
+}
+
+.bottom {
+  display: flex ;
+  justify-content: space-between ;
+  align-items: stretch;
+}
+
+.left, .middle, .right {
+  flex: 1;
+}
+
+.left .room, .middle .room {
+  height: 100%;
+}
+
+.right .room {
+height: 40px;
+}
+
+.room {
+  width: 100%;
+  border: 2px grey solid ;
+  margin-top: 3px ;
+  display: block;
+}
+
+.closed {
+  text-decoration: line-through;
+  color: grey;
+}
