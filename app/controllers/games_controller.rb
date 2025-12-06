@@ -50,8 +50,7 @@ class GamesController < ApplicationController
     room_correct = params[:room] == "Greenhouse"
     weapon_correct = params[:weapon] == "Kitchen knife"
 
-    if killer_correct && room_correct && weapon_correct
-    else
+    unless killer_correct && room_correct && weapon_correct
       redirect_to room_path(@game.rooms.first), notice: "Wrong Accusation"
     end
 
