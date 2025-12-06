@@ -1,3 +1,4 @@
+document.addEventListener("turbo:load", () => {
 const form = document.getElementById("form")
 const weapon = document.getElementById("weapon")
 const killer = document.getElementById("killer")
@@ -12,4 +13,5 @@ form.addEventListener("submit", (event) =>{
     event.preventDefault()
     victory.classList.remove("d-none")
   }
+})
 })
