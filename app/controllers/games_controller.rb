@@ -46,13 +46,11 @@ class GamesController < ApplicationController
 
   def confront
     @game = Game.find(params[:id])
-
     killer_correct = params[:killer] == "Mr. Rook"
     room_correct = params[:room] == "Greenhouse"
     weapon_correct = params[:weapon] == "Kitchen knife"
 
     if killer_correct && room_correct && weapon_correct
-      redirect_to room_path(@game.rooms.first), notice: "Congratulations"
     else
       redirect_to room_path(@game.rooms.first), notice: "Wrong Accusation"
     end
