@@ -1,10 +1,10 @@
 <%= turbo_frame_tag dom_id(message) do %>
   <% if message.role == "user" %>
-    <div class="justify-content-end mb-2 px-3 pb-0 pt-3 chat-border" style="color: blue">
+    <div class="message-user mb-2 px-3 pb-0 pt-3">
       <%= simple_format(message.content) %>
     </div>
   <% elsif message.role == "assistant" %>
-    <div class="justify-content-start mb-5 px-3 pb-0 pt-3 reponse-ia">
+    <div class="message-ai mb-5 px-3 pb-0 pt-3">
       <%= simple_format(message.content) %>
     </div>
   <% end %>

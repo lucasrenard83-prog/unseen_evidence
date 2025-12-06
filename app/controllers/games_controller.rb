@@ -13,7 +13,11 @@ class GamesController < ApplicationController
   def create
     @game = current_user.games.build
     # Default scenario to provide context to the LLM
-    @game.scenario = "A mysterious murder occurred in a Victorian manor. As a medium investigator, you must uncover the truth by exploring rooms, questioning suspects, and gathering evidence. The victim was found dead in the entrance hall, and all suspects remain in the house."
+    @game.scenario = "A mysterious murder occurred in a Victorian manor.
+    As a medium investigator, you must uncover the truth by exploring rooms,
+    questioning suspects, and gathering evidence.
+    The victim was found dead in the entrance hall,
+    and all suspects remain in the house."
     @game.secret_scenario = ""
     if @game.save
       rooms_init(@game)

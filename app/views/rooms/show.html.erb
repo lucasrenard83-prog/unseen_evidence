@@ -13,7 +13,7 @@
   <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
     <div class="show-body pt-3 paper-color mx-3 mb-5">
       <div class="row">
-        <div class="col-10">
+        <div class="col-9">
           <div class="room-main p-3">
             <h2>The <%= @room.name %></h2>
             <hr>
@@ -38,10 +38,10 @@
           </div>
         </div>
 
-        <div class="col-2">
+        <div class="col-3">
           <div class="sidebar p-3">
             <%= turbo_frame_tag "sidebar" do %>
-              <%= render "shared/sidebar", rooms: @rooms %>
+              <%= render "shared/map", rooms: @rooms %>
             <% end %>
           </div>
         </div>
@@ -87,7 +87,7 @@
 
   <%# Confrontation %>
   <div class="tab-pane fade" id="nav-confront" role="tabpanel" aria-labelledby="nav-confront-tab" tabindex="0">
-    <div class="pt-3 mx-3 paper-color">
+    <div class="how-body pt-3 mx-3 paper-color">
       <h2>Conclusion of the investigation</h2>
 
       <%= form_tag confront_game_path(@game), method: :post do %>
