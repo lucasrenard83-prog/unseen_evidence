@@ -5,7 +5,7 @@
 
       <!-- ATTIC FLOOR -->
       <div class="floor-level">
-        <div class="level-label">1th Floor</div>
+        <div class="level-label">1st Floor</div>
         <div class="attic-floor">
           <% room = rooms.find_by(name: "Attic")%>
           <%= link_to room.name, room_path(room), class: "room attic-room", data: { turbo_frame: "_top" } %>
