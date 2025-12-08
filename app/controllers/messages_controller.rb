@@ -125,7 +125,6 @@ private
     If the player finds or receives an item, use the find_item tool with the exact item name.
     Do not give two items in the same message, only give them one by one.
     NEVER invent items - only use: #{all_items.join(', ').presence || 'none'}
-
     "
   end
 
