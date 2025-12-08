@@ -18,9 +18,7 @@
             <%= turbo_frame_tag "messages" do %>
               <h2>The <%= @room.name %></h2>
               <hr>
-
-            <div id="chatbox" class="col-md-6 border mb-2" data-controller="chat" style="width:100%">
-              <%= turbo_frame_tag "messages" do %>
+              <div id="chatbox" class="col-md-6 border mb-2" data-controller="chat" style="width:100%">
                 <div class="messages" id="messages-list" data-chat-target="messages">
                   <% @messages.each do |message| %>
                     <%= render "messages/message", message: message %>
