@@ -1,8 +1,8 @@
 // Specific CSS for your home-page
 .show-body {
   display: flex;
-  border-radius: 10px;
-  height: (100vh);
+  margin-bottom: 15px;
+  border-radius: 15px;
 }
 
 .sign-up-body {
@@ -24,4 +24,11 @@
   margin-top: 8px;
   padding: 30px;
   opacity: 95%;
+}
+
+.folder_holder {
+  display: flex;
+  border-radius: 15px;
+  max-width: 75%;
+  margin-bottom: 15px;
 }
