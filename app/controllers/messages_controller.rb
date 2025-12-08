@@ -36,15 +36,12 @@ class MessagesController < ApplicationController
       end
 
       if @find_item_tool.result
+        # Rails.logger.info "=== FIND ITEM TOOL RESULT: #{@find_item_tool.result.inspect} ==="
         extract_found_item_name(@find_item_tool.result)
+        # Rails.logger.info "=== @item after extract: #{@item.inspect} ==="
       end
 
       raw = response.content
-      # json = JSON.parse(raw)
-
-      # message = json["message"]
-      # item    = json["item_transferred"]
-      # extract_found_item_name(item)
       @message.room.reload
 
       @answer = Message.new(content: raw)
