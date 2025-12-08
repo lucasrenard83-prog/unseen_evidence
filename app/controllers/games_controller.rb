@@ -23,7 +23,6 @@ class GamesController < ApplicationController
       rooms_init(@game)
       personas_init
       items_init(@game)
-      # items_init  # Commented out: items require room_id (NOT NULL)
       redirect_to room_path(@game.rooms.find_by!(name: "Hall"))
     else
       render :new, status: :unprocessable_entity
@@ -181,7 +180,7 @@ class GamesController < ApplicationController
         Light seeps through loose tiles in thin dusty beams.
         At the center lies a toppled chair and a circular mark on the floor,
         signs of something that happened here… whatever it was.
-        Mr.Rook a broad, tall and severe looking figure observes you from the back of the room.",
+        Mr. Rook a broad, tall and severe looking figure observes you from the back of the room.",
         ai_guideline: "If the player looks at the wooden beam near the ceiling, the 'Rope' can be found.
         Rook is guilty, he has lost his 'Revolver' during his escape from the Greenhouse so he used the 'Kitchen knife' to finish the murder. ",
         item_found: false,

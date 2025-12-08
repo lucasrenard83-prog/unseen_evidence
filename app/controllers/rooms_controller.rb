@@ -10,7 +10,7 @@ class RoomsController < ApplicationController
 
     # Only create intro message if this is the first time visiting this room
     if @room.messages.count == 0
-      intro_msg = "Entering #{@room.name}. #{@room.description}"
+      intro_msg = "Entering the #{@room.name}.<br> #{@room.description}"
       Message.create(
         role: "assistant",
         content: intro_msg,
@@ -18,6 +18,17 @@ class RoomsController < ApplicationController
         game: @game,
         persona: Persona.find_by(room: @room)
       )
+    else
+      last_game_message = @game.messages.order(:created_at).last
+      unless last_game_message.room_id == @room.id
+        Message.create(
+        role: "assistant",
+        content: "Entering the #{@room.name}.",
+        room: @room,
+        game: @game,
+        persona: Persona.find_by(room: @room)
+      )
+      end
     end
 
     # Load messages for this room only
