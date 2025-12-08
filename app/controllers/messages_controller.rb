@@ -13,10 +13,23 @@ class MessagesController < ApplicationController
     # Save message and trigger the answer
     if @message.save
       @ruby_llm_chat = RubyLLM.chat
+
+      # tool set to change room when detected
+      @change_room_tool = ChangeRoomTool.new
+      @ruby_llm_chat.with_tool(@change_room_tool)
+
       build_conversation_history
       response = @ruby_llm_chat
         .with_instructions(system_prompt)
         .ask(@message.content)
+
+      if @change_room_tool.result
+        new_room = @message.game.rooms.find_by(name: @change_room_tool.result)
+        if new_room&.open
+          redirect_to room_path(new_room), allow_other_host: false
+          return
+        end
+      end
 
       raw = response.content
       json = JSON.parse(raw)
@@ -99,6 +112,9 @@ private
     4. If player asks about something not in context, say you don't see/know that
     5. Stay in character - respond as the suspect if player addresses them
     6. Keep responses concise (2-4 sentences max)
+
+    If the player wants to move to another room, use the change_room tool with the room name.
+
 
     #RESPONSE FORMAT (mandatory)
     Return ONLY valid JSON, no other text:
