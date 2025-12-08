@@ -23,7 +23,6 @@ class GamesController < ApplicationController
       rooms_init(@game)
       personas_init
       items_init(@game)
-      # items_init  # Commented out: items require room_id (NOT NULL)
       redirect_to room_path(@game.rooms.find_by!(name: "Hall"))
     else
       render :new, status: :unprocessable_entity
