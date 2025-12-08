@@ -15,8 +15,9 @@
       <div class="row">
         <div class="folder_holder">
           <div class="room-main p-3" style="width:750px">
-            <h2>The <%= @room.name %></h2>
-            <hr>
+            <%= turbo_frame_tag "messages" do %>
+              <h2>The <%= @room.name %></h2>
+              <hr>
 
             <div id="chatbox" class="col-md-6 border mb-2" data-controller="chat" style="width:100%">
               <%= turbo_frame_tag "messages" do %>
@@ -25,16 +26,16 @@
                     <%= render "messages/message", message: message %>
                   <% end %>
                 </div>
-              <% end %>
 
-              <div id="new_message_container">
-                <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
-                  <%= f.hidden_field :room_id, value: @room.id %>
-                  <%= f.input :content, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
-                  <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
-                <% end %>
+                <div id="new_message_container">
+                  <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
+                    <%= f.hidden_field :room_id, value: @room.id %>
+                    <%= f.input :content, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
+                    <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
+                  <% end %>
+                </div>
               </div>
-            </div>
+            <% end %>
           </div>
         </div>
 
