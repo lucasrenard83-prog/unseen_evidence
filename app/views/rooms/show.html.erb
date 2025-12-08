@@ -95,22 +95,22 @@
       <img src="app/assets/images/rooms/after_hall.png">
       <h2>Conclusion of the investigation</h2>
 
-      <%= form_tag confront_game_path(@game), id:"form", method: :post do %>
-        <select name="killer" id="killer">
+      <%= form_tag confront_game_path(@game), method: :post, data:{action: "submit->victori#hasWin"} do %>
+        <select name="killer" data-victori-target="killer">
           <option value="">Select the killer...</option>
           <% @personas.each do |persona| %>
             <option value="<%= persona.name %>"><%= persona.name %></option>
           <% end %>
         </select>
 
-        <select name="room" id="room">
+        <select name="room" data-victori-target="room">
           <option value="">Select the room...</option>
           <% @rooms.each do |room| %>
             <option value="<%= room.name %>"><%= room.name %></option>
           <% end %>
         </select>
 
-        <select name="weapon" id="weapon">
+        <select name="weapon" data-victori-target="weapon">
           <option value="">Select the weapon...</option>
           <option value="Kitchen knife">Kitchen knife</option>
           <option value="Revolver">Revolver</option>
@@ -131,9 +131,3 @@
   </div>
 </div>
 </div>
-
-<%= turbo_frame_tag "popup" do %>
-  <div id="img-popup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7);  justify-content:center; align-items:center; z-index:9999;">
-    <img id="img-popup-img" src="" alt="" style="max-width:90vw; max-height:90vh;">
-  </div>
-<% end %>
