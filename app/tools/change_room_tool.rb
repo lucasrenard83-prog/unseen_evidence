@@ -2,7 +2,8 @@ class ChangeRoomTool < RubyLLM::Tool
   attr_accessor :result
 
   # text sent to AI to let it know the role of the tool
-  description "Moves the player to another room in the manor"
+  description "Player leaves current room.
+  Use when they say: go, walk, head to, leave, exit, move to [room]"
 
   param :room_name,
     type: :string,
