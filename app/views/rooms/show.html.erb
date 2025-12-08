@@ -11,14 +11,14 @@
 
   <%# Chat Box %>
   <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
-    <div class="show-body pt-3 paper-color mx-3 mb-5">
+    <div class="show-body pt-3 paper-color mx-3">
       <div class="row">
-        <div class="col-9">
+        <div class="folder_holder">
           <div class="room-main p-3" style="width:750px">
             <h2>The <%= @room.name %></h2>
             <hr>
 
-            <div id="chatbox" class="col-md-6 border" data-controller="chat" style="width:100%">
+            <div id="chatbox" class="col-md-6 border mb-2" data-controller="chat" style="width:100%">
               <%= turbo_frame_tag "messages" do %>
                 <div class="messages" id="messages-list" data-chat-target="messages">
                   <% @messages.each do |message| %>
