@@ -1,0 +1,43 @@
+<h2>Map</h2>
+<hr>
+
+<div class="map">
+  <div class="floor">
+    <% room = rooms.find_by(name: "Attic")%>
+    <%= link_to room.name, room_path(room), class: "room", data: { turbo_frame: "_top" } %>
+  </div>
+  <div class="floor">
+    <div class="top">
+      <% room = rooms.find_by(name: "Greenhouse")%>
+      <% if room.open %>
+        <%= link_to room.name, room_path(room), class: "room", data: { turbo_frame: "_top" } %>
+      <% else %>
+        <div class="room closed"><%= room.name %></div>
+      <% end %>
+    </div>
+    <div class="bottom">
+      <div class="left">
+        <% room = rooms.find_by(name: "Kitchen")%>
+        <%= link_to room.name, room_path(room), class: "room", data: { turbo_frame: "_top" } %>
+      </div>
+      <div class="middle">
+        <% room = rooms.find_by(name: "Hall")%>
+        <%= link_to room.name, room_path(room), class: "room", data: { turbo_frame: "_top" } %>
+      </div>
+      <div class="right">
+        <% room = rooms.find_by(name: "Study")%>
+        <%= link_to room.name, room_path(room), class: "room", data: { turbo_frame: "_top" } %>
+        <% room = rooms.find_by(name: "Library")%>
+        <%= link_to room.name, room_path(room), class: "room", data: { turbo_frame: "_top" } %>
+      </div>
+    </div>
+  </div>
+  <div class="floor">
+    <% room = rooms.find_by(name: "Cellar")%>
+    <% if room.open %>
+      <%= link_to room.name, room_path(room), class: "room", data: { turbo_frame: "_top" } %>
+    <% else %>
+      <div class="room closed"><%= room.name %></div>
+    <% end %>
+  </div>
+</div>

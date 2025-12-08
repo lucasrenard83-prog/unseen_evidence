@@ -13,12 +13,12 @@
   <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
     <div class="show-body pt-3 paper-color mx-3 mb-5">
       <div class="row">
-        <div class="col-10">
-          <div class="room-main p-3">
+        <div class="col-9">
+          <div class="room-main p-3" style="width:750px">
             <h2>The <%= @room.name %></h2>
             <hr>
 
-            <div id="chatbox" class="col-md-6 border" data-controller="chat">
+            <div id="chatbox" class="col-md-6 border" data-controller="chat" style="width:100%">
               <%= turbo_frame_tag "messages" do %>
                 <div class="messages" id="messages-list" data-chat-target="messages">
                   <% @messages.each do |message| %>
@@ -38,10 +38,10 @@
           </div>
         </div>
 
-        <div class="col-2">
+        <div class="col-3">
           <div class="sidebar p-3">
             <%= turbo_frame_tag "sidebar" do %>
-              <%= render "shared/sidebar", rooms: @rooms %>
+              <%= render "shared/map", rooms: @rooms %>
             <% end %>
           </div>
         </div>
@@ -87,25 +87,25 @@
 
   <%# Confrontation %>
   <div class="tab-pane fade" id="nav-confront" role="tabpanel" aria-labelledby="nav-confront-tab" tabindex="0">
-    <div class="pt-3 mx-3 paper-color">
+    <div class="how-body pt-3 mx-3 paper-color">
       <h2>Conclusion of the investigation</h2>
 
-      <%= form_tag confront_game_path(@game), method: :post do %>
-        <select name="killer">
+      <%= form_tag confront_game_path(@game), id:"form", method: :post do %>
+        <select name="killer" id="killer">
           <option value="">Select the killer...</option>
           <% @personas.each do |persona| %>
             <option value="<%= persona.name %>"><%= persona.name %></option>
           <% end %>
         </select>
 
-        <select name="room">
+        <select name="room" id="room">
           <option value="">Select the room...</option>
           <% @rooms.each do |room| %>
             <option value="<%= room.name %>"><%= room.name %></option>
           <% end %>
         </select>
 
-        <select name="weapon">
+        <select name="weapon" id="weapon">
           <option value="">Select the weapon...</option>
           <option value="Kitchen knife">Kitchen knife</option>
           <option value="Revolver">Revolver</option>
@@ -116,11 +116,9 @@
       <%= submit_tag "Submit Accusation", class: "btn btn-danger" %>
       <% end %>
 
-      <%# Victory OR Defeat %>
-
-
-    <% %>
+      <div id = "victory" class="d-none">
     <%= render "shared/victory" %>
+      </div>
 
     <%# if win --> render _victory %>
     <%# elseif render_defeat %>

@@ -27,7 +27,7 @@
 <% end %>
 
 <%= turbo_stream.replace "sidebar" do %>
-  <%= render "shared/sidebar", rooms: @message.game.rooms.reload.order(:position) %>
+  <%= render "shared/map", rooms: @message.game.rooms.reload.order(:position) %>
 <% end %>
 
 <% if @item %>
