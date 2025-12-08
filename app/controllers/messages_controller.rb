@@ -18,6 +18,10 @@ class MessagesController < ApplicationController
       @change_room_tool = ChangeRoomTool.new
       @ruby_llm_chat.with_tool(@change_room_tool)
 
+      # tool set to change item status when found >> true
+      @find_item_tool = FindItemTool.new
+      @ruby_llm_chat.with_tool(@find_item_tool)
+
       build_conversation_history
       response = @ruby_llm_chat
         .with_instructions(system_prompt)
@@ -31,15 +35,19 @@ class MessagesController < ApplicationController
         end
       end
 
-      raw = response.content
-      json = JSON.parse(raw)
+      if @find_item_tool.result
+        extract_found_item_name(@find_item_tool.result)
+      end
 
-      message = json["message"]
-      item    = json["item_transferred"]
-      extract_found_item_name(item)
+      raw = response.content
+      # json = JSON.parse(raw)
+
+      # message = json["message"]
+      # item    = json["item_transferred"]
+      # extract_found_item_name(item)
       @message.room.reload
 
-      @answer = Message.new(content: message)
+      @answer = Message.new(content: raw)
       @answer.role = "assistant"
       @answer.game = @message.game
       @answer.room = @message.room
@@ -114,38 +122,13 @@ private
     6. Keep responses concise (2-4 sentences max)
 
     If the player wants to move to another room, use the change_room tool with the room name.
+    If the player finds or receives an item, use the find_item tool with the exact item name.
+    Do not give two items in the same message, only give them one by one.
+    NEVER invent items - only use: #{all_items.join(', ').presence || 'none'}
 
+    "
+  end
 
-    #RESPONSE FORMAT (mandatory)
-    Return ONLY valid JSON, no other text:
-    {
-      \"message\": \"your narrative response here\",
-      \"item_transferred\": null
-    }
-
-- item_transferred: Use EXACT item name from 'Items Available' list, or null
-  - NEVER invent items - only use: #{all_items.join(', ').presence || 'none'}
-  - If player doesn't explicitly find or receive an item, use null
-  "
-end
-
-
-  # def extract_found_item_name(text)
-  #   # Cherche d'abord dans la room
-  #   @item = @message.room.items.find_by(name: text)
-
-  #   # Si pas trouvé, cherche dans les items du persona
-  #   @item ||= @message.persona&.items&.find_by(name: text)
-
-  #   if @item
-  #     @item.update(found: true)
-
-  #     # Mettre à jour le flag de la room si l'item appartient à cette room
-  #     if @item.room_id == @message.room.id
-  #       @message.room.update(item_found: true)
-  #     end
-  #   end
-  # end
 
   def extract_found_item_name(text)
     @item = @message.room.items.find_by(name: text)
