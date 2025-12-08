@@ -1,8 +1,11 @@
 // Specific CSS for your home-page
 .show-body {
   display: flex;
+  justify-content: center;
   margin-bottom: 15px;
   border-radius: 15px;
+  max-width: 1300px;
+  
 }
 
 .sign-up-body {
@@ -31,4 +34,24 @@
   border-radius: 15px;
   max-width: 75%;
   margin-bottom: 15px;
+}
+
+.image-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.dimension {
+  width: 600px;
+  height: 600px;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  padding: 15px;
+  width: 900px;
 }
