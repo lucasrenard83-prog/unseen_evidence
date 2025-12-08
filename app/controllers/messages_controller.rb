@@ -40,7 +40,7 @@ class MessagesController < ApplicationController
         raise
       end
     else
-      raise
+      redirect_to room_path(@message.room)
     end
   end
 
