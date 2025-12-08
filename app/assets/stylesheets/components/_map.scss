@@ -1,45 +1,164 @@
-.map {
-  display: flex ;
+// Floor Plan - Cluedo Theme
+
+.floor-plan-container {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.floor-plan-frame {
+  background: #f8f8f8;
+  padding: 14px 17px;
+  border: 1px solid #000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+.floor-plan {
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  border: 3px black double ;
-  padding: 4px;
-  text-align: center;
+  gap: 6px;
+  position: relative;
 }
 
-.floor {
+.floor-level {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.level-label {
+  font-size: 0.6rem;
+  color: #333;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 2px;
+  padding-bottom: 1px;
+  border-bottom: 0.6px solid #000;
+  display: inline-block;
+  width: fit-content;
+}
+
+// Floor Plans
+.attic-floor {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  width: 91px;
+  margin: 0 auto;
+}
+
+.ground-floor {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2px;
+  grid-template-areas:
+    "hall library"
+    "kitchen study";
+  width: 186px;
+}
+
+.cellar-floor {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  width: 91px;
+  margin: 0 auto;
+}
+
+.exterior-level {
   margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1.1px dashed #000;
 
-  width: 100% ;
-  padding: 2px;
+  .level-label {
+    color: #666;
+  }
 }
 
-.bottom {
-  display: flex ;
-  justify-content: space-between ;
-  align-items: stretch;
+.exterior-floor {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  width: 91px;
+  margin: 0 auto;
 }
 
-.left, .middle, .right {
-  flex: 1;
-}
-
-.left .room, .middle .room {
-  height: 100%;
-}
-
-.right .room {
-height: 40px;
-}
-
+// Room Base
 .room {
+  background: $purple;
+  padding: 7px 5.7px;
+  min-height: 28.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 0.85px solid #000;
+  cursor: pointer;
   width: 100%;
-  border: 2px grey solid ;
-  margin-top: 3px ;
-  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: $yellow;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  position: relative;
+  box-shadow: 0.6px 0.6px 0 rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: lighten($purple, 8%);
+    box-shadow: 0 0 5.7px rgba($yellow, 0.6);
+    transform: translateY(-0.6px);
+  }
+
+  &.closed {
+    text-decoration: line-through;
+    color: red;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
-.closed {
-  text-decoration: line-through;
-  color: grey;
+// Grid Areas
+.hall { grid-area: hall; }
+.library { grid-area: library; }
+.study { grid-area: study; }
+.kitchen { grid-area: kitchen; }
+
+// Room Variants
+.attic-room {
+  background: lighten($purple, 3%);
+}
+
+.greenhouse-room {
+  border-style: dashed;
+  border-width: 0.85px;
+  background: darken($purple, 3%);
+  min-height: 28.5px;
+}
+
+.cellar-room {
+  background: darken($purple, 8%);
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .ground-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+    "hall library"
+    "study study"
+    "kitchen kitchen";
+  }
+
+  .room {
+    font-size: 0.9rem;
+    // padding: 20px 15px;
+    min-height: 100px;
+  }
 }

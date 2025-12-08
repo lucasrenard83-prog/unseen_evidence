@@ -1,10 +1,13 @@
 // SCSS VICTORY
 .txt {
-  border: 4mm ridge rgba(211, 220, 50, 0.6);
+  margin: 50px;
+  padding: 100px;
+  border: 4mm ridge $yellow;
   text-align: center;
 
   h2 {
-    font-size: $headers-font;
+    padding: 50px;
+    font-family: $headers-font;
   }
 }
 .more {
@@ -12,5 +15,14 @@
   justify-content: space-between;
   padding: 30px;
   margin: 30px;
+
+  .credits {
+    justify-content: space-between;
+  }
+
+  .anecdotes p{
+    justify-content: flex-end;
+    padding: 50px;
+  }
 
 }
