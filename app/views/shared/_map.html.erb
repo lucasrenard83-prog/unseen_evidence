@@ -36,9 +36,11 @@
         <div class="cellar-floor">
           <% cellar = rooms.find_by(name: "Cellar")%>
           <% if cellar.open %>
-            <%= link_to cellar.name, room_path(cellar), class: "room cellar-room", data: { turbo_frame: "_top" } %>
+            <%= link_to room_path(cellar), class: "room cellar-room", data: { turbo_frame: "_top" } do %>
+              <%= cellar.name %><span class="room-lock unlocked"><i class="fa-solid fa-door-open" style="color: #FFD43B;"></i></span>
+            <% end %>
           <% else %>
-            <div class="room cellar-room closed"><%= cellar.name %></div>
+            <div class="room cellar-room closed"><%= cellar.name %><span class="room-lock locked">🔒</span></div>
           <% end %>
         </div>
       </div>
@@ -49,9 +51,11 @@
         <div class="exterior-floor">
           <% greenhouse = rooms.find_by(name: "Greenhouse")%>
           <% if greenhouse.open %>
-            <%= link_to greenhouse.name, room_path(greenhouse), class: "room greenhouse-room", data: { turbo_frame: "_top" } %>
+            <%= link_to room_path(greenhouse), class: "room greenhouse-room", data: { turbo_frame: "_top" } do %>
+              <%= greenhouse.name %><span class="room-lock unlocked"><i class="fa-solid fa-door-open" style="color: #FFD43B;"></i></span>
+            <% end %>
           <% else %>
-            <div class="room greenhouse-room closed"><%= greenhouse.name %></div>
+            <div class="room greenhouse-room closed"><%= greenhouse.name %><span class="room-lock locked">🔒</span></div>
           <% end %>
         </div>
       </div>
