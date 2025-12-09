@@ -106,18 +106,27 @@
   flex-shrink: 0;
   padding: 1rem;
   border-top: 1px solid $light-gray;
+
+
 }
 
 .input-with-mic {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  position: relative;
 
   .string {
-    flex: 1;
+    width: 100%;
+
+    input {
+      padding-right: 45px; // Space for mic icon
+    }
   }
 
   .mic-button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+
     flex-shrink: 0;
     background: linear-gradient(135deg, $purple, darken($purple, 10%));
     border: none;
