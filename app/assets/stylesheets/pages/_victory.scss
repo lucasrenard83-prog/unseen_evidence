@@ -1,28 +1,309 @@
-// SCSS VICTORY
-.txt {
-  margin: 50px;
-  padding: 100px;
-  border: 4mm ridge $yellow;
-  text-align: center;
+// Styles page victoire
 
-  h2 {
-    padding: 50px;
-    font-family: $headers-font;
+// keyframes pour le glow du titre
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 20px rgba(255, 215, 0, 0.8),
+      0 0 40px rgba(255, 215, 0, 0.6),
+      0 0 60px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(255, 215, 0, 1),
+      0 0 60px rgba(255, 215, 0, 0.8),
+      0 0 90px rgba(255, 215, 0, 0.6);
   }
 }
+
+// pas utilisé mais on garde au cas où
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+// effet brillance sur le texte
+@keyframes shine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+// carte principale
+.txt {
+  position: relative;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 60px 40px;
+  text-align: center;
+  z-index: 1;
+
+  // fond avec effet flou
+  background: linear-gradient(
+    135deg,
+    rgba(75, 0, 130, 0.15) 0%,
+    rgba(26, 26, 26, 0.9) 50%,
+    rgba(75, 0, 130, 0.15) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  box-shadow:
+    0 0 0 3px rgba(255, 215, 0, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 0 60px rgba(75, 0, 130, 0.1);
+
+  // bordure dégradée derrière
+  &::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    z-index: -1;
+    border-radius: 22px;
+    opacity: 0.7;
+    background: conic-gradient(
+      from 0deg,
+      $yellow,
+      $purple,
+      $yellow,
+      $purple,
+      $yellow
+    );
+  }
+
+  // fond sombre par dessus le dégradé
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    border-radius: 18px;
+    background: $bg-dark;
+  }
+
+  h1 {
+    font-family: $merry;
+    font-size: 3.5rem;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+
+    // dégradé doré sur le texte
+    background: linear-gradient(
+      90deg,
+      $yellow 0%,
+      #fff8dc 25%,
+      $yellow 50%,
+      #fff8dc 75%,
+      $yellow 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation:
+      glow-pulse 2s ease-in-out infinite,
+      shine 3s linear infinite;
+  }
+
+  h3 {
+    font-family: $headers-font;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: $text-primary;
+    opacity: 0.9;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    font-family: $headers-font;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: $text-primary;
+    text-align: left;
+    padding: 30px;
+    margin: 20px 0;
+    border-radius: 12px;
+    border-left: 4px solid $yellow;
+    background: rgba(255, 215, 0, 0.05);
+  }
+}
+
+// footer avec credits et infos
 .more {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  padding: 30px;
-  margin: 30px;
+  align-items: flex-start;
+  gap: 30px;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 40px;
+  background: rgba(26, 26, 26, 0.6);
+  border-radius: 16px;
+  border: 1px solid $border-color;
 
+  > p {
+    width: 100%;
+    font-family: $merry;
+    font-size: 1.3rem;
+    color: $yellow;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  // liste des noms
   .credits {
-    justify-content: space-between;
+    flex: 1;
+    min-width: 200px;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      text-align: center;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    li {
+      font-family: $headers-font;
+      font-size: 0.95rem;
+      color: $text-primary;
+      padding: 10px 15px;
+      background: rgba(75, 0, 130, 0.2);
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(75, 0, 130, 0.4);
+        border-color: $purple;
+        transform: translateX(5px);
+      }
+    }
   }
 
-  .anecdotes p{
-    justify-content: flex-end;
-    padding: 50px;
+  .anecdotes-wrapper {
+    flex: 1.5;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
   }
 
+  // bouton info rond
+  .info-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid $purple;
+    background: rgba(75, 0, 130, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    svg {
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 0 8px rgba(75, 0, 130, 0.6));
+    }
+
+    &:hover {
+      background: rgba(75, 0, 130, 0.5);
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(75, 0, 130, 0.6);
+    }
+
+    &.active {
+      background: $purple;
+      box-shadow: 0 0 25px rgba(75, 0, 130, 0.8);
+
+      svg {
+        transform: rotate(180deg);
+
+        path {
+          fill: $yellow;
+        }
+      }
+    }
+  }
+
+  // panneau caché par défaut, s'ouvre au clic
+  .anecdotes {
+    width: 100%;
+    font-family: $headers-font;
+    font-size: 0.9rem;
+    color: $text-primary;
+    line-height: 1.6;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: all 0.4s ease;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 20px;
+
+    // quand on clique sur le bouton
+    &.open {
+      max-height: 200px;
+      opacity: 1;
+      padding: 20px;
+      border-color: rgba(104, 141, 117, 0.3);
+    }
+
+    i {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    em {
+      color: $vert;
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    p {
+      width: 100%;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid $border-color;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+// mobile
+@media (max-width: 768px) {
+  .txt {
+    margin: 20px;
+    padding: 40px 20px;
+
+    h1 { font-size: 2.5rem; }
+    h3 { font-size: 1.2rem; }
+    h2 {
+      font-size: 1rem;
+      padding: 20px;
+    }
+  }
+
+  .more {
+    flex-direction: column;
+    padding: 20px;
+  }
 }
