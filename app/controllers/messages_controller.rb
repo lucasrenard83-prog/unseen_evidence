@@ -90,11 +90,11 @@ private
   end
 
   def system_prompt
-    # Récupère les items de la room
-    room_items = @message.room.items.pluck(:name)
+    # Récupère les items de la room (non trouvés uniquement)
+    room_items = @message.room.items.where(found: false).pluck(:name)
 
-    # Récupère les items du persona présent (si existe)
-    persona_items = @message.persona&.items&.pluck(:name) || []
+    # Récupère les items du persona présent (non trouvés uniquement)
+    persona_items = @message.persona&.items&.where(found: false)&.pluck(:name) || []
 
     # Combine les deux listes
     all_items = (room_items + persona_items).uniq

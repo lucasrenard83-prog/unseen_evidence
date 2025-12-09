@@ -21,7 +21,7 @@ class GamesController < ApplicationController
     @game.secret_scenario = ""
     if @game.save
       rooms_init(@game)
-      personas_init
+      personas_init(@game)
       items_init(@game)
       redirect_to room_path(@game.rooms.find_by!(name: "Hall"))
     else
@@ -191,7 +191,7 @@ class GamesController < ApplicationController
     rooms_data.each { |room| game.rooms.create!(room)}
   end
 
-  def personas_init
+  def personas_init(game)
     persona_data = [
       { name: "Mrs. Queen",
         description: "Graceful, eloquent, and dangerously observant.
@@ -202,7 +202,7 @@ class GamesController < ApplicationController
         ai_guideline: "She deliberately misleads the investigator to prove mediums are frauds who cannot solve murders.
         She is innocent but acts suspiciously - an obvious red herring.",
         item_given: false,
-        room: @game.rooms.find_by!(name: "Library")
+        room: game.rooms.find_by!(name: "Library")
       },
       { name: "Mrs. Cavaleer",
         description: "Restless energy wrapped in a confident grin.
@@ -216,7 +216,7 @@ class GamesController < ApplicationController
         Her charisma makes her seem suspicious, but she's innocent.
         She gives the key if player is respectful/kind (Mr. King can advise this approach).",
         item_given: false,
-        room: @game.rooms.find_by!(name: "Kitchen")
+        room: game.rooms.find_by!(name: "Kitchen")
       },
       { name: "Mrs. Pawn",
         description: "Young, timid, and often ignored; exactly how she prefers it.
@@ -228,7 +228,7 @@ class GamesController < ApplicationController
         She has the 'Revolver'. She saw a tall shadow (the killer) but doesn't know their identity.
         This is a crucial clue - the killer is tall (narrows to Mr. Rook or Mr. King).",
         item_given: false,
-        room: @game.rooms.find_by!(name: "Greenhouse")
+        room: game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
         description: "Solid as a wall and twice as immovable.
@@ -241,7 +241,7 @@ class GamesController < ApplicationController
         He lost his 'Revolver' fleeing the Greenhouse, used 'Kitchen knife' instead.
         He is tall (matches Pawn's description).",
         item_given: false,
-        room: @game.rooms.find_by!(name: "Attic")
+        room: game.rooms.find_by!(name: "Attic")
       },
       { name: "Mr. Bishop",
         description: "Soft-spoken, with a calm that borders on unsettling.
@@ -253,7 +253,7 @@ class GamesController < ApplicationController
         ai_guideline: "Calm but unsettling demeanor creates constant trust/mistrust in the investigator.
         He is innocent but his behavior makes him suspicious - another red herring.",
         item_given: false,
-        room: @game.rooms.find_by!(name: "Hall")
+        room: game.rooms.find_by!(name: "Hall")
       },
       { name: "Mr. King",
         description: "A tall, imposing man whose presence fills the room long before he speaks.
@@ -262,14 +262,14 @@ class GamesController < ApplicationController
         His eyes—cold, calculating—measure everything and everyone. There's a quiet tension around him,
         as if he knows more than he will ever admit, and fears far more than he lets show.",
         ai_guideline: "Relaxed and trustworthy - the most helpful character.
-        Gives the 'Worn out paper' if player is polite.
+        Gives the 'Worn out paper' if player is polite or asks if he found anything.
         Reveals how to get 'Greenhouse key' from Cavaleer (be respectful/kind).
         He is innocent and genuinely helpful.",
         item_given: false,
-        room: @game.rooms.find_by!(name: "Study")
+        room: game.rooms.find_by!(name: "Study")
       }
     ]
-    persona_data.each { |persona| Persona.create!(persona)}
+    persona_data.each { |persona| Persona.create!(persona) }
   end
 
   def items_init(game)
@@ -284,7 +284,7 @@ class GamesController < ApplicationController
       { name: "Greenhouse key",
         description: "it is the key to the greenhouse.",
         # room: game.rooms.find_by!(name: "Kitchen"),
-        persona: Persona.find_by!(name: "Mrs. Cavaleer"),
+        persona: game.personas.find_by!(name: "Mrs. Cavaleer"),
         picture_url: helpers.image_url("items/greenhouse_key.png"),
         found: false
       },
@@ -298,7 +298,7 @@ class GamesController < ApplicationController
       { name: "Revolver",
       description: "An original piece, well decorated and taken care of.",
       # room: game.rooms.find_by!(name: "Study"),
-      persona: Persona.find_by!(name: "Mrs. Pawn"),
+      persona: game.personas.find_by!(name: "Mrs. Pawn"),
       picture_url: helpers.image_url("items/revolver.png"),
       found: false
       },
@@ -317,7 +317,7 @@ class GamesController < ApplicationController
       },
       { name: "Worn out paper",
       description: "A worn out piece of paper, only a number is written on it : '21'",
-      persona:  Persona.find_by!(name: "Mr. King"),
+      persona: game.personas.find_by!(name: "Mr. King"),
       picture_url: helpers.image_url("items/worn_out_paper.png"),
       found: false
       },
