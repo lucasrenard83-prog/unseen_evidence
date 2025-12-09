@@ -51,59 +51,102 @@
                     <%= f.input :content, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
                     <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
                   <% end %>
+<div class="main-page">
+
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link active paper-folder paper-color" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">Investigation</button>
+      <button class="nav-link paper-folder paper-color" id="nav-image-tab" data-bs-toggle="tab" data-bs-target="#nav-image" type="button" role="tab" aria-controls="nav-image" aria-selected="false">Inspect Room</button>
+      <button class="nav-link paper-folder paper-color" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false">Inventory</button>
+      <button class="nav-link paper-folder paper-color" id="nav-confront-tab" data-bs-toggle="tab" data-bs-target="#nav-confront" type="button" role="tab" aria-controls="nav-confront" aria-selected="false">Confrontation</button>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+
+    <%# Chat Box %>
+    <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
+      <div class="show-body pt-5 paper-color">
+          <div class="folder_holder">
+            <div class="room-main">
+              <%= turbo_frame_tag "messages" do %>
+                <h2 style="text-align:center">The <%= @room.name %></h2>
+                <hr>
+                <div id="chatbox" class="col-md-6 border mb-2" data-controller="chat" style="width:100%">
+                  <div class="messages" id="messages-list" data-chat-target="messages">
+                    <% @messages.each do |message| %>
+                      <%= render "messages/message", message: message %>
+                    <% end %>
+                  </div>
+
+                  <div id="new_message_container">
+                    <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
+                      <%= f.hidden_field :room_id, value: @room.id %>
+                      <%= f.input :content, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
+                      <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
+                    <% end %>
+                  </div>
                 </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="map-holder">
+            <h2 style="text-align:center">Map</h2>
+            <hr>
+            <div class="sidebar">
+              <%= turbo_frame_tag "sidebar" do %>
+                <%= render "shared/map", rooms: @rooms %>
+              <% end %>
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+
+    <%# Image of Rooms %>
+    <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab" tabindex="0">
+      <div class="show-body pt-3 paper-color">
+        <div class="image-holder p-3">
+          <h2>The <%= @room.name%> </h2>
+          <hr >
+          <%= turbo_frame_tag "room_image" do %>
+            <% if @room.item_found%>
+              <img src="<%= @room.after_picture_url %>" alt="<%= @room.name%>" class="dimension">
+            <% else %>
+              <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>" class="dimension">
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Inventory %>
+    <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
+      <div class="show-body pt-3 paper-color">
+          <%= turbo_frame_tag "inventory" do %>
+        <div  class="inventory-grid">
+            <% @game.items.each do |item| %>
+              <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
+                <img
+                  src="<%= item.picture_url %>"
+                  alt="Picture of <%= item.name %>"
+                  class="clue-image">
+
+                <% unless item.found %>
+                  <div class="clue-mask">?</div>
+                <% end %>
               </div>
             <% end %>
-          </div>
-        </div>
-
-        <div class="col-3">
-          <div class="sidebar p-3">
-            <%= turbo_frame_tag "sidebar" do %>
-              <%= render "shared/map", rooms: @rooms %>
-            <% end %>
-          </div>
+          <% end %>
         </div>
       </div>
-
     </div>
-  </div>
 
-  <%# Image of Rooms %>
-  <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab" tabindex="0">
-    <div class="show-body pt-3 mx-3 paper-color">
-      <div class="image-holder p-3">
-        <h2>The <%= @room.name%> </h2>
-        <hr>
-        <%= turbo_frame_tag "room_image" do %>
-          <% if @room.item_found%>
-            <img src="<%= @room.after_picture_url %>" alt="<%= @room.name%>">
-          <% else %>
-            <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>">
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <%# Inventory %>
-  <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
-    <%= turbo_frame_tag "inventory", data:{controller:"popup"} do %>
-      <% @game.items.each do |item|%>
-        <div class="clue-container <%= item.found ? 'found' : 'not-found' %>" data-popup-target="itemfound">
-
-          <img
-            src="<%= item.picture_url %>"
-            alt="Picture of <%= item.name %>"
-            class="clue-image">
-
-          <% unless item.found %>
-            <div class="clue-mask">?</div>
-          <% end %>
-
-          <div data-popup-target="imgpopup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7);  justify-content:center; align-items:center; z-index:9999;">
-            <img data-popup-target="imgpopupimg" src="" alt="" style="max-width:90vw; max-height:90vh;">
-          </div>
+    <%# Confrontation %>
+    <div class="tab-pane fade" id="nav-confront" role="tabpanel" aria-labelledby="nav-confront-tab" tabindex="0">
+      <div class="show-body pt-3 paper-color">
 
         </div>
       <% end %>

@@ -38,3 +38,21 @@
     </div>
   <% end %>
 <% end %>
+
+<% if @show_code_lock %>
+  <%= turbo_stream.append "messages-list" do %>
+    <div class="message system-message trapdoor-found">
+      <strong><i class="fas fa-lock"></i> You found a trapdoor with a code lock!</strong>
+      <p>The lock requires a 4-digit code. You remember the numbers from the papers you found...</p>
+      <button class="btn btn-warning mt-2" onclick="document.getElementById('code-lock-modal').style.display='flex'">
+        <i class="fas fa-key me-2"></i>Enter Code
+      </button>
+    </div>
+  <% end %>
+  <%# Use update instead of append to avoid duplicates %>
+  <%= turbo_stream.update "modals-container" do %>
+    <div id="code-lock-modal" data-controller="code-lock" data-code-lock-code-value="2129" data-code-lock-room-id-value="<%= @message.room.id %>" style="display: none;">
+      <%= render "shared/code_lock_modal" %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,8 +1,27 @@
+.main-page {
+  width: 90%;
+  margin: auto;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 100%
+}
+
+.room-main {
+}
+
 // Specific CSS for your home-page
 .show-body {
   display: flex;
+  justify-content: space-evenly;
+
   margin-bottom: 15px;
-  border-radius: 15px;
+  border-radius: 20px;
+  max-width: 1300px;
+
+  border: 1px solid grey;
 }
 
 .sign-up-body {
@@ -29,6 +48,42 @@
 .folder_holder {
   display: flex;
   border-radius: 15px;
-  max-width: 75%;
   margin-bottom: 15px;
+  padding: 0px;
+}
+
+.map-holder {
+  width: 25%;
+}
+
+.image-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.dimension {
+  width: 600px;
+  height: 600px;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  padding: 15px;
+  width: 900px;
+}
+
+.nav {
+  border-bottom: 0px solid rgba(128, 128, 128, 0.81);
+  margin-top: 40px !important;
+
+  width: 95%;
+  margin: auto ;
+}
+
+.nav-link {
+  border: 1px solid grey !important;
 }

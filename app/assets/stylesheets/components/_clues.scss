@@ -1,15 +1,3 @@
-// Import your components CSS files here.
-@import "alert";
-@import "avatar";
-@import "form_legend_clear";
-@import "navbar";
-@import "button";
-@import "map";
-@import "confrontation";
-@import "timer";
-@import "clues";
-@import "code_lock";
-
 .clue-container {
   position: relative;
   display: inline-block;
@@ -23,15 +11,16 @@
 
 /* Le masque avec le point d’interrogation */
 .clue-mask {
-  position: absolute;
+  position:  absolute;
   inset: 0; /* top/right/bottom/left: 0 */
   display: flex;
-  align-items: center;
+  align-items:flex-start;
   justify-content: center;
   background: rgba(0, 0, 0, 0.6);
   color: white;
   font-size: 3rem;
   font-weight: bold;
+  width: 150px;
 }
 
 /* Si tu veux que le curseur ne soit pas cliquable sur les non trouvées */
@@ -46,4 +35,3 @@
 .clue-container.not-found .clue-image {
   filter: blur(8px) brightness(0.3); /* flou + plus sombre */
 }
-
