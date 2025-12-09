@@ -51,7 +51,7 @@
 
 .ground-floor {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 100px 100px;
   grid-template-rows: repeat(2, 1fr);
   gap: 2px;
   grid-template-areas:
