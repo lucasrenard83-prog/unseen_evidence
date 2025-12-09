@@ -55,10 +55,16 @@
               <% end %>
             </div>
 
-            <div id="new_message_container">
+            <div id="new_message_container" data-controller="speech">
               <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
                 <%= f.hidden_field :room_id, value: @room.id %>
-                <%= f.input :content, label: false, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
+                <%= f.input :content, label: false, required: true, placeholder: "Your Text Here",
+                    input_html: { id: "message_input", data: { speech_target: "input" } } %>
+                <div class="input-with-mic">
+                  <button type="button" class="mic-button" data-speech-target="button" data-action="click->speech#toggle">
+                    <i class="fa-solid fa-microphone"></i>
+                  </button>
+                </div>
                 <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
               <% end %>
             </div>
