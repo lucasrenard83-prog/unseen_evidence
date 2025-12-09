@@ -8,10 +8,9 @@
 
 .floor-plan-frame {
   background: $light-gray;
-  padding: 0px 3px;
+  padding: 0 3px 20px;
   border: 1px solid #000;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding-bottom: 20px;
 }
 
 .floor-plan {
@@ -23,7 +22,10 @@
 
 .floor-level {
   width: 90%;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .level-label {
@@ -86,10 +88,7 @@
 .room {
   background: $purple;
   padding: 7px 5.7px;
-
   height: 40px;
-  min-height: 28.5px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,12 +96,10 @@
   transition: all 0.3s ease;
   border: 0.85px solid #000;
   cursor: pointer;
-  width: 100%;
   font-family: 'Playfair Display', serif;
   font-size: 0.7rem;
   font-weight: 700;
   color: white;
-  text-decoration: none;
   text-shadow: 0.6px 0.6px 0 rgba(0, 0, 0, 0.2);
   letter-spacing: 0.3px;
   text-transform: uppercase;
@@ -122,6 +119,14 @@
   }
 }
 
+.room-lock {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  font-size: 1em;
+  line-height: 1;
+}
+
 // Grid Areas
 .hall {
   grid-area: hall;
@@ -129,60 +134,54 @@
   background-image: asset-url("rooms/before_hall.png");
   background-size: cover;
   width: 100px;
-  height: 80px; }
+  height: 60px; }
 
 .library { grid-area: library;
 
   background-image: asset-url("rooms/before_library.png");
   background-size: cover;
   width: 100px;
-  height: 80px;  }
-
+  height: 60px;  }
 .study { grid-area: study;
 
   background-image: asset-url("rooms/before_study.png");
   background-size: cover;
   width: 100px;
-  height: 80px; }
+  height: 60px; }
 .kitchen { grid-area: kitchen;
 
   background-image: asset-url("rooms/before_kitchen.png");
   background-size: cover;
   width: 100px;
-  height: 80px; }
+  height: 60px; }
 
 // Room Variants
 .attic-room {
   background-image: asset-url("rooms/before_attic.png");
   background-size: cover;
   width: 100px;
-  height: 80px;
+  height: 60px;
 }
 
 .greenhouse-room {
   border-style: dashed;
   border-width: 0.85px;
-  background: darken($purple, 3%);
-  min-height: 28.5px;
-
   background-image: asset-url("rooms/greenhouse.png");
   background-size: cover;
   width: 100px;
-  height: 80px;
+  height: 60px;
 }
 
 .cellar-room {
-  background: darken($purple, 8%);
-
   background-image: asset-url("rooms/before_cellar.png");
   background-size: cover;
   width: 100px;
-  height: 80px;
+  height: 60px;
 }
 
 // Responsive
 @media (max-width: 768px) {
-  .ground-grid {
+  .ground-floor {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
     "hall library"
@@ -192,7 +191,6 @@
 
   .room {
     font-size: 0.9rem;
-    // padding: 20px 15px;
     min-height: 100px;
   }
 }
