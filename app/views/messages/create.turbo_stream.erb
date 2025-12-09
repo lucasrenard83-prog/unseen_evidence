@@ -16,14 +16,20 @@
 <% end %>
 
 <%= turbo_stream.replace "inventory" do %>
-  <% Item.where(game_id: @message.game.id).each do |item| %>
-    <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
-      <img src="<%= item.picture_url %>" alt="Picture of <%= item.name %>" class="clue-image">
-      <% unless item.found %>
-        <div class="clue-mask">?</div>
-      <% end %>
+  <div  class="inventory-grid">
+    <% Item.where(game_id: @message.game.id).each do |item| %>
+      <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
+        <img
+          src="<%= item.picture_url %>"
+          alt="Picture of <%= item.name %>"
+          class="clue-image">
+
+        <% unless item.found %>
+          <div class="clue-mask">?</div>
+        <% end %>
+      </div>
+    <% end %>
     </div>
-  <% end %>
 <% end %>
 
 <%= turbo_stream.replace "sidebar" do %>
