@@ -1,7 +1,7 @@
 
 <div class="txt">
-  <h1>🕵️‍♂️ VICTORY! 🏆 </h1>
-  <h3> Congratulations, detective. Case closed! </h3>
+  <h1> VICTORY! </h1>
+  <h3> 🏆 Congratulations, detective. Case closed! 🕵️‍♂️ </h3>
 <h2>The mystery is solved, the clues are aligned, and thanks to your flawless deduction skills, the culprit didn’t stand a chance.
 You dodged the traps, gathered the evidence, and uncovered the truth… Like a true Clue master! </h2>
 </div>
@@ -17,13 +17,24 @@ You dodged the traps, gathered the evidence, and uncovered the truth… Like a t
       </ul>
     </div>
 
-  <div class="anecdotes">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-	<path fill="#4B0082" d="M30.48 9.14h-1.53V6.09h-1.52V4.57H25.9V3.05h-3.04V1.52h-3.05V0h-7.62v1.52H9.14v1.53H6.09v1.52H4.57v1.52H3.05v3.05H1.52v3.05H0v7.62h1.52v3.05h1.53v3.04h1.52v1.53h1.52v1.52h3.05v1.53h3.05V32h7.62v-1.52h3.05v-1.53h3.04v-1.52h1.53V25.9h1.52v-3.04h1.53v-3.05H32v-7.62h-1.52ZM12.19 6.09h1.52V4.57h4.58v1.52h1.52v4.58h-1.52v1.52h-4.58v-1.52h-1.52ZM22.86 25.9h-1.53v1.53h-7.62V25.9h-1.52V15.24h1.52v-1.53h4.58v1.53h1.52v7.62h1.52v1.52h1.53Z" stroke-width="0.6" stroke="yellow" />
-    </svg>
-     This game is powered by AI, if you play it fully, Your CO2 emissions amount to
-    <i style="text-decoration:line-through;"> 225g</i><em> ~90g !</em> (equivalent to : ~73 web research or ~37 emails send)
-    <p>Final project for LeWagon </p>
+  <div class="anecdotes-wrapper">
+    <button class="info-btn" id="infoToggle" aria-label="Afficher les informations">
+       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 15 15">
+	       <path fill="#4B0082" d="M7.5 1C6.7 1 6 1.7 6 2.5S6.7 4 7.5 4S9 3.3 9 2.5S8.3 1 7.5 1M4 5v1s2 0 2 2v2c0 2-2 2-2 2v1h7v-1s-2 0-2-2V6c0-.5-.5-1-1-1z" />
+       </svg>
+    </button>
+    <div class="anecdotes" id="anecdotesContent">
+      <span>This game is powered by AI, if you play it fully, Your CO2 emissions amount to
+      <i style="text-decoration:line-through;"> 225g</i><em> ~90g !</em> (equivalent to : ~73 web research or ~37 emails send)</span>
+      <p>© Final project for LeWagon: Unless Evidence, structured with rubyOnRails. Powered by AI, Enjoy your Cluedo !</p>
     </div>
+  </div>
+
+  <script>
+    document.getElementById('infoToggle').addEventListener('click', function() {
+      this.classList.toggle('active');
+      document.getElementById('anecdotesContent').classList.toggle('open');
+    });
+  </script>
 
   </footer>

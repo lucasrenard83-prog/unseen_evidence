@@ -4,7 +4,7 @@
 <% end %>
 
 <%= turbo_stream.replace "message_input" do %>
-  <input class="form-control string required" type="text" name="message[content]" id="message_input" placeholder="Your Text Here" required="required" aria-required="true">
+  <input class="form-control string required" type="text" name="message[content]" id="message_input" placeholder="Your Text Here" required="required" aria-required="true" data-speech-target="input">
 <% end %>
 
 <%= turbo_stream.replace "room_image" do %>
@@ -16,18 +16,24 @@
 <% end %>
 
 <%= turbo_stream.replace "inventory" do %>
-  <% @message.game.items.reload.each do |item| %>
-    <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
-      <img src="<%= item.picture_url %>" alt="Picture of <%= item.name %>" class="clue-image">
-      <% unless item.found %>
-        <div class="clue-mask">?</div>
-      <% end %>
+  <div  class="inventory-grid">
+    <% Item.where(game_id: @message.game.id).each do |item| %>
+      <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
+        <img
+          src="<%= item.picture_url %>"
+          alt="Picture of <%= item.name %>"
+          class="clue-image">
+
+        <% unless item.found %>
+          <div class="clue-mask">?</div>
+        <% end %>
+      </div>
+    <% end %>
     </div>
-  <% end %>
 <% end %>
 
 <%= turbo_stream.replace "sidebar" do %>
-  <%= render "shared/map", rooms: @message.game.rooms.reload.order(:position) %>
+  <%= render "shared/map", rooms: Room.where(game_id: @message.game.id).order(:position) %>
 <% end %>
 
 <% if @item %>
