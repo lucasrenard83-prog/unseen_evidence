@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   resources :games, only: [:index, :new, :create, :destroy] do
     resources :messages, only: [:create]
   end
-  resources :rooms, only: [:show]
+  resources :rooms, only: [:show] do
+    member do
+      post :unlock_trapdoor
+    end
+  end
 
   post "games/:id/confront", to: "games#confront", as: "confront_game"
 

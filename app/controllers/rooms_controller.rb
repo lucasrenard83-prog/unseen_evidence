@@ -34,4 +34,29 @@ class RoomsController < ApplicationController
     # Load messages for this room only
     @messages = @room.messages.order(:created_at)
   end
+
+  def unlock_trapdoor
+    @room = Room.find(params[:id])
+    @game = @room.game
+
+    # Find and mark Kitchen knife as found
+    kitchen_knife = @game.items.find_by(name: "Kitchen knife")
+    if kitchen_knife
+      kitchen_knife.update(found: true)
+      @room.update(item_found: true)
+
+      # Add a message to the chat
+      Message.create(
+        role: "assistant",
+        content: "The trapdoor opens with a click! Inside, you find a Kitchen knife",
+        room: @room,
+        game: @game,
+        persona: Persona.find_by(room: @room)
+      )
+
+      render json: { success: true, item: kitchen_knife.name }
+    else
+      render json: { success: false, error: "Item not found" }, status: :not_found
+    end
+  end
 end

@@ -22,6 +22,10 @@ class MessagesController < ApplicationController
       @find_item_tool = FindItemTool.new
       @ruby_llm_chat.with_tool(@find_item_tool)
 
+      # tool to examine the trapdoor in the Library
+      @examine_trapdoor_tool = ExamineTrapdoorTool.new
+      @ruby_llm_chat.with_tool(@examine_trapdoor_tool)
+
       build_conversation_history
       response = @ruby_llm_chat
         .with_instructions(system_prompt)
@@ -39,6 +43,15 @@ class MessagesController < ApplicationController
         # Rails.logger.info "=== FIND ITEM TOOL RESULT: #{@find_item_tool.result.inspect} ==="
         extract_found_item_name(@find_item_tool.result)
         # Rails.logger.info "=== @item after extract: #{@item.inspect} ==="
+      end
+
+      # Check if trapdoor was examined and player has both code pieces
+      # Also check for keywords in case AI doesn't call the tool
+      trapdoor_keywords = @message.content.downcase.match?(/trappe|trapdoor|tapis|carpet|rug|sous le|under the/)
+      tool_triggered = @examine_trapdoor_tool.result.present?
+
+      if (tool_triggered || trapdoor_keywords) && @message.room.name == "Library"
+        @show_code_lock = check_has_both_papers
       end
 
       raw = response.content
@@ -122,6 +135,8 @@ private
     If the player finds or receives an item, use the find_item tool with the exact item name.
     Do not give two items in the same message, only give them one by one.
     NEVER invent items - only use: #{all_items.join(', ').presence || 'none'}
+
+    SPECIAL: In the Library, if the player searches under the carpet/rug or examines the trapdoor, use the examine_trapdoor tool with action 'examine'. Describe finding a locked trapdoor with a code lock.
     "
   end
 
@@ -147,6 +162,14 @@ private
 
   def params_message
     params.require(:message).permit(:room_id, :content, :game_id, )
+  end
+
+  def check_has_both_papers
+    game_items = @message.game.items
+    worn_out_paper = game_items.find_by(name: "Worn out paper")
+    piece_of_paper = game_items.find_by(name: "Piece of paper")
+
+     worn_out_paper&.found? && piece_of_paper&.found?
   end
 
 end

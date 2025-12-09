@@ -69,7 +69,7 @@ class GamesController < ApplicationController
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore.",
         ai_guideline: "Bishop will give you a little introduction of the context.
-        There's a piece of paper hidden under the table with part of a code, if the player searches under the table he finds the 'Piece of paper'.
+        There's a piece of paper('piece_of_paper') hidden under the table with part of a code, if the player searches under the table he finds the 'Piece of paper'.
         There's also dirty footsteps around the room pointing to the greenhouse.
         If the player examines the body, he'll find out that the murder weapon is probably a knife.",
         item_found: false,
@@ -89,8 +89,8 @@ class GamesController < ApplicationController
         You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen.",
         ai_guideline: "A trapdoor is hidden under the rug - it holds the 'Kitchen knife' (murder weapon).
         If player searches under the carpet, reveal the trapdoor with a code lock.
-        If player has both 'Piece of paper' (code: 29) and 'Worn out paper' (code: 21), they can deduce the code is 2921.
-        If player enters code 2921, the 'Kitchen knife' is found.
+        If player has both the 'Worn out paper' (code: 21) and the 'Piece of paper' (code: 29), they can deduce the code is 2129.
+        If player enters code 2129, the 'Kitchen knife' is found.
         Otherwise, describe the locked trapdoor without revealing contents.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_library.png"),
@@ -146,7 +146,7 @@ class GamesController < ApplicationController
         silent hints that someone was here not long ago… whoever they were.
         Mr.King is here observing the grey sky through the window, he salutes you, his back still facing you.",
         ai_guideline: "The desk drawer has a hidden compartment containing the 'Cellar key'.
-        If player is polite to Mr. King and asks if he found anything, he gives the 'Worn out paper'.
+        If player is polite to Mr. King and asks if he found anything, he gives the 'Worn out paper'('worn_out_paper').
         If player asks about Mrs. Cavaleer, King reveals how to get the 'Greenhouse key' from her (be kind/respectful).",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_study.png"),
@@ -312,7 +312,7 @@ class GamesController < ApplicationController
       { name: "Piece of paper",
       description: " A piece of paper with faded words, you can make out part of a code : '29'",
       room: game.rooms.find_by!(name: "Hall"),
-      picture_url: helpers.image_url("items/Piece_of_paper.png"),
+      picture_url: helpers.image_url("items/piece_of_paper.png"),
       found: false
       },
       { name: "Worn out paper",
