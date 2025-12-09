@@ -4,38 +4,6 @@
     <button class=" nav-button" id="nav-image-tab" data-bs-toggle="tab" data-bs-target="#nav-image" type="button" role="tab" aria-controls="nav-image" aria-selected="false">Inspect Room</button>
     <button class=" nav-button" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false">Inventory</button>
     <button type="button" class="nav-button" data-bs-toggle="modal" data-bs-target="#confrontationModal">Confrontation</button>
-
-      <div class="ms-auto d-flex align-items-center">
-        <div class="confrontation-toast" data-timer-target="fiveMinutesToast">
-          <div class="confrontation-toast-inner">
-            <div class="confrontation-toast-icon">⏳</div>
-              <div>
-                <div class="confrontation-toast-title">You have 5 minutes left.</div>
-                  <div class="confrontation-toast-body">Finish your questions. The confrontation is coming…</div>
-              </div>
-          </div>
-        </div>
-          <div class="modal fade" id="confrontationModal" tabindex="-1" aria-labelledby="confrontationModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content confront-modal">
-                <div class="modal-header border-0 pb-0">
-                  <h1 class="modal-title h5 mb-0" id="confrontationModalLabel">Proceed to confrontation?</h1>
-                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body pt-3">
-                  <p class="mb-2">Once you enter confrontation, you can’t ask any more questions.</p>
-                  <p class="mb-0"><strong>You only get one chance to accuse the killer.</strong></p>
-                </div>
-
-                <div class="modal-footer border-0 pt-2 d-flex justify-content-between">
-                  <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Keep investigating</button>
-                  <button type="button" class="btn btn-danger btn-sm" data-action="click->timer#goToConfrontation">Confront now</button>
-          </div>
-        </div>
-       </div>
-      </div>
-    </div>
   </div>
 </nav>
 
@@ -85,6 +53,37 @@
               </div>
             </div>
           </div>
+          <div class="ms-auto d-flex align-items-center">
+        <div class="confrontation-toast" data-timer-target="fiveMinutesToast">
+          <div class="confrontation-toast-inner">
+            <div class="confrontation-toast-icon">⏳</div>
+              <div>
+                <div class="confrontation-toast-title">You have 5 minutes left.</div>
+                  <div class="confrontation-toast-body">Finish your questions. The confrontation is coming…</div>
+              </div>
+          </div>
+        </div>
+          <div class="modal fade" id="confrontationModal" tabindex="-1" aria-labelledby="confrontationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content confront-modal">
+                <div class="modal-header border-0 pb-0">
+                  <h1 class="modal-title h5 mb-0" id="confrontationModalLabel">Proceed to confrontation?</h1>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body pt-3">
+                  <p class="mb-2">Once you enter confrontation, you can’t ask any more questions.</p>
+                  <p class="mb-0"><strong>You only get one chance to accuse the killer.</strong></p>
+                </div>
+
+                <div class="modal-footer border-0 pt-2 d-flex justify-content-between">
+                  <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Keep investigating</button>
+                  <button type="button" class="btn btn-danger btn-sm" data-action="click->timer#goToConfrontation">Confront now</button>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
         </div>
 
         <div class="sidebar">
