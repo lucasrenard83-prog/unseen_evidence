@@ -1,16 +1,23 @@
 .main-page {
-  width: 90%;
+  width: 72%;
   margin: auto;
+  background-color: white;
+  border-radius: 20px;
+  margin-bottom: 30px;
 }
 
-.row {
-  margin-left: 0px;
-  margin-right: 0px;
-  width: 100%
+.folder-holder {
+  width:65%;
+  padding: 20px;
 }
 
-.room-main {
+.map-holder {
+  width: 35%;
+  background: radial-gradient(circle at top, #2b2a4a 0, #151425 45%, #050308 100%);
+  border-radius: 0px 20px 20px 0px;
+  color: white;
 }
+
 
 // Specific CSS for your home-page
 .show-body {
@@ -20,8 +27,6 @@
   margin-bottom: 15px;
   border-radius: 20px;
   max-width: 1300px;
-
-  border: 1px solid grey;
 }
 
 .sign-up-body {
@@ -45,16 +50,6 @@
   opacity: 95%;
 }
 
-.folder_holder {
-  display: flex;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  padding: 0px;
-}
-
-.map-holder {
-  width: 25%;
-}
 
 .image-holder {
   display: flex;
@@ -78,12 +73,31 @@
 
 .nav {
   border-bottom: 0px solid rgba(128, 128, 128, 0.81);
-  margin-top: 40px !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
 
   width: 95%;
   margin: auto ;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-link {
   border: 1px solid grey !important;
+}
+
+.nav-center {
+  width: 600px;
+  margin: auto;
+}
+
+.nav-button {
+  color: $purple;
+  background: none;
+  border: 1px solid $purple ;
+  border-radius: 5px;
+  margin-right: 15px;
+  text-decoration: none;
+  padding: 8px;
 }

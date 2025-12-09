@@ -1,114 +1,101 @@
-<div class="main-page">
-<nav class="mt-3 mx-4">
-  <div class="nav nav-tabs align-items-center w-100 pe-4" id="nav-tab" role="tablist">
-    <button class="nav-link active paper-folder paper-color" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">Investigation</button>
-    <button class="nav-link paper-folder paper-color" id="nav-image-tab" data-bs-toggle="tab" data-bs-target="#nav-image" type="button" role="tab" aria-controls="nav-image" aria-selected="false">Inspect Room</button>
-    <button class="nav-link paper-folder paper-color" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false">Inventory</button>
-    <%= link_to "Confrontation", confrontation_game_path(@game) %>
+<nav class="nav-center">
+  <div class="nav w-100" id="nav-tab" role="tablist">
+    <button class="active nav-button" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">Investigation</button>
+    <button class=" nav-button" id="nav-image-tab" data-bs-toggle="tab" data-bs-target="#nav-image" type="button" role="tab" aria-controls="nav-image" aria-selected="false">Inspect Room</button>
+    <button class=" nav-button" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false">Inventory</button>
+    <%= link_to "Confrontation", confrontation_game_path(@game), class: " nav-button" %>
 
-    <div class="ms-auto d-flex align-items-center" data-controller="timer" data-timer-url-value="<%= stop_game_path(@game) %>" data-timer-counter-value="<%= @game.elapsed_time %>" data-timer-game-id-value ="<%= @game.id %>" data-timer-rul-value="<%= confrontation_game_path(@game) %>">
-      <strong data-timer-target="clock" class="me-2"><%= Time.at(@game.elapsed_time).utc.strftime("%H:%M:%S") %></strong>
+  </div>
+</nav>
 
-      <div class="confrontation-toast" data-timer-target="fiveMinutesToast">
-        <div class="confrontation-toast-inner">
-          <div class="confrontation-toast-icon">⏳</div>
-          <div>
-            <div class="confrontation-toast-title">You have 5 minutes left.</div>
-            <div class="confrontation-toast-body">Finish your questions. The confrontation is coming…</div>
+<div class="main-page shadow-lg border-0">
+  <div class="tab-content">
+
+  <%# Chat Box %>
+  <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
+    <div class="d-flex">
+      <div class="folder-holder">
+        <%= turbo_frame_tag "messages" do %>
+          <h2 style="text-align:center">The <%= @room.name %></h2>
+          <div id="chatbox" class="col-md-6 mb-2" data-controller="chat" style="width:100%">
+            <div class="messages" id="messages-list" data-chat-target="messages">
+              <% @messages.each do |message| %>
+                <%= render "messages/message", message: message %>
+              <% end %>
+            </div>
+
+            <div id="new_message_container">
+              <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
+                <%= f.hidden_field :room_id, value: @room.id %>
+                <%= f.input :content, label: false, required: true, placeholder: "Your Text Here", input_html: { id: "message_input" } %>
+                <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
+              <% end %>
+            </div>
           </div>
+        <% end %>
+      </div>
+
+      <div class="map-holder">
+
+        <div class="ms-auto d-flex align-items-center" style="justify-content: end; padding: 4px;" data-controller="timer" data-timer-url-value="<%= stop_game_path(@game) %>" data-timer-counter-value="<%= @game.elapsed_time %>" data-timer-game-id-value ="<%= @game.id %>" data-timer-rul-value="<%= confrontation_game_path(@game) %>">
+          <strong data-timer-target="clock" class="me-2"><%= Time.at(@game.elapsed_time).utc.strftime("%H:%M:%S") %></strong>
+          <div class="confrontation-toast" data-timer-target="fiveMinutesToast">
+            <div class="confrontation-toast-inner">
+              <div class="confrontation-toast-icon">⏳</div>
+              <div>
+                <div class="confrontation-toast-title">You have 5 minutes left.</div>
+                <div class="confrontation-toast-body">Finish your questions. The confrontation is coming…</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <%= turbo_frame_tag "sidebar" do %>
+            <%= render "shared/map", rooms: @rooms %>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-</nav>
 
+  <%# Image of Rooms %>
+  <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab" tabindex="0">
+    <div class="show-body pt-3 paper-color">
+      <div class="image-holder p-3">
+        <h2>The <%= @room.name%> </h2>
+        <hr >
+        <%= turbo_frame_tag "room_image" do %>
+          <% if @room.item_found%>
+            <img src="<%= @room.after_picture_url %>" alt="<%= @room.name%>" class="dimension">
+          <% else %>
+            <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>" class="dimension">
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
+  <%# Inventory %>
+  <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
+    <div class="show-body pt-3 paper-color">
+        <%= turbo_frame_tag "inventory" do %>
+      <div  class="inventory-grid">
+          <% @game.items.each do |item| %>
+            <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
+              <img
+                src="<%= item.picture_url %>"
+                alt="Picture of <%= item.name %>"
+                class="clue-image">
 
-  <div class="tab-content" id="nav-tabContent">
-
-    <%# Chat Box %>
-    <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
-      <div class="show-body pt-5 paper-color">
-          <div class="folder_holder">
-            <div class="room-main">
-              <%= turbo_frame_tag "messages" do %>
-                <h2 style="text-align:center">The <%= @room.name %></h2>
-                <hr>
-                <div id="chatbox" class="col-md-6 border mb-2" data-controller="chat" style="width:100%">
-                  <div class="messages" id="messages-list" data-chat-target="messages">
-                    <% @messages.each do |message| %>
-                      <%= render "messages/message", message: message %>
-                    <% end %>
-                  </div>
-
-                  <div id="new_message_container" data-controller="speech">
-                    <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
-                      <%= f.hidden_field :room_id, value: @room.id %>
-                      <div class="input-with-mic">
-                        <%= f.input :content, required: true, placeholder: "Your Text Here", input_html: { id: "message_input", data: { speech_target: "input" } } %>
-                        <button type="button" class="mic-button" data-speech-target="button" data-action="click->speech#toggle">
-                          <i class="fa-solid fa-microphone"></i>
-                        </button>
-                      </div>
-                      <%= f.button :submit, 'Send', class: "button-perso my-2", style: "width: 150px" %>
-                    <% end %>
-                  </div>
-                </div>
+              <% unless item.found %>
+                <div class="clue-mask">?</div>
               <% end %>
             </div>
-          </div>
-
-          <div class="map-holder">
-            <h2 style="text-align:center">Map</h2>
-            <hr>
-            <div class="sidebar">
-              <%= turbo_frame_tag "sidebar" do %>
-                <%= render "shared/map", rooms: @rooms %>
-              <% end %>
-            </div>
-          </div>
-
-
-      </div>
-    </div>
-
-    <%# Image of Rooms %>
-    <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab" tabindex="0">
-      <div class="show-body pt-3 paper-color">
-        <div class="image-holder p-3">
-          <h2>The <%= @room.name%> </h2>
-          <hr >
-          <%= turbo_frame_tag "room_image" do %>
-            <% if @room.item_found%>
-              <img src="<%= @room.after_picture_url %>" alt="<%= @room.name%>" class="dimension">
-            <% else %>
-              <img src="<%= @room.before_picture_url %>" alt="<%= @room.name%>" class="dimension">
-            <% end %>
           <% end %>
-        </div>
+        <% end %>
       </div>
     </div>
-
-    <%# Inventory %>
-    <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
-      <div class="show-body pt-3 paper-color">
-          <%= turbo_frame_tag "inventory" do %>
-        <div  class="inventory-grid">
-            <% @game.items.each do |item| %>
-              <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
-                <img
-                  src="<%= item.picture_url %>"
-                  alt="Picture of <%= item.name %>"
-                  class="clue-image">
-
-                <% unless item.found %>
-                  <div class="clue-mask">?</div>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
+  </div>
   </div>
 </div>
