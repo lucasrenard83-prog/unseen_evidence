@@ -10,8 +10,6 @@
 }
 
 .room-main {
-  width: 90% ;
-  margin: auto;
 }
 
 // Specific CSS for your home-page
@@ -51,6 +49,11 @@
   display: flex;
   border-radius: 15px;
   margin-bottom: 15px;
+  padding: 0px;
+}
+
+.map-holder {
+  width: 25%;
 }
 
 .image-holder {
