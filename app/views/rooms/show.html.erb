@@ -13,12 +13,11 @@
 
     <%# Chat Box %>
     <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
-      <div class="show-body pt-3 paper-color">
-        <div class="row">
-          <div class="folder_holder col-9">
-            <div class="room-main p-3">
+      <div class="show-body pt-5 paper-color">
+          <div class="folder_holder">
+            <div class="room-main">
               <%= turbo_frame_tag "messages" do %>
-                <h2>The <%= @room.name %></h2>
+                <h2 style="text-align:center">The <%= @room.name %></h2>
                 <hr>
                 <div id="chatbox" class="col-md-6 border mb-2" data-controller="chat" style="width:100%">
                   <div class="messages" id="messages-list" data-chat-target="messages">
@@ -39,14 +38,16 @@
             </div>
           </div>
 
-          <div class="col-3">
-            <div class="sidebar p-3">
+          <div class="map-holder">
+            <h2 style="text-align:center">Map</h2>
+            <hr>
+            <div class="sidebar">
               <%= turbo_frame_tag "sidebar" do %>
                 <%= render "shared/map", rooms: @rooms %>
               <% end %>
             </div>
           </div>
-        </div>
+
 
       </div>
     </div>
