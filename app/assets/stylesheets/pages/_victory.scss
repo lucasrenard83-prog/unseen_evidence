@@ -307,3 +307,66 @@
     padding: 20px;
   }
 }
+/* Conteneur de la partial */
+#victory {
+  padding: 2.5rem 1.5rem;
+}
+
+/* Bloc texte principal */
+#victory .txt {
+  max-width: 750px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+/* Titres */
+#victory .txt h1 {
+  font-size: clamp(2.2rem, 3vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+#victory .txt h3 {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+#victory .txt h2 {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Footer / crédits */
+#victory footer.more {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  font-size: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+#victory .credits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#victory .credits li::before {
+  content: "• ";
+}
+
+#victory .anecdotes {
+  max-width: 420px;
+}
+
+/* Petit ajustement de l’icône */
+#victory .anecdotes svg {
+  vertical-align: middle;
+  margin-right: 0.4rem;
+}

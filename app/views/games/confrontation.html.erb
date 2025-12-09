@@ -1,20 +1,23 @@
 <div class="confrontation-page container py-5" data-controller="victori">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-      <%# Popup "plus de temps" %>
-      <div
-        class="confrontation-toast show"
-        data-victori-target="timeup">
-        <div class="confrontation-toast-inner">
-          <div class="confrontation-toast-icon">⏰</div>
-          <div>
-            <div class="confrontation-toast-title">Time’s up, detective.</div>
-            <div class="confrontation-toast-body">
-              You’ve run out of time. It’s now time to confront the killer.
+
+      <% if @game.elapsed_time == 0 %>
+        <div
+          class="confrontation-toast show"
+          data-victori-target="timeup">
+          <div class="confrontation-toast-inner">
+            <div class="confrontation-toast-icon">⏰</div>
+            <div>
+              <div class="confrontation-toast-title">Time’s up, detective.</div>
+              <div class="confrontation-toast-body">
+                You’ve run out of time. It’s now time to confront the killer.
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      <% end %>
+
 
       <div class="card shadow-lg border-0 overflow-hidden confrontation-card">
 
@@ -24,7 +27,7 @@
             <div class="mb-4 text-uppercase small text-muted">
               Case #<%= @game.id %> • Final Confrontation
             </div>
-
+            <%= @game.elapsed_time %>
             <h2 class="mb-2">Conclusion of the investigation</h2>
             <p class="text-muted mb-4">
               Time is up. It’s time to name the <strong>killer</strong>, the <strong>room</strong> and the <strong>weapon</strong>.
@@ -126,7 +129,7 @@
         </div>
 
         <div id="victory"
-             class="d-none p-4 p-lg-5"
+             class=" d-none col-12 mt-4"
              data-victori-target="victory">
           <%= render "shared/victory" %>
         </div>
