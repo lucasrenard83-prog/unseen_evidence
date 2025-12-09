@@ -9,6 +9,7 @@
 @import "timer";
 @import "clues";
 @import "code_lock";
+@import "confront_modal";
 
 .clue-container {
   position: relative;
@@ -46,4 +47,3 @@
 .clue-container.not-found .clue-image {
   filter: blur(8px) brightness(0.3); /* flou + plus sombre */
 }
-

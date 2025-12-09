@@ -65,4 +65,23 @@ export default class extends Controller {
     get storageKey() {
     return `timer-counter-${this.gameIdValue}`;
   }
+
+  goToConfrontation(event) {
+  event.preventDefault();
+  clearInterval(this.intervalId);
+  console.log(this.counterValue);
+
+  fetch(this.urlValue, {
+      method: "PATCH",
+      headers: {
+        "X-CSRF-Token": document.querySelector("meta[name=csrf-token]").content,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ game: { elapsed_time: this.counterValue } }),
+      keepalive: true
+    })
+    .then(() => {
+      window.location.href = `/games/${this.gameIdValue}/confrontation`;
+    });
+  };
 }
