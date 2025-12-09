@@ -32,8 +32,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_08_151246) do
     t.boolean "found"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "game_id"
     t.bigint "persona_id"
-    t.bigint "game_id", null: false
     t.index ["game_id"], name: "index_items_on_game_id"
     t.index ["persona_id"], name: "index_items_on_persona_id"
     t.index ["room_id"], name: "index_items_on_room_id"
