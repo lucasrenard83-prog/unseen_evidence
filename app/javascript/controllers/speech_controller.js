@@ -6,7 +6,13 @@ export default class extends Controller {
   connect() {
     this.recognition = null
     this.isListening = false
-    this.supported = ('webkitSpeechRecognition' in window) || ('SpeechRecognition' in window)
+
+    // Vérifier si le navigateur est Chrome ou Safari
+    const isChrome = /chrome/i.test(navigator.userAgent) && !/edg/i.test(navigator.userAgent)
+    const isSafari = /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent)
+    const hasSpeechRecognition = ('webkitSpeechRecognition' in window) || ('SpeechRecognition' in window)
+
+    this.supported = hasSpeechRecognition && (isChrome || isSafari)
 
     if (!this.supported) {
       this.buttonTarget.style.display = 'none'
