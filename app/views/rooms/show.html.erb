@@ -5,7 +5,7 @@
     <button class=" nav-button" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false">Inventory</button>
     <button type="button" class="nav-button" data-bs-toggle="modal" data-bs-target="#confrontationModal">Confrontation</button>
 
-      <div class="ms-auto d-flex align-items-center" data-controller="timer" data-timer-url-value="<%= stop_game_path(@game) %>" data-timer-counter-value="<%= @game.elapsed_time %>" data-timer-game-id-value ="<%= @game.id %>" data-timer-rul-value="<%= confrontation_game_path(@game) %>">
+      <div class="ms-auto d-flex align-items-center">
         <div class="confrontation-toast" data-timer-target="fiveMinutesToast">
           <div class="confrontation-toast-inner">
             <div class="confrontation-toast-icon">⏳</div>
