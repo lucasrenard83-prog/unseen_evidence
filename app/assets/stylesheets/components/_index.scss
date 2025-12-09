@@ -5,5 +5,45 @@
 @import "navbar";
 @import "button";
 @import "map";
+@import "confrontation";
+@import "timer";
 @import "clues";
 @import "code_lock";
+
+.clue-container {
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+}
+
+.clue-image {
+  width: 150px;
+  display: block;
+}
+
+/* Le masque avec le point d’interrogation */
+.clue-mask {
+  position: absolute;
+  inset: 0; /* top/right/bottom/left: 0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+/* Si tu veux que le curseur ne soit pas cliquable sur les non trouvées */
+.clue-container.not-found {
+  cursor: default;
+}
+
+/* Les trouvées : pas de masque, donc cliquables */
+.clue-container.found {
+  cursor: pointer;
+}
+.clue-container.not-found .clue-image {
+  filter: blur(8px) brightness(0.3); /* flou + plus sombre */
+}
+

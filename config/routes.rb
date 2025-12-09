@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   resources :games, only: [:index, :new, :create, :destroy] do
     resources :messages, only: [:create]
+    member do
+      patch :stop
+      get :confrontation
+    end
   end
   resources :rooms, only: [:show] do
     member do

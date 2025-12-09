@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_03_205155) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_08_151246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_03_205155) do
     t.string "secret_scenario"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "elapsed_time", default: 0
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 
@@ -31,8 +32,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_03_205155) do
     t.boolean "found"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "game_id"
     t.bigint "persona_id"
+    t.bigint "game_id", null: false
     t.index ["game_id"], name: "index_items_on_game_id"
     t.index ["persona_id"], name: "index_items_on_persona_id"
     t.index ["room_id"], name: "index_items_on_room_id"

@@ -2,8 +2,13 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="victori"
 export default class extends Controller {
-  static targets = ["weapon", "killer", "room", "victory"]
+  static targets = ["weapon", "killer", "room", "victory", "timeup"]
   connect() {
+    if (this.hasTimeupTarget){
+      setTimeout(() => {
+        this.timeupTarget.classList.add("hide")
+      }, 5000)
+    }
   }
 
   hasWin(event) {

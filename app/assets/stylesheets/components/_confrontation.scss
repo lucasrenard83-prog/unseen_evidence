@@ -1,0 +1,105 @@
+.confrontation-page {
+  min-height: 100vh;
+}
+
+.confrontation-card {
+  border-radius: 1.25rem;
+}
+
+.confrontation-sidebar {
+  background: radial-gradient(circle at top, #2b2a4a 0, #151425 45%, #050308 100%);
+}
+
+.confrontation-badge {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #ff4b5c;
+  box-shadow: 0 0 12px rgba(255, 75, 92, 0.6);
+}
+
+.confrontation-tip {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.confrontation-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.confrontation-select-wrapper {
+  position: relative;
+}
+
+.confrontation-select-label {
+  position: absolute;
+  top: -0.6rem;
+  left: 0.75rem;
+  background: #f8f9fa;
+  padding: 0 0.4rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #999;
+}
+
+.confrontation-select-wrapper .form-select {
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  border-radius: 0.75rem;
+}
+
+.confrontation-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1050;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.confrontation-toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.confrontation-toast.hide {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.confrontation-toast-inner {
+  background: radial-gradient(circle at top, #2b2a4a 0, #151425 45%, #050308 100%);
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15); // comme la footer
+}
+
+.confrontation-toast-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.1rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.confrontation-toast-body {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.confrontation-toast-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-top: 0.1rem;
+}
