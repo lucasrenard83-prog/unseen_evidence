@@ -1,12 +1,32 @@
 <nav>
-  <div class="nav nav-tabs mt-3 mx-4" id="nav-tab" role="tablist">
+  <div class="nav nav-tabs mt-3 mx-4 position-relative" id="nav-tab" role="tablist">
     <button class="nav-link active paper-folder paper-color" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">Investigation</button>
     <button class="nav-link paper-folder paper-color" id="nav-image-tab" data-bs-toggle="tab" data-bs-target="#nav-image" type="button" role="tab" aria-controls="nav-image" aria-selected="false">Inspect Room</button>
     <button class="nav-link paper-folder paper-color" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false">Inventory</button>
-    <button class="nav-link paper-folder paper-color" id="nav-confront-tab" data-bs-toggle="tab" data-bs-target="#nav-confront" type="button" role="tab" aria-controls="nav-confront" aria-selected="false">Confrontation</button>
+    <%= link_to "Confrontation", confrontation_game_path(@game)  %>
+    <div class = " position-absolute end-0"  data-controller="timer" data-timer-url-value="<%= stop_game_path(@game) %>" data-timer-counter-value="<%= @game.elapsed_time %>" data-timer-game-id-value ="<%= @game.id%>" data-timer-rul-value="<%= confrontation_game_path(@game) %>">
+      <strong data-timer-target="clock">
+        <%= Time.at(@game.elapsed_time).utc.strftime("%H:%M:%S") %>
+      </strong>
+      <div
+        class="confrontation-toast"
+        data-timer-target="fiveMinutesToast">
+        <div class="confrontation-toast-inner">
+          <div class="confrontation-toast-icon">⏳</div>
+          <div>
+            <div class="confrontation-toast-title">
+              You have 5 minutes left.
+            </div>
+            <div class="confrontation-toast-body">
+              Finish your questions. The confrontation is coming…
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
 </nav>
-
 <div class="tab-content" id="nav-tabContent">
 
   <%# Chat Box %>
@@ -89,45 +109,4 @@
       <% end %>
     <% end %>
   </div>
-
-  <%# Confrontation %>
-  <div class="tab-pane fade" id="nav-confront" role="tabpanel" aria-labelledby="nav-confront-tab" tabindex="0">
-    <div class="how-body pt-3 mx-3 paper-color" data-controller="victori">
-      <h2>Conclusion of the investigation</h2>
-
-      <%= form_tag confront_game_path(@game), method: :post, data:{action: "submit->victori#hasWin"} do %>
-        <select name="killer" data-victori-target="killer">
-          <option value="">Select the killer...</option>
-          <% @personas.each do |persona| %>
-            <option value="<%= persona.name %>"><%= persona.name %></option>
-          <% end %>
-        </select>
-
-        <select name="room" data-victori-target="room">
-          <option value="">Select the room...</option>
-          <% @rooms.each do |room| %>
-            <option value="<%= room.name %>"><%= room.name %></option>
-          <% end %>
-        </select>
-
-        <select name="weapon" data-victori-target="weapon">
-          <option value="">Select the weapon...</option>
-          <option value="Kitchen knife">Kitchen knife</option>
-          <option value="Revolver">Revolver</option>
-          <option value="Poison">Poison</option>
-          <option value="Rope">Rope</option>
-        </select>
-
-      <%= submit_tag "Submit Accusation", class: "btn btn-danger" %>
-      <% end %>
-
-      <div id = "victory" class="d-none">
-    <%= render "shared/victory" %>
-      </div>
-
-    <%# if win --> render _victory %>
-    <%# elseif render_defeat %>
-    </div>
-  </div>
-
 </div>

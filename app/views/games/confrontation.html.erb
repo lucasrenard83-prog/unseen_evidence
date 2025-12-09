@@ -1,0 +1,138 @@
+<div class="confrontation-page container py-5" data-controller="victori">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <%# Popup "plus de temps" %>
+      <div
+        class="confrontation-toast show"
+        data-victori-target="timeup">
+        <div class="confrontation-toast-inner">
+          <div class="confrontation-toast-icon">⏰</div>
+          <div>
+            <div class="confrontation-toast-title">Time’s up, detective.</div>
+            <div class="confrontation-toast-body">
+              You’ve run out of time. It’s now time to confront the killer.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-lg border-0 overflow-hidden confrontation-card">
+
+        <div class="row g-0" data-victori-target="layout">
+
+          <div class="col-lg-7 p-4 p-lg-5 bg-light">
+            <div class="mb-4 text-uppercase small text-muted">
+              Case #<%= @game.id %> • Final Confrontation
+            </div>
+
+            <h2 class="mb-2">Conclusion of the investigation</h2>
+            <p class="text-muted mb-4">
+              Time is up. It’s time to name the <strong>killer</strong>, the <strong>room</strong> and the <strong>weapon</strong>.
+              Choose carefully – this is your only shot.
+            </p>
+
+            <%= form_tag confront_game_path(@game), method: :post, data: { action: "submit->victori#hasWin" } do %>
+              <div class="mb-3">
+                <label class="form-label fw-bold">
+                  1. Who is the killer?
+                </label>
+                <div class="confrontation-select-wrapper">
+                  <span class="confrontation-select-label">Suspect</span>
+                  <select name="killer" data-victori-target="killer" class="form-select">
+                    <option value="">Select the killer...</option>
+                    <% @personas.each do |persona| %>
+                      <option value="<%= persona.name %>"><%= persona.name %></option>
+                    <% end %>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">
+                  2. Where did it happen?
+                </label>
+                <div class="confrontation-select-wrapper">
+                  <span class="confrontation-select-label">Room</span>
+                  <select name="room" data-victori-target="room" class="form-select">
+                    <option value="">Select the room...</option>
+                    <% @rooms.each do |room| %>
+                      <option value="<%= room.name %>"><%= room.name %></option>
+                    <% end %>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-bold">
+                  3. What was the weapon?
+                </label>
+                <div class="confrontation-select-wrapper">
+                  <span class="confrontation-select-label">Weapon</span>
+                  <select name="weapon" data-victori-target="weapon" class="form-select">
+                    <option value="">Select the weapon...</option>
+                    <option value="Kitchen knife">Kitchen knife</option>
+                    <option value="Revolver">Revolver</option>
+                    <option value="Poison">Poison</option>
+                    <option value="Rope">Rope</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between mt-4">
+                <div class="text-muted small">
+                  This accusation will <strong>end the game</strong>.
+                </div>
+                <%= submit_tag "Submit Accusation", class: "btn btn-danger px-4 py-2 text-uppercase fw-bold tracking-wide" %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="col-lg-5 confrontation-sidebar d-flex flex-column justify-content-between text-light">
+            <div class="p-4 p-lg-5">
+              <div class="d-flex align-items-center mb-3">
+                <div class="confrontation-badge me-2"></div>
+                <span class="text-uppercase small">Detective’s Log</span>
+              </div>
+
+              <h3 class="h4 mb-3">Last chance to be right</h3>
+              <p class="small text-light-50 mb-4">
+                Review the clues you gathered during the investigation.
+                Once you confirm your accusation, the truth will be revealed:
+                either you unmask the killer, or an innocent walks free…
+              </p>
+
+              <ul class="list-unstyled small mb-4">
+                <li class="mb-2">• Think about <strong>who had the motive</strong>.</li>
+                <li class="mb-2">• Remember <strong>where</strong> each suspect was seen.</li>
+                <li class="mb-2">• Match the clues with the <strong>weapon</strong> used.</li>
+              </ul>
+
+              <div class="confrontation-tip p-3 rounded-3 small">
+                <strong>Tip:</strong> if something still feels inconsistent,
+                trust the clue, not your instinct.
+              </div>
+            </div>
+
+            <div class="confrontation-footer px-4 py-3 d-flex justify-content-between align-items-center">
+              <div class="small">
+                Case file: <strong>#<%= @game.id %></strong>
+              </div>
+              <div class="small text-uppercase">
+                Clue Phase: <strong>Confrontation</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="victory"
+             class="d-none p-4 p-lg-5"
+             data-victori-target="victory">
+          <%= render "shared/victory" %>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

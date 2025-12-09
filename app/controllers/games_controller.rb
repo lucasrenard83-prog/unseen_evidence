@@ -56,7 +56,21 @@ class GamesController < ApplicationController
 
   end
 
+  def stop
+    @game = Game.find(params[:id])
+    @game.update(game_params)
+  end
+
+  def confrontation
+  @game = Game.find(params[:id])
+  @rooms = @game.rooms
+  @personas = Persona.joins(:room).where(rooms: { game_id: @game.id })
+  end
   private
+
+  def game_params
+    params.require(:game).permit(:elapsed_time)
+  end
 
   def rooms_init(game)
     rooms_data = [
