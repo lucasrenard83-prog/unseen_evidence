@@ -1,6 +1,6 @@
 .navbar-bar {
   background-color: $purple;
-  background: linear-gradient(to left, $gray, $purple);
+  background: radial-gradient(circle at top, #2b2a4a 0, #151425 45%, #050308 100%);
   display: flex;
 
 

@@ -3,9 +3,18 @@
     <div class="message-user mb-2 px-3 pb-0 pt-3">
       <%= simple_format(message.content) %>
     </div>
-  <% elsif message.role == "assistant" %>
-    <div class="message-ai mb-5 px-3 pb-0 pt-3">
-      <%= simple_format(message.content) %>
+  <% else %>
+    <div class="message-assistant mb-2 px-3 pb-0 pt-3 d-flex justify-content-between align-items-start" data-controller="tts">
+      <div class="message-body flex-grow-1">
+        <%= simple_format(message.content) %>
+      </div>
+      <button
+      type="button"
+      class="btn btn-sm btn-outline-light message-play ms-2"
+      data-action="click->tts#play"
+      data-tts-url-value="<%= tts_game_message_path(message.game, message) %>">
+      ▶
+    </button>
     </div>
   <% end %>
 <% end %>

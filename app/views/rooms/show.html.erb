@@ -19,7 +19,7 @@
           <div id="chatbox" class="col-md-6 mb-2" data-controller="chat" style="width:100%">
             <div class="messages" id="messages-list" data-chat-target="messages">
               <% @messages.each do |message| %>
-                <%= render "messages/message", message: message %>
+                <%= render "messages/message", message: message, game: @game %>
               <% end %>
             </div>
 
