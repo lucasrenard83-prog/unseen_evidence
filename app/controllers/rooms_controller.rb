@@ -11,7 +11,7 @@ class RoomsController < ApplicationController
     # Only create intro message if this is the first time visiting this room
     if @game.messages.count == 0
       intro_msg = "A mysterious event occurred in a Victorian manor.
-      As a medium and investigator, you must uncover the truth by exploring rooms,
+      As an investigator, you must uncover the truth by exploring rooms,
       questioning suspects, and gathering evidence.
       The victim was found in the entrance hall,
       and all suspects remain in the house."
