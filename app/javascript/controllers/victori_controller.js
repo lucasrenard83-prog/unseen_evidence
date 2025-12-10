@@ -12,13 +12,13 @@ export default class extends Controller {
   }
 
   hasWin(event) {
-    const hasWin =
-      this.roomTarget.value == "Greenhouse"&&
-      this.weaponTarget.value == "Kitchen knife"&&
-      this.killerTarget.value == "Mr. Rook";
-    if (hasWin){
+    // const hasWin =
+    //   this.roomTarget.value == "Greenhouse"&&
+    //   this.weaponTarget.value == "Kitchen knife"&&
+    //   this.killerTarget.value == "Mr. Rook";
+    // if (hasWin){
       event.preventDefault()
       victory.classList.remove("d-none")
-    }
+    // }
   }
 }
