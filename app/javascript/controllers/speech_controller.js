@@ -6,6 +6,7 @@ export default class extends Controller {
   connect() {
     this.recognition = null
     this.isListening = false
+    this.fullTranscript = ""
 
     // Vérifier si le navigateur est Chrome ou Safari
     const isChrome = /chrome/i.test(navigator.userAgent) && !/edg/i.test(navigator.userAgent)
@@ -19,13 +20,9 @@ export default class extends Controller {
     }
   }
 
-  toggle() {
-    if (!this.supported) return
-    this.isListening ? this.stop() : this.start()
-  }
-
   start() {
     if (this.isListening) return
+    this.fullTranscript = ""
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     this.recognition = new SpeechRecognition()
@@ -34,11 +31,15 @@ export default class extends Controller {
     this.recognition.interimResults = true
 
     this.recognition.onresult = (event) => {
-      let finalTranscript = ''
+      let interimTranscript = ''
       for (let i = event.resultIndex; i < event.results.length; i++) {
-        finalTranscript += event.results[i][0].transcript
+        if (event.results[i].isFinal) {
+          this.fullTranscript += event.results[i][0].transcript
+        } else {
+          interimTranscript += event.results[i][0].transcript
+        }
       }
-      this.inputTarget.value = finalTranscript
+      this.inputTarget.value = this.fullTranscript + interimTranscript
     }
 
     this.recognition.onerror = (event) => {
