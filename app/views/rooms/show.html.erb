@@ -112,24 +112,40 @@
     </div>
 
     <%# Inventory %>
-    <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
-      <div class="show-body pt-3 paper-color">
-          <%= turbo_frame_tag "inventory" do %>
-          <div  class="inventory-grid">
-            <% @game.items.each do |item| %>
-              <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
-                <img
-                  src="<%= item.picture_url %>"
-                  alt="Picture of <%= item.name %>"
-                  class="clue-image">
+        <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
+          <div class="show-body pt-3 paper-color" data-controller="popup">
+            <%= turbo_frame_tag "inventory" do %>
+              <div class="inventory-grid">
+                <% @game.items.each do |item| %>
+                  <div
+                    class="clue-container <%= item.found ? 'found' : 'not-found' %>"
+                    data-popup-target="itemfound">
+                    <img
+                      src="<%= item.picture_url %>"
+                      alt="Picture of <%= item.name %>"
+                      class="clue-image">
 
-                <% unless item.found %>
-                  <div class="clue-mask">?</div>
+                    <% unless item.found %>
+                      <div class="clue-mask">?</div>
+                    <% end %>
+                  </div>
                 <% end %>
               </div>
             <% end %>
+
+            <div
+              id="img-popup"
+              data-popup-target="imgpopup"
+              style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+              <img
+                id="img-popup-img"
+                data-popup-target="imgpopupimg"
+                src=""
+                alt=""
+                style="max-width:90vw; max-height:90vh;">
+            </div>
           </div>
-        <% end %>
+        </div>
       </div>
     </div>
     </div>
