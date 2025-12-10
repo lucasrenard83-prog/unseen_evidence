@@ -106,8 +106,6 @@
   flex-shrink: 0;
   padding: 1rem;
   border-top: 1px solid $light-gray;
-
-
 }
 
 .input-with-mic {
@@ -143,12 +141,8 @@
     transition: all 0.25s ease;
 
     &:hover {
-      transform: scale(1.1);
+      transform: translateY(-50%) scale(1.1);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    }
-
-    &:active {
-      transform: scale(0.95);
     }
 
     &.recording {
