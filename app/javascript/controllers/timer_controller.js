@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="timer"
 export default class extends Controller {
   static targets = ["clock", "fiveMinutesToast"]
   static values = {

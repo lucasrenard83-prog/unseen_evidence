@@ -79,12 +79,13 @@ class MessagesController < ApplicationController
   end
 
   def tts
+    @game = Game.find(params[:game_id])
     message = Message.find(params[:id])
     audio = generate_tts(message.content)
     if audio
-      send_data audio, type : "audio/mpeg", disposition: "inline"
+      send_data audio, type: "audio/mpeg", disposition: "inline"
     else
-      head: bad_gateway
+      head :bad_gateway
     end
   end
 
@@ -95,7 +96,7 @@ private
     api_key = ENV["ELEVENLABS_API_KEY"]
 
     uri = URI("https://api.elevenlabs.io/v1/text-to-speech/#{voice_id}")
-    http = NET::http.new(uri.host, uri.port)
+    http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
 
     req = Net::HTTP::Post.new(uri)
@@ -111,6 +112,12 @@ private
         similarity_boost: 0.8
       }
     }.to_json
+
+    res = http.request(req)
+    return res.body if res.is_a?(Net::HTTPSuccess)
+
+    Rails.logger.error "ElevenLabs error: #{res.code} #{res.body}"
+    nil
   end
 
   def build_conversation_history
