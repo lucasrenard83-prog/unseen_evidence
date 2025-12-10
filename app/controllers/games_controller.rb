@@ -13,12 +13,12 @@ class GamesController < ApplicationController
   def create
     @game = current_user.games.build
     # Default scenario to provide context to the LLM
-    @game.scenario = "A mysterious murder occurred in a Victorian manor.
+    @game.scenario = "A mysterious event occurred in a Victorian manor.
     As a medium investigator, you must uncover the truth by exploring rooms,
     questioning suspects, and gathering evidence.
-    The victim was found dead in the entrance hall,
+    The victim was found in the entrance hall,
     and all suspects remain in the house."
-    @game.secret_scenario = ""
+    # @game.secret_scenario =
     if @game.save
       rooms_init(@game)
       personas_init(@game)
@@ -76,16 +76,16 @@ class GamesController < ApplicationController
       { name: "Hall",
         position: 1,
         open: true,
-        description: "The imposing entrance hall appears in front of you.
+        description:"The imposing entrance hall appears in front of you.
         A grand varnished staircase dominates the room, its steps worn by years of usage.
         Portraits line the walls. The central carpet bears faint marks as if someone had run,
         hesitated… or fled. The air here feels colder than in the rest of the house.
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore.",
-        ai_guideline: "Bishop will give you a little introduction of the context.
-        There's a piece of paper('piece_of_paper') hidden under the table with part of a code, if the player searches under the table he finds the 'Piece of paper'.
+        ai_guideline: "Bishop will give you a little introduction of the context ().
+        If the player searches under the table he finds the 'Piece of paper'.
         There's also dirty footsteps around the room pointing to the greenhouse.
-        If the player examines the body, he'll find out that the murder weapon is probably a knife.",
+        If the player examines the body, he'll find out laceration and stabbing traces.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_hall.png"),
         after_picture_url: helpers.image_url("rooms/after_hall.png"),
@@ -213,8 +213,8 @@ class GamesController < ApplicationController
         She moves with a precision that suggests she is always three steps ahead in any conversation.
         Pearls at her neck, gloves spotless, yet a faint tremor in her fingers betrays hidden nerves.
         Rumors cling to her like a perfume; secrets, alliances, and a temper sharp enough to cut long before she raises her voice.",
-        ai_guideline: "She deliberately misleads the investigator to prove mediums are frauds who cannot solve murders.
-        She is innocent but acts suspiciously - an obvious red herring.",
+        ai_guideline: "She seems suspicious. Doesn't really want to help.
+        She is innocent.",
         item_given: false,
         room: game.rooms.find_by!(name: "Library")
       },
@@ -226,9 +226,15 @@ class GamesController < ApplicationController
         A scar cuts across her jaw, earned in a story she tells differently every time.
         She protects those she chooses with fierce loyalty,
         but her unpredictable nature leaves everyone wondering whose side she's truly on.",
-        ai_guideline: "Ambivalent behavior - holds 'Greenhouse key' but genuinely wants to help solve the murder.
-        Her charisma makes her seem suspicious, but she's innocent.
-        She gives the key if player is respectful/kind (Mr. King can advise this approach).",
+        ai_guideline: "She was outside, smoking a cigarette.
+        She saw a light in the Greenhouse and heard loud voices.
+        She heard a slammed door.
+        She entered and crossed path with Mr. Bishop in the kitchen.
+        She suggested to go and check the Greenhouse. The door was locked.
+        They (Mr.Bishop and Mrs. Cavaleer) went to hall and discovered the victim.
+        She had a panic attack and went back to the kitchen.
+        On the way she found the 'Greenhouse key'
+        She called the police.",
         item_given: false,
         room: game.rooms.find_by!(name: "Kitchen")
       },
@@ -238,22 +244,27 @@ class GamesController < ApplicationController
         But behind that meek exterior lies a surprising alertness.
         She notices details others overlook, absorbing whispers, gestures, and footsteps.
         People underestimate her, unaware she might hold the missing piece to the truth even if she doesn't realize it herself.",
-        ai_guideline: "Was locked in Greenhouse (crime scene) from the beginning.
-        She has the 'Revolver'. She saw a tall shadow (the killer) but doesn't know their identity.
-        This is a crucial clue - the killer is tall (narrows to Mr. Rook or Mr. King).",
+        ai_guideline: "She was searching the Library for a book when she heard people arguing.
+        She couldn't understand the content of the dispute so decided to search for the source of the noise.
+        The noise was coming from the Greenhouse so she went and entered.
+        A tall silhouette pushed her.
+        She grabbed his/her pocket and ripped it.
+        A gun fell on the ground and she picked it up.
+        When she tried to leave the room the door was locked.",
         item_given: false,
         room: game.rooms.find_by!(name: "Greenhouse")
       },
       { name: "Mr. Rook",
-        description: "Solid as a wall and twice as immovable.
+        description: "Tall and solid as a wall and twice as immovable.
         Broad-shouldered, square-jawed, he stands with the stoic discipline of someone used to being a guardian.
         His loyalty is unquestionable—or so he insists.
         But the blankness in his expression feels trained, as if hiding doubts he cannot afford to show.
         He carries a quiet heaviness, the kind that comes from witnessing too much… and speaking too little.",
         ai_guideline: "GUILTY - Mr. Rook is the killer.
         He acts serious and helpful while subtly misdirecting the investigation.
-        He lost his 'Revolver' fleeing the Greenhouse, used 'Kitchen knife' instead.
-        He is tall (matches Pawn's description).",
+        He lost his 'Revolver' fleeing the Greenhouse.
+        He used the 'Kitchen knife' on the victim instead.
+        His alibi is that he slept through the whole night.",
         item_given: false,
         room: game.rooms.find_by!(name: "Attic")
       },
@@ -264,8 +275,13 @@ class GamesController < ApplicationController
         Symbols hang from his neck, worn thin from years of handling.
         He speaks of guidance and redemption,
         yet there is something in his smile that suggests he knows exactly where everyone's sins are buried.",
-        ai_guideline: "Calm but unsettling demeanor creates constant trust/mistrust in the investigator.
-        He is innocent but his behavior makes him suspicious - another red herring.",
+        ai_guideline: "He was in the kitchen having a midnight snack when he heard loud noises.
+        He then heard something being dragged on the floor.
+        He saw Mr. King entering the study.
+        He saw Ms. Cavaleer came to the kitchen, she told him she was outside when she heard noises.
+        They (Mr. Bishop and Mrs. Cavaleer) went to the Greenhouse to check.
+        The door was locked. They (Mr. Bishop and Mrs. Cavaleer) went to the hall and discovered the victim.
+        He stayed to offer the last rites.",
         item_given: false,
         room: game.rooms.find_by!(name: "Hall")
       },
@@ -275,10 +291,11 @@ class GamesController < ApplicationController
         Deep lines carve his face, each one a trace of sleepless nights and unspoken worries.
         His eyes—cold, calculating—measure everything and everyone. There's a quiet tension around him,
         as if he knows more than he will ever admit, and fears far more than he lets show.",
-        ai_guideline: "Relaxed and trustworthy - the most helpful character.
-        Gives the 'Worn out paper' if player is polite or asks if he found anything.
-        Reveals how to get 'Greenhouse key' from Cavaleer (be respectful/kind).
-        He is innocent and genuinely helpful.",
+        ai_guideline: "He was in the study and heard a noise.
+        He went out of the room, saw nothing and came back in the study.
+        He spent a little time working and fell asleep.
+        He woke up hearing the cries of Mrs. Cavaleer and Mr. Bishop.
+        When he left the room he found the 'Worn out paper' just out the study's door.",
         item_given: false,
         room: game.rooms.find_by!(name: "Study")
       }
