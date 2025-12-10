@@ -10,7 +10,7 @@
     aria-required="true" data-speech-target="input">
 <% end %>
 
-<%= turbo_stream.replace "room_image" do %>
+<%= turbo_stream.update "room_image" do %>
   <% if @message.room.item_found%>
     <img src="<%= @message.room.after_picture_url %>" alt="<%= @message.room.name%>">
   <% else %>

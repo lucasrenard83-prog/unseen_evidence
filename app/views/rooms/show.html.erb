@@ -88,6 +88,36 @@
             <%= turbo_frame_tag "sidebar" do %>
               <%= render "shared/map", rooms: @rooms %>
             <% end %>
+
+             <div class="room-preview">
+    <button type="button" class="eye-btn" data-bs-toggle="modal" data-bs-target="#roomImageModal">👁️</button>
+    <%= turbo_frame_tag "room_image" do %>
+      <% if @room.item_found %>
+        <img src="<%= @room.after_picture_url %>" alt="<%= @room.name %>">
+      <% else %>
+        <img src="<%= @room.before_picture_url %>" alt="<%= @room.name %>">
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Modal Image Fullscreen -->
+<div class="modal fade" id="roomImageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content room-modal-content">
+      <button type="button" class="btn-close btn-close-white room-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-body p-0">
+        <% if @room.item_found %>
+          <img src="<%= @room.after_picture_url %>" alt="<%= @room.name %>" class="room-modal-img">
+        <% else %>
+          <img src="<%= @room.before_picture_url %>" alt="<%= @room.name %>" class="room-modal-img">
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
           </div>
         </div>
       </div>
