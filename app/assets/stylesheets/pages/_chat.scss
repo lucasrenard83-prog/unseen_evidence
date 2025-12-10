@@ -60,6 +60,10 @@
   clear: both;
 }
 
+.message-body {
+  display: flex;
+}
+
 .message-ai {
   margin-right: auto;
   margin-left: 0;

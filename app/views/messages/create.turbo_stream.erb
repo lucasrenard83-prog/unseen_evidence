@@ -4,7 +4,10 @@
 <% end %>
 
 <%= turbo_stream.replace "message_input" do %>
-  <input class="form-control string required" type="text" name="message[content]" id="message_input" placeholder="Your Text Here" required="required" aria-required="true" data-speech-target="input">
+  <input class="form-control string required message-input"
+    type="text" name="message[content]" id="message_input"
+    placeholder="Your Text Here" required="required"
+    aria-required="true" data-speech-target="input">
 <% end %>
 
 <%= turbo_stream.replace "room_image" do %>
