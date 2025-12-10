@@ -1,3 +1,6 @@
+require "net/http"
+require "uri"
+require "json"
 class MessagesController < ApplicationController
   before_action :authenticate_user!
 
@@ -75,7 +78,40 @@ class MessagesController < ApplicationController
     end
   end
 
+  def tts
+    message = Message.find(params[:id])
+    audio = generate_tts(message.content)
+    if audio
+      send_data audio, type : "audio/mpeg", disposition: "inline"
+    else
+      head: bad_gateway
+    end
+  end
+
 private
+
+  def generate_tts(text)
+    voice_id = ENV["ELEVENLABS_VOICE_ID"]
+    api_key = ENV["ELEVENLABS_API_KEY"]
+
+    uri = URI("https://api.elevenlabs.io/v1/text-to-speech/#{voice_id}")
+    http = NET::http.new(uri.host, uri.port)
+    http.use_ssl = true
+
+    req = Net::HTTP::Post.new(uri)
+    req["xi-api-key"]   = api_key
+    req["Content-Type"] = "application/json"
+    req["Accept"]       = "audio/mpeg"
+
+    req.body = {
+      text: text,
+      model_id: "eleven_multilingual_v2", # ou autre modèle
+      voice_settings: {
+        stability: 0.5,
+        similarity_boost: 0.8
+      }
+    }.to_json
+  end
 
   def build_conversation_history
     # Limite à 15 derniers messages pour réduire le coût et la latence
