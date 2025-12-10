@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   get "uikit" => "pages#uikit"
 
   resources :games, only: [:index, :new, :create, :destroy] do
-    resources :messages, only: [:create]
+    resources :messages, only: [:create] do
+      member do
+        get :tts
+      end
+    end
     member do
       patch :stop
       get :confrontation
