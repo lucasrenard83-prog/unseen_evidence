@@ -1,9 +1,14 @@
+.page {
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  justify-content: space-evenly;
+}
+
 .main-page {
   width: 72%;
-  margin: auto;
   background-color: #f8f9fa;
   border-radius: 20px;
-  margin-bottom: 30px;
 }
 
 .folder-holder {
@@ -73,15 +78,10 @@
 }
 
 .nav {
-  border-bottom: 0px solid rgba(128, 128, 128, 0.81);
-  margin-top: 10px !important;
-  margin-bottom: 10px !important;
-
-  width: 95%;
-  margin: auto ;
-
-  display: flex;
+  display: flex ;
+  flex-direction: column ;
   justify-content: space-between;
+  height: 100%;
 }
 
 .nav-link {
@@ -89,8 +89,6 @@
 }
 
 .nav-center {
-  width: 600px;
-  margin: auto;
 }
 
 .nav-button {
