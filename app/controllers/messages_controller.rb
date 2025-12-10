@@ -172,7 +172,7 @@ private
     3. NEVER confirm or deny who the killer is
     4. If player asks about something not in context, say you don't see/know that
     5. Stay in character - respond as the suspect if player addresses them
-    6. Keep responses concise (2-4 sentences max)
+    6. Keep responses concise (4-6 sentences max)
 
     If the player wants to move to another room, use the change_room tool with the room name.
     If the player finds or receives an item, use the find_item tool with the exact item name.
