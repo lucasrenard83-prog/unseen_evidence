@@ -11,9 +11,9 @@ export default class extends Controller {
   }
 
   connect() {
-    const fromServer = this.counterValue || 3599
+    const fromServer = this.counterValue || 300
     const stored = localStorage.getItem(this.storageKey);
-    const fromLocal = stored ? Number(stored) : 3599;
+    const fromLocal = stored ? Number(stored) : 300;
 
     this.counterValue = Math.min(fromServer, fromLocal);
     this.updateClock();
@@ -30,7 +30,7 @@ export default class extends Controller {
           this.fiveMinutesToastTarget.classList.add("hide")
         }, 5000)
         }
-          if(this.counterValue<=10 && this.counterValue> 0) {
+          if(this.counterValue<=120 && this.counterValue> 0) {
             this.clockTarget.classList.add("timer-pulse")
           } else {
             this.clockTarget.classList.remove("timer-pulse")
