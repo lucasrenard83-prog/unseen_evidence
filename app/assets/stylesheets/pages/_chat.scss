@@ -193,9 +193,27 @@
   border-radius: 10px;
   padding: 0 1.5rem;
   align-self: flex-start;
+  align-content: center;
 
   &:hover {
     background-color: darken($yellow, 10%);
     color: $purple;
+  }
+}
+
+.button-delete {
+  height: 60px;
+  font-weight: 500;
+  color: $red;
+  border-radius: 10px;
+  padding: 0 1.5rem;
+  align-self: flex-start;
+  border: 1px solid $red;
+  align-content: center;
+  width: 120px;
+
+  &:hover {
+    background-color: darken($red, 10%);
+    color: $white;
   }
 }
