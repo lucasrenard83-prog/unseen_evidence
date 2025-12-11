@@ -139,3 +139,25 @@
 
   </div>
 </div>
+<% if flash[:play_intro].present? %>
+  <audio
+    id="intro-audio"
+    src="<%= asset_path('firstmessage.mp3') %>"
+    hidden>
+  </audio>
+
+  <script>
+    document.addEventListener("turbo:load", function () {
+      // Empêche tout double déclenchement dans cet onglet
+      if (window.__introPlayed) return;
+      window.__introPlayed = true;
+
+      const audio = document.getElementById("intro-audio");
+      if (!audio) return;
+
+      audio.play().catch(function (err) {
+        console.warn("Impossible de lire l'audio automatiquement :", err);
+      });
+    });
+  </script>
+<% end %>
