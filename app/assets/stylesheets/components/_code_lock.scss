@@ -24,8 +24,8 @@
 }
 
 .code-lock-modal {
-  background-color: #1a1a1a;
-  border: 2px solid #ffc107;
+  background: radial-gradient(circle at top, #2b2a4a 0, #151425 45%, #050308 100%);
+  border: 2px solid $yellow;
   border-radius: 8px;
   box-shadow: 0 0 30px rgba(255, 193, 7, 0.3);
   max-width: 400px;
@@ -39,7 +39,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  border-bottom: 1px solid #ffc107;
+  border-bottom: 1px solid $yellow;
 
   h5 {
     margin: 0;
@@ -63,7 +63,7 @@
 
 .code-lock-footer {
   padding: 10px 20px;
-  border-top: 1px solid #ffc107;
+  border-top: 1px solid $yellow;
   text-align: center;
 
   small {
@@ -89,11 +89,11 @@
 
 .lock-icon.unlocked .lock-shackle {
   transform: rotate(-45deg) translateX(10px);
-  stroke: #28a745;
+  stroke: $blue;
 }
 
 .lock-icon.unlocked .lock-body {
-  fill: #28a745;
+  fill: $blue;
 }
 
 .lock-icon.shake {
@@ -117,18 +117,18 @@
 .code-dot {
   width: 50px;
   height: 50px;
-  border: 2px solid #ffc107;
+  border: 2px solid $yellow;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 193, 7, 0.1);
+  background: radial-gradient(circle at top, #151425 0%, #050308 100%);
   transition: all 0.3s ease;
 
   span {
     font-size: 24px;
     font-weight: bold;
-    color: #ffc107;
+    color: $yellow;
     opacity: 0;
     transform: scale(0);
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -162,10 +162,10 @@
   height: 50px;
   font-size: 20px;
   font-weight: bold;
-  border: 2px solid #ffc107;
+  border: 2px solid $yellow;
   border-radius: 6px;
   background: transparent;
-  color: #ffc107;
+  color: $yellow;
   cursor: pointer;
   transition: all 0.2s;
 
@@ -191,12 +191,12 @@
 }
 
 .keypad-btn-success {
-  border-color: #28a745;
-  color: #28a745;
+  border-color: $blue;
+  color: $blue;
 
   &:hover {
-    box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
-    background: rgba(40, 167, 69, 0.2);
+    box-shadow: 0 0 15px rgba(40, 57, 167, 0.5);
+    background: rgba(40, 57, 167, 0.2);
   }
 }
 
@@ -216,9 +216,9 @@
   }
 
   .alert-success {
-    background: rgba(40, 167, 69, 0.2);
-    border: 1px solid #28a745;
-    color: #28a745;
+    background: rgba(40, 57, 167, 0.2);
+    border: 1px solid $blue;
+    color: $blue;
   }
 }
 

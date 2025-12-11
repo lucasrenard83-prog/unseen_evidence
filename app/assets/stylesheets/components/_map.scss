@@ -115,9 +115,9 @@
 
   &.closed {
     text-decoration: line-through;
-    color: red;
+    color: $red;
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 1;
   }
 }
 
