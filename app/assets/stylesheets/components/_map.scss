@@ -1,26 +1,22 @@
 // Floor Plan - Cluedo Theme
 
 .floor-plan-container {
-  margin: 0;
-  padding: 0;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .floor-plan-frame {
   padding: 0 3px 20px;
-  margin: auto;
 }
 
 .floor-plan {
   display: flex;
-  width: 100%;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 15px;
 }
 
-.inside {
+.inside,
+.outside {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -28,11 +24,9 @@
 }
 
 .floor-level {
-  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .level-label {
@@ -44,16 +38,15 @@
   margin-bottom: 2px;
   padding-bottom: 1px;
   border-bottom: 0.6px solid #000;
-  display: inline-block;
-  width: fit-content;
 }
 
-// Floor Plans
-.attic-floor {
+// Floor Grids
+.attic-floor,
+.cellar-floor,
+.exterior-floor {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2px;
-  margin: auto;
 }
 
 .ground-floor {
@@ -64,33 +57,14 @@
   grid-template-areas:
     "hall library"
     "kitchen study";
-  margin: auto;
-}
-
-.cellar-floor {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2px;
-  margin: auto;
-}
-
-.exterior-level {
-  margin-top: 8px;
-  padding-top: 8px;
-}
-
-.exterior-floor {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2px;
-  margin: auto;
 }
 
 // Room Base
 .room {
   background: $purple;
   padding: 7px 5.7px;
-  height: 40px;
+  width: 100px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,6 +81,7 @@
   text-transform: uppercase;
   position: relative;
   box-shadow: 0.6px 0.6px 0 rgba(0, 0, 0, 0.2);
+  background-size: cover;
 
   &:hover {
     box-shadow: 0 0 5.7px rgba($yellow, 0.6);
@@ -129,56 +104,38 @@
   line-height: 1;
 }
 
-// Grid Areas
+// Grid Areas & Room Images
 .hall {
   grid-area: hall;
-
   background-image: asset-url("rooms/before_hall.png");
-  background-size: cover;
-  width: 100px;
-  height:80px; }
+}
 
-.library { grid-area: library;
-
+.library {
+  grid-area: library;
   background-image: asset-url("rooms/before_library.png");
-  background-size: cover;
-  width: 100px;
-  height:80px;  }
-.study { grid-area: study;
+}
 
+.study {
+  grid-area: study;
   background-image: asset-url("rooms/before_study.png");
-  background-size: cover;
-  width: 100px;
-  height:80px; }
-.kitchen { grid-area: kitchen;
+}
 
+.kitchen {
+  grid-area: kitchen;
   background-image: asset-url("rooms/before_kitchen.png");
-  background-size: cover;
-  width: 100px;
-  height:80px; }
+}
 
-// Room Variants
 .attic-room {
   background-image: asset-url("rooms/before_attic.png");
-  background-size: cover;
-  width: 100px;
-  height:80px;
 }
 
 .greenhouse-room {
   border-style: dashed;
-  border-width: 0.85px;
   background-image: asset-url("rooms/greenhouse.png");
-  background-size: cover;
-  width: 100px;
-  height:80px;
 }
 
 .cellar-room {
   background-image: asset-url("rooms/before_cellar.png");
-  background-size: cover;
-  width: 100px;
-  height:80px;
 }
 
 // Room Preview Image
@@ -191,7 +148,6 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  box-sizing: border-box;
   width: 100%;
 
   turbo-frame {
@@ -259,9 +215,9 @@
   .ground-floor {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
-    "hall library"
-    "study study"
-    "kitchen kitchen";
+      "hall library"
+      "study study"
+      "kitchen kitchen";
   }
 
   .room {

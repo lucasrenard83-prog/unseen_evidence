@@ -19,6 +19,6 @@ export default class extends Controller {
     // if (hasWin){
       event.preventDefault()
       victory.classList.remove("d-none")
-    // }
+    }
   }
 }
