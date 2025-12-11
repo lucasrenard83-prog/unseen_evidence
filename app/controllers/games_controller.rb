@@ -73,7 +73,7 @@ class GamesController < ApplicationController
         hesitated… or fled. The air here feels colder than in the rest of the house.
         The cozy ambiance is broken once you notice the cadaver eternally sleeping on the ground
         A serene looking man, Mr.Bishop, is murmuring prayers, near the body, as to call help that's not needed anymore.",
-        ai_guideline: "Bishop will give you a little introduction of the context ().
+        ai_guideline: "Bishop will give you a little introduction of the context.
         If the player searches under the table he finds the 'Piece of paper'.
         There's also dirty footsteps around the room pointing to the greenhouse.
         If the player examines the body, he'll find out laceration and stabbing traces.",
@@ -93,8 +93,7 @@ class GamesController < ApplicationController
         as though the walls are waiting for someone to finally uncover a secret kept far too long.
         You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen.",
         ai_guideline: "A trapdoor is hidden under the rug - it holds the 'Kitchen knife' (murder weapon).
-        If player searches under the carpet, reveal the trapdoor with a code lock.
-        If player has both the 'Worn out paper' (code: 21) and the 'Piece of paper' (code: 29), they can deduce the code is 2129.
+        If player searches under the carpet, reveal the trapdoor with a code lock, the code is 2129.
         If player enters code 2129, the 'Kitchen knife' is found.
         Otherwise, describe the locked trapdoor without revealing contents.",
         item_found: false,
@@ -150,9 +149,7 @@ class GamesController < ApplicationController
         a drawer sits ajar and a pen lies on the floor,
         silent hints that someone was here not long ago… whoever they were.
         Mr.King is here observing the grey sky through the window, he salutes you, his back still facing you.",
-        ai_guideline: "The desk drawer has a hidden compartment containing the 'Cellar key'.
-        If player is polite to Mr. King and asks if he found anything, he gives the 'Worn out paper'('worn_out_paper').
-        If player asks about Mrs. Cavaleer, King reveals how to get the 'Greenhouse key' from her (be kind/respectful).",
+        ai_guideline: "The desk drawer has a hidden compartment containing the 'Cellar key.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_study.png"),
         after_picture_url: helpers.image_url("rooms/after_study.png"),
@@ -169,8 +166,7 @@ class GamesController < ApplicationController
         You stumble upon Mrs.Cavaleer when you open the door, she's playing with a knife,
         her eyes lost in the void as if she was contemplating old memories.
         She finally notices you, unfazed she invites you to enter.",
-        ai_guideline: "The 'Poison' is hidden in the spices cabinet. If player searches cabinet, they find it.
-        Cavaleer holds the 'Greenhouse key'. She gives it if player is respectful/kind (as King advised).",
+        ai_guideline: "The 'Poison' is hidden in the spices cabinet. If player searches cabinet, they find it.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_kitchen.png"),
         after_picture_url: helpers.image_url("rooms/after_kitchen.png"),
