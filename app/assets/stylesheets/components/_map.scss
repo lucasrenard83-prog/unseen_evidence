@@ -12,6 +12,7 @@
 .floor-plan-frame {
   padding: 0 3px 20px;
   margin: auto;
+  width: 100%;
 }
 
 .floor-plan {
@@ -268,4 +269,8 @@
     font-size: 0.9rem;
     min-height: 100px;
   }
+}
+
+.room-preview {
+  padding-top: 40px;
 }
