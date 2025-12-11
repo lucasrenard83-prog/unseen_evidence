@@ -85,18 +85,18 @@
   max-width: 90%;
   padding: 1rem;
   background-color: #fff3cd;
-  border: 2px solid #ffc107;
-  border-radius: 8px;
+  border: 2px solid $yellow;
+  border-radius: 10px;
   clear: both;
   text-align: center;
 
   &.trapdoor-found {
-    background-color: #1a1a1a;
+    background: radial-gradient(circle at top, #2b2a4a 0, #151425 45%, #050308 100%);
     color: white;
-    border-color: #ffc107;
+    border-color: $yellow;
 
     strong {
-      color: #ffc107;
+      color: $yellow;
       display: block;
       margin-bottom: 0.5rem;
     }
@@ -107,6 +107,8 @@
 
     .btn {
       display: inline-block !important;
+      border-radius: 5px;
+      background-color: $yellow;
     }
   }
 }
