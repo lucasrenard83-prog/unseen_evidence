@@ -16,17 +16,18 @@
 }
 
 .confront-modal .btn-outline-light {
-  border-color: rgba(248, 241, 227, 0.6);
-  color: #f8f1e3;
+  border-color: $yellow;
+  color: $yellow;
+  border-radius: 5px;
 }
 
 .confront-modal .btn-outline-light:hover {
-  background: rgba(248, 241, 227, 0.12);
+  background: rgba(250, 176, 29, 0.608);
 }
 
 .confront-btn {
-  background: #b00020;
-  border-color: #b00020;
+  background: $red;
+  border-color: $red;
   color: #f8f1e3;
   text-transform: uppercase;
   letter-spacing: 0.06em;
