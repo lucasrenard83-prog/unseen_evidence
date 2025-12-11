@@ -93,8 +93,8 @@ class GamesController < ApplicationController
         as though the walls are waiting for someone to finally uncover a secret kept far too long.
         You notice a tall silhouette holding a cigarette, her judging eyes locked on you, Mrs.Queen.",
         ai_guideline: "A trapdoor is hidden under the rug - it holds the 'Kitchen knife' (murder weapon).
-        If player searches under the carpet, reveal the trapdoor with a code lock, the code is 2129.
-        If player enters code 2129, the 'Kitchen knife' is found.
+        If player searches under the carpet, reveal the trapdoor with a code lock.
+        If player enters the right code, the 'Kitchen knife' is found.
         Otherwise, describe the locked trapdoor without revealing contents.",
         item_found: false,
         before_picture_url: helpers.image_url("rooms/before_library.png"),
@@ -280,9 +280,9 @@ class GamesController < ApplicationController
         as if he knows more than he will ever admit, and fears far more than he lets show.",
         ai_guideline: "He was in the study and heard a noise.
         He went out of the room, saw nothing and came back in the study.
+        When he left the room he found the 'Worn out paper' just out the study's door, he will give it to the player if he asks if Mr. King found anything.
         He spent a little time working and fell asleep.
-        He woke up hearing the cries of Mrs. Cavaleer and Mr. Bishop.
-        When he left the room he found the 'Worn out paper' just out the study's door.",
+        He woke up hearing the cries of Mrs. Cavaleer and Mr. Bishop.",
         item_given: false,
         room: game.rooms.find_by!(name: "Study")
       }
