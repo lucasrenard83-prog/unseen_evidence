@@ -200,6 +200,8 @@ private
       elsif @item.name == "Greenhouse key"
         Room.where(name: "Greenhouse").where(game_id: params["game_id"].to_i)[0].update(open: true)
       end
+      @message.game.rooms.reload
+      @message.game.items.reload
     end
   end
 
