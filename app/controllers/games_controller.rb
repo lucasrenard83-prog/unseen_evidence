@@ -34,17 +34,17 @@ class GamesController < ApplicationController
     redirect_to games_path
   end
 
-  # def confront
-  #   @game = Game.find(params[:id])
-  #   killer_correct = params[:killer] == "Mr. Rook"
-  #   room_correct = params[:room] == "Greenhouse"
-  #   weapon_correct = params[:weapon] == "Kitchen knife"
+  def confront
+    @game = Game.find(params[:id])
+    killer_correct = params[:killer] == "Mr. Rook"
+    room_correct = params[:room] == "Greenhouse"
+    weapon_correct = params[:weapon] == "Kitchen knife"
 
-  #   unless killer_correct && room_correct && weapon_correct
-  #     redirect_to room_path(@game.rooms.first), notice: "Wrong Accusation"
-  #   end
+    unless killer_correct && room_correct && weapon_correct
+      redirect_to room_path(@game.rooms.first), notice: "Wrong Accusation"
+    end
 
-  # end
+  end
 
   def stop
     @game = Game.find(params[:id])
