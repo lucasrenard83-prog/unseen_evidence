@@ -23,6 +23,7 @@ class GamesController < ApplicationController
       rooms_init(@game)
       personas_init(@game)
       items_init(@game)
+      flash[:play_intro] = true
       redirect_to room_path(@game.rooms.find_by!(name: "Hall"))
     else
       render :new, status: :unprocessable_entity

@@ -1,4 +1,3 @@
-// Chat/Messages container
 #chatbox {
   display: flex;
   flex-direction: column;
@@ -7,20 +6,12 @@
   width: 90%;
 }
 
-#chatbox > turbo-frame {
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.message-input {
-    border-radius: 10px;
-    height: 60px;
-    background-color: white;
-  }
 
 .messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   overflow-y: auto;
   padding: 1rem;
   min-height: 0;
@@ -28,7 +19,6 @@
   border-radius: 10px;
   border: 1px solid black;
 
-  // Custom scrollbar styling
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -48,37 +38,34 @@
   }
 }
 
+
 .message-user {
-  margin-left: auto;
-  margin-right: 0;
+  align-self: flex-end;
   max-width: 80%;
   background-color: $purple;
   color: $yellow;
   border-radius: 12px 12px 0 12px;
   display: inline-block;
-  float: right;
-  clear: both;
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3) ;
-  margin-bottom: 12px;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+  padding: 0.75rem 1rem;
+}
+
+
+.message-ai {
+  align-self: flex-start; //
+  max-width: 80%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 12px 12px 12px 0;
+  display: inline-block;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+  padding: 0.75rem 1rem;
 }
 
 .message-body {
   display: flex;
 }
 
-.message-ai {
-  margin-right: auto;
-  margin-left: 0;
-  margin-bottom: 12px;
-  max-width: 80%;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 12px 12px 12px 0;
-  display: inline-block;
-  float: left;
-  clear: both;
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3) ;
-}
 
 .system-message {
   margin: 1rem auto;
@@ -87,7 +74,6 @@
   background-color: #fff3cd;
   border: 2px solid #ffc107;
   border-radius: 8px;
-  clear: both;
   text-align: center;
 
   &.trapdoor-found {
@@ -112,7 +98,6 @@
 }
 
 
-
 #new_message_container {
   flex-shrink: 0;
   padding-top: 1rem;
@@ -134,10 +119,10 @@
     .string {
       width: 100%;
       position: relative;
-      margin-bottom: 0px;
+      margin-bottom: 0;
 
       input {
-        padding-right: 45px; // Space for mic icon
+        padding-right: 45px;
       }
     }
 
@@ -146,7 +131,6 @@
       right: 8px;
       top: 30px;
       transform: translateY(-50%);
-
       flex-shrink: 0;
       background: linear-gradient(135deg, $purple, darken($purple, 10%));
       border: none;
@@ -176,18 +160,10 @@
   }
 }
 
-@keyframes recording-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(231, 76, 60, 0.1);
-  }
-}
 
 .button-perso {
   height: 60px;
-  background-color: $yellow ;
+  background-color: $yellow;
   font-weight: 500;
   color: $purple;
   border-radius: 10px;
