@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
     @game = @room.game
     @rooms = @game.rooms.order(:position)
     @message = Message.new
-    @personas = Persona.joins(:room).where(rooms: { game_id: @game.id })
+    @persona = Persona.find_by(room: @room)
 
     # Only create intro message if this is the first time visiting this room
     if @game.messages.count == 0
@@ -20,7 +20,7 @@ class RoomsController < ApplicationController
         content: intro_msg,
         room: @room,
         game: @game,
-        persona: Persona.find_by(room: @room)
+        persona: @persona
       )
       intro_msg = "Entering the #{@room.name}.<br> #{@room.description}"
       Message.create(
@@ -28,7 +28,7 @@ class RoomsController < ApplicationController
         content: intro_msg,
         room: @room,
         game: @game,
-        persona: Persona.find_by(room: @room)
+        persona: @persona
       )
 
     elsif @room.messages.count == 0
@@ -38,7 +38,7 @@ class RoomsController < ApplicationController
         content: intro_msg,
         room: @room,
         game: @game,
-        persona: Persona.find_by(room: @room)
+        persona: @persona
       )
 
     else
@@ -49,7 +49,7 @@ class RoomsController < ApplicationController
         content: "Entering the #{@room.name}.",
         room: @room,
         game: @game,
-        persona: Persona.find_by(room: @room)
+        persona: @persona
       )
       end
     end
@@ -61,6 +61,7 @@ class RoomsController < ApplicationController
   def unlock_trapdoor
     @room = Room.find(params[:id])
     @game = @room.game
+    @persona = Persona.find_by(room: @room)
 
     # Find and mark Kitchen knife as found
     kitchen_knife = @game.items.find_by(name: "Kitchen knife")
@@ -74,7 +75,7 @@ class RoomsController < ApplicationController
         content: "The trapdoor opens with a click! Inside, you find a Kitchen knife",
         room: @room,
         game: @game,
-        persona: Persona.find_by(room: @room)
+        persona: @persona
       )
 
       render json: { success: true, item: kitchen_knife.name }

@@ -10,7 +10,7 @@
     aria-required="true" data-speech-target="input">
 <% end %>
 
-<%= turbo_stream.update "room_image" do %>
+<%= turbo_stream.update "room_preview" do %>
   <% if @message.room.item_found%>
     <img src="<%= @message.room.after_picture_url %>" alt="<%= @message.room.name%>">
   <% else %>
@@ -18,25 +18,27 @@
   <% end %>
 <% end %>
 
-<%= turbo_stream.replace "inventory" do %>
-  <div  class="inventory-grid">
-    <% Item.where(game_id: @message.game.id).each do |item| %>
-      <div class="clue-container <%= item.found ? 'found' : 'not-found' %>">
+<%= turbo_stream.update "inventory" do %>
+  <div class="inventory-grid">
+    <% @message.game.items.each do |item| %>
+      <div
+        class="clue-container <%= item.found ? 'found' : 'not-found' %>"
+        data-popup-target="itemfound">
         <img
           src="<%= item.picture_url %>"
           alt="Picture of <%= item.name %>"
           class="clue-image">
-
         <% unless item.found %>
           <div class="clue-mask">?</div>
         <% end %>
       </div>
     <% end %>
-    </div>
+  </div>
 <% end %>
 
-<%= turbo_stream.replace "sidebar" do %>
-  <%= render "shared/map", rooms: Room.where(game_id: @message.game.id).order(:position) %>
+<%= turbo_stream.update "sidebar" do %>
+  <%= render "shared/map", rooms: @message.game.rooms.order(:position) %>
+  <%= render "shared/preview", room: @message.room %>
 <% end %>
 
 <% if @item %>
@@ -65,3 +67,12 @@
     </div>
   <% end %>
 <% end %>
+
+<% if @redirect_to_room %>
+  <%= turbo_stream.update "turbo-scripts" do %>
+    <script>
+      Turbo.visit('<%= room_path(@redirect_to_room) %>', { action: 'replace' })
+    </script>
+  <% end %>
+<% end %>
+

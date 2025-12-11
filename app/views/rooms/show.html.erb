@@ -1,14 +1,15 @@
 <div class="page" data-controller="timer" data-timer-url-value="<%= stop_game_path(@game) %>" data-timer-counter-value="<%= @game.elapsed_time %>" data-timer-game-id-value ="<%= @game.id %>" data-timer-rul-value="<%= confrontation_game_path(@game) %>">
-    <div class="nav" id="nav-tab" role="tablist">
-      <button class="active nav-button" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true"><i class="fa-solid fa-magnifying-glass"></i><p>Investigation</p></button>
-      <button class=" nav-button" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false"><i class="fa-solid fa-basket-shopping"></i><p>Inventory</p></button>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link active nav-button" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true"><i class="fa-solid fa-magnifying-glass"></i><p>Investigation</p></button>
+      <button class="nav-link nav-button" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false"><i class="fa-solid fa-basket-shopping"></i><p>Inventory</p></button>
       <button type="button" class="nav-button" data-bs-toggle="modal" data-bs-target="#confrontationModal"><i class="fa-regular fa-lightbulb"></i><p>Confrontation</p></button>
     </div>
 
   <div class="main-page shadow-lg">
-    <%# Chat Box %>
     <div class="tab-content">
-      <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
+    <%# Chat Box %>
+    <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
+      <div class="chat-content">
         <div class="d-flex">
           <div class="folder-holder">
             <%= turbo_frame_tag "messages" do %>
@@ -55,17 +56,8 @@
             <div class="sidebar">
               <%= turbo_frame_tag "sidebar" do %>
                 <%= render "shared/map", rooms: @rooms %>
+                <%= render "shared/preview", room: @room %>
               <% end %>
-              <div class="room-preview">
-                <button type="button" class="eye-btn" data-bs-toggle="modal" data-bs-target="#roomImageModal">👁️</button>
-                <%= turbo_frame_tag "room_image" do %>
-                  <% if @room.item_found %>
-                    <img src="<%= @room.after_picture_url %>" alt="<%= @room.name %>">
-                  <% else %>
-                    <img src="<%= @room.before_picture_url %>" alt="<%= @room.name %>">
-                  <% end %>
-                <% end %>
-              </div>
             </div>
 
             <div class="modal fade" id="roomImageModal" tabindex="-1" aria-hidden="true">
@@ -121,7 +113,9 @@
         </div>
       </div>
     </div>
+    </div>
 
+    <%# confront %>
     <div class="modal fade" id="confrontationModal" tabindex="-1" aria-labelledby="confrontationModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content confront-modal">

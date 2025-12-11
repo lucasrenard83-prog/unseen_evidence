@@ -83,6 +83,7 @@
   justify-content: center;
   width: 14%;
   gap: 24px;
+  border: none;
 }
 
 .nav-link {
@@ -105,6 +106,15 @@
 
   &.active {
     box-shadow: 3px 3px 5px $yellow ;
+  }
+}
+
+.page {
+  .nav-link {
+    border-radius: 10px !important;
+  }
+  .nav-link.active {
+    color: $yellow !important;
   }
 }
 

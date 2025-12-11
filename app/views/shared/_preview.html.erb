@@ -1,0 +1,10 @@
+<%= turbo_frame_tag "room_preview" do %>
+  <div class="room-preview">
+    <button type="button" class="eye-btn" data-bs-toggle="modal" data-bs-target="#roomImageModal">👁️</button>
+    <% if room.item_found %>
+      <img src="<%= room.after_picture_url %>" alt="<%= room.name %>">
+    <% else %>
+      <img src="<%= room.before_picture_url %>" alt="<%= room.name %>">
+    <% end %>
+  </div>
+<% end %>

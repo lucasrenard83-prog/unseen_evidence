@@ -35,10 +35,13 @@ class MessagesController < ApplicationController
         .ask(@message.content)
 
       if @change_room_tool.result
+        Rails.logger.info "=== CHANGE ROOM TOOL RESULT: #{@change_room_tool.result.inspect} ==="
         new_room = @message.game.rooms.find_by(name: @change_room_tool.result)
+        Rails.logger.info "=== NEW ROOM FOUND: #{new_room.inspect} ==="
+        Rails.logger.info "=== NEW ROOM OPEN?: #{new_room&.open} ==="
         if new_room&.open
-          redirect_to room_path(new_room), allow_other_host: false
-          return
+          @redirect_to_room = new_room
+          Rails.logger.info "=== REDIRECT_TO_ROOM SET: #{@redirect_to_room.inspect} ==="
         end
       end
 
@@ -196,9 +199,9 @@ private
       # set item as found and open doors if a key
       @item&.update(found: true)
       if @item.name == "Cellar key"
-        Room.where(name: "Cellar").where(game_id: params["game_id"].to_i)[0].update(open: true)
+        @message.game.rooms.find_by(name: "Cellar")&.update(open: true)
       elsif @item.name == "Greenhouse key"
-        Room.where(name: "Greenhouse").where(game_id: params["game_id"].to_i)[0].update(open: true)
+        @message.game.rooms.find_by(name: "Greenhouse")&.update(open: true)
       end
       @message.game.rooms.reload
       @message.game.items.reload
