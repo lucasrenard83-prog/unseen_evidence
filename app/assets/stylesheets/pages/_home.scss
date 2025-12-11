@@ -2,6 +2,7 @@
   display: flex;
   margin-top: 40px;
   margin-bottom: 30px;
+  height: 80vh;
 }
 
 .main-page {
@@ -29,9 +30,9 @@
   display: flex;
   justify-content: space-evenly;
 
-  margin-bottom: 15px;
   border-radius: 20px;
   max-width: 1300px;
+  min-height: 100%;
 }
 
 .sign-up-body {
@@ -103,6 +104,14 @@
   height: 60px;
 
   &.active {
-    box-shadow: 3px 3px 5px blue ;
+    box-shadow: 3px 3px 5px $yellow ;
   }
+}
+
+.tab-content {
+  height: 100%;
+}
+
+.tab-pane {
+  height: 100%;
 }

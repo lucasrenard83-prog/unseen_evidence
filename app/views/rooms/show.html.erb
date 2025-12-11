@@ -1,122 +1,87 @@
-<div class="page">
+<div class="page" data-controller="timer" data-timer-url-value="<%= stop_game_path(@game) %>" data-timer-counter-value="<%= @game.elapsed_time %>" data-timer-game-id-value ="<%= @game.id %>" data-timer-rul-value="<%= confrontation_game_path(@game) %>">
     <div class="nav" id="nav-tab" role="tablist">
-      <button class="active nav-button" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">Investigation</button>
-      <button class=" nav-button" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false">Inventory</button>
-      <button type="button" class="nav-button" data-bs-toggle="modal" data-bs-target="#confrontationModal">Confrontation</button>
+      <button class="active nav-button" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true"><i class="fa-solid fa-magnifying-glass"></i><p>Investigation</p></button>
+      <button class=" nav-button" id="nav-clues-tab" data-bs-toggle="tab" data-bs-target="#nav-clues" type="button" role="tab" aria-controls="nav-clues" aria-selected="false"><i class="fa-solid fa-basket-shopping"></i><p>Inventory</p></button>
+      <button type="button" class="nav-button" data-bs-toggle="modal" data-bs-target="#confrontationModal"><i class="fa-regular fa-lightbulb"></i><p>Confrontation</p></button>
     </div>
 
   <div class="main-page shadow-lg">
-    <div class="tab-content">
-
     <%# Chat Box %>
-    <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
-      <div class="d-flex">
-        <div class="folder-holder">
-          <%= turbo_frame_tag "messages" do %>
-            <h2 style="text-align:center">The <%= @room.name %></h2>
-            <div id="chatbox" class="col-md-6 mb-2" data-controller="chat" style="width:100%">
-              <div class="messages" id="messages-list" data-chat-target="messages">
-                <% @messages.each do |message| %>
-                  <%= render "messages/message", message: message, game: @game %>
-                <% end %>
-              </div>
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
+        <div class="d-flex">
+          <div class="folder-holder">
+            <%= turbo_frame_tag "messages" do %>
+              <h2 style="text-align:center">The <%= @room.name %></h2>
+              <div id="chatbox" class="col-md-6 mb-2" data-controller="chat" style="width:100%">
+                <div class="messages" id="messages-list" data-chat-target="messages">
+                  <% @messages.each do |message| %>
+                    <%= render "messages/message", message: message, game: @game %>
+                  <% end %>
+                </div>
 
-              <div id="new_message_container" data-controller="speech">
-                <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
-                  <%= f.hidden_field :room_id, value: @room.id %>
-                  <div class="input-with-mic">
-                  <%= f.input :content, label: false, required: true, placeholder: "Your Text Here",
-                      input_html: { id: "message_input", class: "message-input", data: { speech_target: "input" } } %>
-                    <button type="button" class="mic-button" data-speech-target="button" data-action="mousedown->speech#start mouseup->speech#stop">
-                      <i class="fa-solid fa-microphone"></i>
-                    </button>
-                  </div>
-                  <%= f.button :submit, 'Send', class: "button-perso", style: "width: 150px" %>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-
-        <div class="map-holder">
-
-          <div class="ms-auto d-flex align-items-center" style="justify-content: end; padding: 4px;" data-controller="timer" data-timer-url-value="<%= stop_game_path(@game) %>" data-timer-counter-value="<%= @game.elapsed_time %>" data-timer-game-id-value ="<%= @game.id %>" data-timer-rul-value="<%= confrontation_game_path(@game) %>">
-            <strong data-timer-target="clock" class="me-2"><%= Time.at(@game.elapsed_time).utc.strftime("%H:%M:%S") %></strong>
-            <div class="confrontation-toast" data-timer-target="fiveMinutesToast">
-              <div class="confrontation-toast-inner">
-                <div class="confrontation-toast-icon">⏳</div>
-                <div>
-                  <div class="confrontation-toast-title">You have 5 minutes left.</div>
-                  <div class="confrontation-toast-body">Finish your questions. The confrontation is coming…</div>
+                <div id="new_message_container" data-controller="speech">
+                  <%= simple_form_for [@game, @message], data: { turbo_frame: "messages" } do |f| %>
+                    <%= f.hidden_field :room_id, value: @room.id %>
+                    <div class="input-with-mic">
+                    <%= f.input :content, label: false, required: true, placeholder: "Your Text Here",
+                        input_html: { id: "message_input", class: "message-input", data: { speech_target: "input" } } %>
+                      <button type="button" class="mic-button" data-speech-target="button" data-action="mousedown->speech#start mouseup->speech#stop">
+                        <i class="fa-solid fa-microphone"></i>
+                      </button>
+                    </div>
+                    <%= f.button :submit, 'Send', class: "button-perso", style: "width: 150px" %>
+                  <% end %>
                 </div>
               </div>
-            </div>
-            <div class="ms-auto d-flex align-items-center">
-          <div class="confrontation-toast" data-timer-target="fiveMinutesToast">
-            <div class="confrontation-toast-inner">
-              <div class="confrontation-toast-icon">⏳</div>
-                <div>
-                  <div class="confrontation-toast-title">You have 5 minutes left.</div>
-                    <div class="confrontation-toast-body">Finish your questions. The confrontation is coming…</div>
-                </div>
-            </div>
-          </div>
-            <div class="modal fade" id="confrontationModal" tabindex="-1" aria-labelledby="confrontationModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content confront-modal">
-                  <div class="modal-header border-0 pb-0">
-                    <h1 class="modal-title h5 mb-0" id="confrontationModalLabel">Proceed to confrontation?</h1>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-
-                  <div class="modal-body pt-3">
-                    <p class="mb-2">Once you enter confrontation, you can't ask any more questions.</p>
-                    <p class="mb-0"><strong>You only get one chance to accuse the killer.</strong></p>
-                  </div>
-
-                  <div class="modal-footer border-0 pt-2 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Keep investigating</button>
-                    <button type="button" class="btn btn-danger btn-sm" data-action="click->timer#goToConfrontation">Confront now</button>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-          </div>
-
-          <div class="sidebar">
-            <%= turbo_frame_tag "sidebar" do %>
-              <%= render "shared/map", rooms: @rooms %>
             <% end %>
+          </div>
 
-             <div class="room-preview">
-    <button type="button" class="eye-btn" data-bs-toggle="modal" data-bs-target="#roomImageModal">👁️</button>
-    <%= turbo_frame_tag "room_image" do %>
-      <% if @room.item_found %>
-        <img src="<%= @room.after_picture_url %>" alt="<%= @room.name %>">
-      <% else %>
-        <img src="<%= @room.before_picture_url %>" alt="<%= @room.name %>">
-      <% end %>
-    <% end %>
-  </div>
-</div>
+          <div class="map-holder">
 
-<!-- Modal Image Fullscreen -->
-<div class="modal fade" id="roomImageModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content room-modal-content">
-      <button type="button" class="btn-close btn-close-white room-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body p-0">
-        <% if @room.item_found %>
-          <img src="<%= @room.after_picture_url %>" alt="<%= @room.name %>" class="room-modal-img">
-        <% else %>
-          <img src="<%= @room.before_picture_url %>" alt="<%= @room.name %>" class="room-modal-img">
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
+            <div class="ms-auto d-flex align-items-center" style="justify-content: end; padding: 4px;">
+              <strong data-timer-target="clock" class="me-2"><%= Time.at(@game.elapsed_time).utc.strftime("%H:%M:%S") %></strong>
+              <div class="confrontation-toast" data-timer-target="fiveMinutesToast">
+                <div class="confrontation-toast-inner">
+                  <div class="confrontation-toast-icon">⏳</div>
+                  <div>
+                    <div class="confrontation-toast-title">You have 5 minutes left.</div>
+                    <div class="confrontation-toast-body">Finish your questions. The confrontation is coming…</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <div class="sidebar">
+              <%= turbo_frame_tag "sidebar" do %>
+                <%= render "shared/map", rooms: @rooms %>
+              <% end %>
+              <div class="room-preview">
+                <button type="button" class="eye-btn" data-bs-toggle="modal" data-bs-target="#roomImageModal">👁️</button>
+                <%= turbo_frame_tag "room_image" do %>
+                  <% if @room.item_found %>
+                    <img src="<%= @room.after_picture_url %>" alt="<%= @room.name %>">
+                  <% else %>
+                    <img src="<%= @room.before_picture_url %>" alt="<%= @room.name %>">
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="modal fade" id="roomImageModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content room-modal-content">
+                  <button type="button" class="btn-close btn-close-white room-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="modal-body p-0">
+                    <% if @room.item_found %>
+                      <img src="<%= @room.after_picture_url %>" alt="<%= @room.name %>" class="room-modal-img">
+                    <% else %>
+                      <img src="<%= @room.before_picture_url %>" alt="<%= @room.name %>" class="room-modal-img">
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
         </div>
@@ -124,42 +89,59 @@
     </div>
 
     <%# Inventory %>
-        <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
-          <div class="show-body pt-3 paper-color" data-controller="popup">
-            <%= turbo_frame_tag "inventory" do %>
-              <div class="inventory-grid">
-                <% @game.items.each do |item| %>
-                  <div
-                    class="clue-container <%= item.found ? 'found' : 'not-found' %>"
-                    data-popup-target="itemfound">
-                    <img
-                      src="<%= item.picture_url %>"
-                      alt="Picture of <%= item.name %>"
-                      class="clue-image">
-
-                    <% unless item.found %>
-                      <div class="clue-mask">?</div>
-                    <% end %>
-                  </div>
+    <div class="tab-pane fade" id="nav-clues" role="tabpanel" aria-labelledby="nav-clues-tab" tabindex="0">
+      <div class="show-body pt-3 paper-color" data-controller="popup">
+        <%= turbo_frame_tag "inventory" do %>
+          <div class="inventory-grid">
+            <% @game.items.each do |item| %>
+              <div
+              class="clue-container <%= item.found ? 'found' : 'not-found' %>"
+              data-popup-target="itemfound">
+                <img
+                src="<%= item.picture_url %>"
+                alt="Picture of <%= item.name %>"
+                class="clue-image">
+                <% unless item.found %>
+                  <div class="clue-mask">?</div>
                 <% end %>
               </div>
             <% end %>
+          </div>
+        <% end %>
+        <div
+        id="img-popup"
+        data-popup-target="imgpopup"
+        style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+          <img
+          id="img-popup-img"
+          data-popup-target="imgpopupimg"
+          src=""
+          alt=""
+          style="max-width:90vw; max-height:90vh;">
+        </div>
+      </div>
+    </div>
 
-            <div
-              id="img-popup"
-              data-popup-target="imgpopup"
-              style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
-              <img
-                id="img-popup-img"
-                data-popup-target="imgpopupimg"
-                src=""
-                alt=""
-                style="max-width:90vw; max-height:90vh;">
-            </div>
+    <div class="modal fade" id="confrontationModal" tabindex="-1" aria-labelledby="confrontationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content confront-modal">
+          <div class="modal-header border-0 pb-0">
+            <h1 class="modal-title h5 mb-0" id="confrontationModalLabel">Proceed to confrontation?</h1>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body pt-3">
+            <p class="mb-2">Once you enter confrontation, you can’t ask any more questions.</p>
+            <p class="mb-0"><strong>You only get one chance to accuse the killer.</strong></p>
+          </div>
+
+          <div class="modal-footer border-0 pt-2 d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Keep investigating</button>
+            <button type="button" class="btn btn-danger btn-sm" data-action="click->timer#goToConfrontation">Confront now</button>
           </div>
         </div>
       </div>
     </div>
-    </div>
+
   </div>
 </div>

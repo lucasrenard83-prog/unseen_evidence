@@ -11,9 +11,9 @@ export default class extends Controller {
   }
 
   connect() {
-    const fromServer = this.counterValue || 3000
+    const fromServer = this.counterValue || 3599
     const stored = localStorage.getItem(this.storageKey);
-    const fromLocal = stored ? Number(stored) : 3000;
+    const fromLocal = stored ? Number(stored) : 3599;
 
     this.counterValue = Math.min(fromServer, fromLocal);
     this.updateClock();
